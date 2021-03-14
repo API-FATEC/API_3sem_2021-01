@@ -36,6 +36,13 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 ## Organização de Sprints
 
 ### Sprint 1
+Conhecer as necessidades do cliente, definição dos requisitos (User stories) e estudar qual seria o produto mínimo viável.
+
 ### Sprint 2
+Focar em estimativas, treinamento, critérios de qualidade e na modelagem do banco.
+
 ### Sprint 3
+Começar a entregar as implementações parciais do sistema.
+
 ### Sprint 4
+Aperfeiçoar o produto, determinando novas versões, novas funcionalidades, etc.
