@@ -36,6 +36,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>
 			<version>3.0.0</version>
@@ -121,13 +126,13 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<activedProperties>local</activedProperties>
+				<activeProfile>local</activeProfile>
 			</properties>
 		</profile>
 		<profile>
 			<id>prod</id>
 			<properties>
-				<activedProperties>prod</activedProperties>
+				<activeProfile>prod</activeProfile>
 			</properties>
 		</profile>
 	</profiles>
