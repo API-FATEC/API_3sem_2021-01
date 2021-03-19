@@ -1,7 +1,7 @@
-package com.fatec.mom.database;
+package com.fatec.mom.test.database;
 
-import com.fatec.mom.integration.AbstractIntegrationTest;
-import com.fatec.mom.integration.IntegrationTest;
+import com.fatec.mom.test.integration.AbstractIntegrationTest;
+import com.fatec.mom.test.integration.IntegrationTest;
 import com.google.gson.Gson;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ public class SimpleDatabaseConfigTest extends AbstractIntegrationTest {
     private ExampleEntityRepository exampleEntityRepository;
 
     @Test
-    @Sql(value = "/com/fatec/mom/sql/example-entity.sql")
+    @Sql(value = "/com/fatec/mom/test/sql/example-entity.sql")
     public void givenATestDatabaseItMustFetchAllTheDataEntered() throws JSONException {
         List<ExampleEntity> exampleEntities = exampleEntityRepository.findAll();
         String result = new Gson().toJson(exampleEntities);

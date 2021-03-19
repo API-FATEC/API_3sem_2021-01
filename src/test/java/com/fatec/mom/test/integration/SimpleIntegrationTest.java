@@ -1,4 +1,4 @@
-package com.fatec.mom.integration;
+package com.fatec.mom.test.integration;
 
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;

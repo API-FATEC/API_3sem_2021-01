@@ -1,4 +1,4 @@
-package com.fatec.mom.integration;
+package com.fatec.mom.test.integration;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

@@ -1,4 +1,4 @@
-package com.fatec.mom.integration;
+package com.fatec.mom.test.integration;
 
 import net.minidev.json.JSONValue;
 import org.springframework.test.web.servlet.MvcResult;
@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 public abstract class AbstractIntegrationTest {
 
     protected String jsonAsString(final String path) {
-        InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream(String.format("/com/fatec/mom/jsons/%s", path)), StandardCharsets.UTF_8);
+        InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream(String.format("/com/fatec/mom/test/jsons/%s", path)), StandardCharsets.UTF_8);
         return JSONValue.parse(reader).toString();
     }
 
