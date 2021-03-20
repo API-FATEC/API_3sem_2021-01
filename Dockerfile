@@ -1,4 +1,4 @@
 FROM amazoncorretto:11-alpine-jdk
 MAINTAINER baeldung.com
-COPY target/*.jar mom.0.1.jar
+COPY deploy/*.jar mom.0.1.jar
 ENTRYPOINT ["java","-jar","/mom.0.1.jar"]
