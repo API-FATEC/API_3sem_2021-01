@@ -15,12 +15,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.crypto.SecretKey;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final String PATH = "/";
+    private static final String INDEX = "index";
+    private static final String STYLE = "/css/*";
+    private static final String SCRIPT = "/js/8";
+    private static final String SWAGGER = "/swagger-ui/index.html";
+    private static final String LOGIN = "/login";
+    private static final String LOGOUT = "/logout";
 
     private PasswordEncoder passwordEncoder;
     private ApplicationUserService applicationUserService;
@@ -47,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAfter(jwtTokenVerifier(), JwtAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers(PATH, INDEX, STYLE, SCRIPT, SWAGGER, LOGIN, LOGOUT).permitAll()
                 .anyRequest().authenticated();
     }
 
