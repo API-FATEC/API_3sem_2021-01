@@ -11,7 +11,7 @@ services:
       - 49161:1521
   mom:
     container_name: mom
-    build: docker
+    build: .
     ports:
       - "9090:9090"
     depends_on:
