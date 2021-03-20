@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  oracle-db:
+    image: klwang/oracle10g
+    environment:
+      - ORACLE_DB=xe
+      - ORACLE_USER=mom
+      - ORACLE_PASSWORD=mom
+    ports:
+      - 1521:1521
+  mom:
+    container_name: mom
+    build: docker
+    ports:
+      - "9090:9090"
+    depends_on:
+      - oracle-db
