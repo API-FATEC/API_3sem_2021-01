@@ -8,7 +8,7 @@ services:
       - ORACLE_USER=mom
       - ORACLE_PASSWORD=mom
     ports:
-      - 49161:1521
+      - 49161:1522
   mom:
     container_name: mom
     build: .
