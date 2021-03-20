@@ -2,6 +2,7 @@ version: '3'
 
 services:
   oracle-db:
+    hostname: oracle-db
     image: oracleinanutshell/oracle-xe-11g:latest
     environment:
       - ORACLE_DB=xe
