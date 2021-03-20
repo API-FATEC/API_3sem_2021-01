@@ -2,7 +2,6 @@ version: '3'
 
 services:
   oracle-db:
-    hostname: oracle-db
     image: oracleinanutshell/oracle-xe-11g:latest
     environment:
       - ORACLE_DB=xe
@@ -15,5 +14,7 @@ services:
     build: .
     ports:
       - "9090:9090"
+    links:
+      - oracle-db
     depends_on:
       - oracle-db
