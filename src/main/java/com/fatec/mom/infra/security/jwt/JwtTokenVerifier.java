@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Data
 public class JwtTokenVerifier extends OncePerRequestFilter {
 
-    private static final String AUTHORITIES = "authorities";
+    private static final String AUTHORITIES = "Authorities";
     private static final String AUTHORITIY = "authority";
     private static final String BEARER = "Bearer ";
 
@@ -65,9 +65,9 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
             Set<SimpleGrantedAuthority> simpleGrantedAuthorities = new HashSet<>();
             if (authorities != null) {
-                authorities.stream()
-                        .map(item -> new SimpleGrantedAuthority(item.get(AUTHORITIY)))
-                        .collect(Collectors.toSet());
+                for (var item : authorities) {
+                    simpleGrantedAuthorities.add(new SimpleGrantedAuthority(item.get(AUTHORITIY)));
+                }
             }
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
