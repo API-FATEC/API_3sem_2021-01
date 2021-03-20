@@ -2,13 +2,13 @@ version: '3'
 
 services:
   oracle-db:
-    image: klwang/oracle10g
+    image: oracleinanutshell/oracle-xe-11g:latest
     environment:
       - ORACLE_DB=xe
       - ORACLE_USER=mom
       - ORACLE_PASSWORD=mom
     ports:
-      - 1521:1521
+      - 49161:1521
   mom:
     container_name: mom
     build: docker
