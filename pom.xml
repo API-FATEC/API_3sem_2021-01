@@ -5,7 +5,7 @@
 	<groupId>com.fatec</groupId>
 	<artifactId>mom</artifactId>
 	<version>0.1</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>mom</name>
 	<description>Management of Operational Manuals - MOM</description>
 
