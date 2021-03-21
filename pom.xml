@@ -202,6 +202,8 @@
 					<promptOnNonLocalDatabase>true</promptOnNonLocalDatabase>
 					<driver>oracle.jdbc.OracleDriver</driver>
 					<url>${liquibase.url}</url>
+					<username>${liquibase.username}</username>
+					<password>${liquibase.password}</password>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -231,7 +233,9 @@
 			</activation>
 			<properties>
 				<activeProfile>local</activeProfile>
-				<liquibase.url>jdbc:oracle:thin:mom/mom@//localhost:1521/xe</liquibase.url>
+				<liquibase.url>jdbc:oracle:thin:@//localhost:1521/xe</liquibase.url>
+				<liquibase.username>mom</liquibase.username>
+				<liquibase.password>mom</liquibase.password>
 			</properties>
 		</profile>
 		<profile>

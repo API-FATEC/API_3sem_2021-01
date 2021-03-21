@@ -10,6 +10,5 @@
     </preConditions>
 
     <!-- Sprint 0 -->
-    <include file="src/main/resources/db-scripts/scripts/db.changelog-01-21-03-2021-tables.sql"/>
-    <include file="src/main/resources/db-scripts/scripts/db.changelog-01-21-03-2021-inserts.sql"/>
+    <include file="src/main/resources/db-scripts/scripts/sprint0/db.changelog-01-21-03-2021-users.sql"/>
 </databaseChangeLog>
