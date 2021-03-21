@@ -24,8 +24,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String PATH = "/";
     private static final String INDEX = "index";
     private static final String STYLE = "/css/*";
-    private static final String SCRIPT = "/js/8";
-    private static final String SWAGGER = "/swagger-ui/index.html";
+    private static final String SCRIPTS = "/js/*";
+    private static final String SWAGGER_UI = "/swagger-ui/**";
+    private static final String SWAGGER_RESOURCES = "/swagger-resources/**";
+    private static final String API_DOCS = "/v2/api-docs";
+    private static final String CONFIGURATION = "/configuration/**";
+    private static final String API = "/v3/**";
     private static final String LOGIN = "/login";
     private static final String LOGOUT = "/logout";
 
@@ -54,7 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAfter(jwtTokenVerifier(), JwtAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .antMatchers(PATH, INDEX, STYLE, SCRIPT, SWAGGER, LOGIN, LOGOUT).permitAll()
+                .antMatchers(PATH, INDEX, STYLE, SCRIPTS).permitAll()
+                .antMatchers(SWAGGER_UI, API, API_DOCS, CONFIGURATION, SWAGGER_RESOURCES).permitAll()
+                .antMatchers(LOGIN, LOGOUT).permitAll()
                 .anyRequest().authenticated();
     }
 
