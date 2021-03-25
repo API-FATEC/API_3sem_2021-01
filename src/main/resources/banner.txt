@@ -1,0 +1,12 @@
+
+
+                        `7MMM.     ,MMF'  .g8""8q.   `7MMM.     ,MMF'
+     ,;//'     ,;//'      MMMb    dPMM  .dP'    `YM.   MMMb    dPMM      `\\.      `\\.
+  ,;//'     ,;//'         M YM   ,M MM  dM'      `MM   M YM   ,M MM         `\\:.     `\\:.
+,//'      ,//'            M  Mb  M' MM  MM        MM   M  Mb  M' MM            `\\.      `\\.
+`\\.      `\\.            M  YM.P'  MM  MM.      ,MP   M  YM.P'  MM           ,;//'     ,;//'
+   `\\:.     `\\:.        M  `YM'   MM  `Mb.    ,dP'   M  `YM'   MM        ,;//'     ,;//'
+      `\\.      `\\.    .JML. `'  .JMML.  `"bmmd"'   .JML. `'  .JMML.    ,//'      ,//'
+
+         ${AnsiColor.RED}:: Management of Operational Manuals :: (0.1)   ${AnsiColor.GREEN}:: Spring Boot :: (2.4.3)
+

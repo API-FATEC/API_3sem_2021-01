@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres_sgt
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
+        mode: host
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: mom
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+volumes:
+  database-data:
