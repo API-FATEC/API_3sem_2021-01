@@ -1,25 +1,18 @@
-version: '3'
-
+version: '3.7'
 services:
-  oracle-db:
-    dns: oracle-db
-    image: oracleinanutshell/oracle-xe-11g:latest
+  postgres:
+    image: postgres
+    container_name: postgres_sgt
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
+        mode: host
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DATABASE: mom
     volumes:
-      - /home/oracle/oradata:/opt/oracle/oradata
-    environment:
-      - ORACLE_SID=xe
-      - ORACLE_PDB=mom
-      - ORACLE_PWD=mom
-    ports:
-      - 1521:1521
-  mom:
-    container_name: mom
-    build: .
-    ports:
-      - "9090:9090"
-    depends_on:
-      - oracle-db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@//oracle-db:1521/xe
-      - SPRING_DATASOURCE_USERNAME=mom
-      - SPRING_DATASOURCE_PASSWORD=mom
+      - database-data:/var/lib/postgresql/data/
+volumes:
+  database-data:

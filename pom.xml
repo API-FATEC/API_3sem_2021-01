@@ -80,34 +80,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Spring Security -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-		</dependency>
-
-		<!-- JWT -->
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-api</artifactId>
-			<version>${jjwt.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-impl</artifactId>
-			<version>${jjwt.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId>
-			<version>${jjwt.version}</version>
-			<scope>runtime</scope>
-		</dependency>
 
 		<!-- Google -->
 		<dependency>
@@ -134,11 +106,10 @@
 		</dependency>
 
 		<!-- Database -->
-		<!-- Oracle Driver -->
+		<!-- Postres Driver -->
 		<dependency>
-			<groupId>com.oracle.database.jdbc</groupId>
-			<artifactId>ojdbc8</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 		</dependency>
 		<!-- H2 -->
 		<dependency>
@@ -201,9 +172,9 @@
 					<verbose>true</verbose>
 					<promptOnNonLocalDatabase>true</promptOnNonLocalDatabase>
 					<driver>oracle.jdbc.OracleDriver</driver>
-					<url>${liquibase.url}</url>
-					<username>${liquibase.username}</username>
-					<password>${liquibase.password}</password>
+					<url>jdbc:postgresql://localhost:5432/sgt</url>
+					<username>postgres</username>
+					<password>postgres</password>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -224,32 +195,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>local</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<activeProfile>local</activeProfile>
-				<liquibase.url>jdbc:oracle:thin:@//localhost:1521/xe</liquibase.url>
-				<liquibase.username>mom</liquibase.username>
-				<liquibase.password>mom</liquibase.password>
-			</properties>
-		</profile>
-		<profile>
-			<id>prod</id>
-			<properties>
-				<activeProfile>prod</activeProfile>
-			</properties>
-		</profile>
-		<profile>
-			<id>qa</id>
-			<properties>
-				<activeProfile>qa</activeProfile>
-			</properties>
-		</profile>
-	</profiles>
 
 </project>
