@@ -20,4 +20,9 @@ public class SimpleSwagger {
     public String helloWorld() {
         return "Hello World";
     }
+
+    @GetMapping("/world/admin")
+    public String helloAdmin() {
+        return "Hello Admin";
+    }
 }

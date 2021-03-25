@@ -32,6 +32,20 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 #### Informações sobre tecnologias (framework, versão, banco de dados, servidor de aplicação, backend, frontend, etc.) serão registradas na aba Wiki.
 
 ## Configuração do Ambiente
+> **Pre-requisitos:**
+- Java 11
+- Maven 3
+- Oracle XE 11g ou superior
+- Docker e Docker Compose
+> **Preparação do Banco de dados**
+- criar uma base de dados no Oracle com o usuário `mom` e senha `mom`
+  > Se utilizar o Oracle no Docker, subir o container do banco com o comando `docker-compose -f docker/docker-compose.yml up -d`
+- Executar o comando `mvn liquibase:update -Plocal` para construir os objetos do banco
+> **Subindo o sistema**
+- Executar o comando `mvn clean package spring-boot:run`
+- A aplicação estará em execução no `locahost:9090`
+> **Testando a aplicação**
+- Executar o comando `mvn test`
 
 ## Organização de Sprints
 
