@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  oracle-db:
+    dns: oracle-db
+    image: oracleinanutshell/oracle-xe-11g:latest
+    volumes:
+      - /home/oracle/oradata:/opt/oracle/oradata
+    environment:
+      - ORACLE_SID=xe
+      - ORACLE_PDB=mom
+      - ORACLE_PWD=mom
+    ports:
+      - 1521:1521

@@ -1,6 +1,7 @@
 package com.fatec.mom.application;
 
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,5 +20,11 @@ public class SimpleSwagger {
     @ApiOperation(value = "Retorna um Hello World")
     public String helloWorld() {
         return "Hello World";
+    }
+
+    @GetMapping("/world/admin")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String helloAdmin() {
+        return "Hello Admin";
     }
 }
