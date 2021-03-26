@@ -39,7 +39,7 @@ CREATE TABLE MOM_DOC_BLOCO (
 --comment: Inserts documents based on the model codelist
 INSERT INTO MOM_DOCUMENTO(doc_cod, doc_nome, doc_pn, doc_traco) VALUES (5, 'ABC', 1234, 50);
 INSERT INTO MOM_DOCUMENTO(doc_cod, doc_nome, doc_pn, doc_traco) VALUES (6, 'ABC', 1234, 55);
-INSERT INTO MOM_DOCUMENTO(doc_cod, doc_nome, doc_pn, doc_traco) VALUES (7, 'ABC', 5555, 50);
+INSERT INTO MOM_DOCUMENTO(doc_cod, doc_nome, doc_pn, doc_traco) VALUES (7, 'ABC', 1234, 60);
 
 --comment: Inserts blocks based on the model codelist
 INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (1, 0, 0, 'Letter', 50);
