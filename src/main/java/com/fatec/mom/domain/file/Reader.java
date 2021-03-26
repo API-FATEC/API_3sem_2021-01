@@ -1,4 +1,4 @@
-package com.fatec.mom.application;
+package com.fatec.mom.domain.file;
 
 import java.io.File;
 import java.io.FileInputStream;
