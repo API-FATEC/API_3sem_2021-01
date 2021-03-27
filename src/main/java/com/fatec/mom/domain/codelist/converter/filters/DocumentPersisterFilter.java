@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * A classe <code>DocumentPersisterFilter</code> é responsável por persistir os documentos retornados da corrente.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 @Component
 public class DocumentPersisterFilter extends AbstractConverterFilter {
 

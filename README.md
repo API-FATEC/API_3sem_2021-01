@@ -49,6 +49,8 @@ documentos manualmente no novo sistema.
 A importação é feita fornecendo o nome do documento e o part number correspondente e inserindo o arquivo da codelist.
 O sistema então irá tratar o arquivo, gerar os documentos e seus blocos correspondentes e salvá-los no banco de dados.
 
+![Tela de importação do codelist](https://user-images.githubusercontent.com/50988433/112736254-18ab1700-8f30-11eb-9cba-3f8e4d472026.png)
+
 O usuário poderá visualizar os seus documentos em uma estrutura de listas mais confortável e confiável.
 
 ### Sprint 2

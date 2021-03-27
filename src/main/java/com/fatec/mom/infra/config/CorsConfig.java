@@ -5,6 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * A classe <code>CorsConfig</code> configura a política de cors para requisições no localhost.
+ *
+ * @author Tobias Lino
+ * @version v01 27/03/2021
+ */
 @Configuration
 public class CorsConfig {
 
