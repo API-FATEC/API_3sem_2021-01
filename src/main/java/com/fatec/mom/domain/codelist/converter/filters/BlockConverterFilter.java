@@ -7,6 +7,7 @@ import com.fatec.mom.domain.file.Reader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -19,7 +20,7 @@ public class BlockConverterFilter extends AbstractConverterFilter {
     private Reader xlsReader;
 
     @Override
-    public void doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) {
+    public void doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
         for (int row = fileInfo.getActualIndex(); row < fileInfo.getTotalRows(); ++row) {
             var cells = xlsReader.getRow(fileInfo.getFileName(), row);
 

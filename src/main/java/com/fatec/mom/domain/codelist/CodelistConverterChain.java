@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.List;
 
 @Component
@@ -15,7 +16,7 @@ public class CodelistConverterChain {
     @Getter @Setter
     private AbstractConverterFilter converterFilter;
 
-    public void doFilters(Document referenceDocument, FileInfo fileInfo, List<Document> documents) {
+    public void doFilters(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
         converterFilter.doFilter(referenceDocument, fileInfo, documents);
     }
 }

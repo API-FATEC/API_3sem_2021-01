@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/codelist")
 public class CodelistController {
@@ -26,7 +28,7 @@ public class CodelistController {
     public ResponseEntity<String> importCodelistAsExcel(
             @RequestParam("document_name") String documentName,
             @RequestParam("part_number") Integer partNumber,
-            @RequestParam("file") MultipartFile file) {
+            @RequestParam("file") MultipartFile file) throws IOException {
 
         var doc = Document.builder()
                 .name(documentName)
@@ -34,7 +36,6 @@ public class CodelistController {
 
         var fileInfo = FileInfo.builder()
                 .fileName(file.getName())
-                .path(defaultUploadPath)
                 .actualIndex(1)
                 .totalRows(27)
                 .build();

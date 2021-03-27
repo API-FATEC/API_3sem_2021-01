@@ -8,7 +8,6 @@ import lombok.Data;
 public class FileInfo {
 
     private String fileName;
-    private String path;
 
     private int actualIndex;
     private int totalRows;
