@@ -5,8 +5,8 @@ import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,27 +19,21 @@ public class Document {
     @Id
     @GeneratedValue(generator = "MOM_DOCUMENTO_SQ", strategy = GenerationType.SEQUENCE)
     @Column(name = "DOC_COD", nullable = false)
-    @Expose
     private Long id;
 
-    @Expose
     @Column(name = "DOC_DATA_CRIA")
     private Date createdDate;
 
-    @Expose
     @Column(name = "DOC_NOME", nullable = false)
     private String name;
 
-    @Expose
     @Column(name = "DOC_PN", nullable = false)
     private Integer partNumber;
 
-    @Expose
     @Column(name = "DOC_TRACO", nullable = false)
     private Integer trait;
 
-    @Expose
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
     @JoinTable(name = "MOM_DOC_BLOCO",
         joinColumns = @JoinColumn(name = "DOC_COD"),
         inverseJoinColumns = @JoinColumn(name = "BLC_COD"))

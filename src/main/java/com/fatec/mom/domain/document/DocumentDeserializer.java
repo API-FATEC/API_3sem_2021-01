@@ -3,7 +3,6 @@ package com.fatec.mom.domain.document;
 import com.fatec.mom.domain.utils.ModelDeserializer;
 import lombok.AllArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -16,6 +15,7 @@ public class DocumentDeserializer implements ModelDeserializer<Document> {
 
     private final String referenceDocumentName;
     private final Integer referenceDocumentPartNumber;
+    private final Date referenceDocumentDate;
 
     @Override
     public Document deserialize(List<String> rowCells) {
@@ -32,8 +32,8 @@ public class DocumentDeserializer implements ModelDeserializer<Document> {
                     .name(referenceDocumentName)
                     .partNumber(referenceDocumentPartNumber)
                     .trait(formattedTraitCell)
+                    .createdDate(referenceDocumentDate)
                     .blocks(new HashSet<>())
-                    .createdDate(new Date())
                     .build();
             documents.add(document);
         }

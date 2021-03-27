@@ -1,0 +1,281 @@
+[
+  {"id":1,
+    "createdDate":"Mar 23, 2021, 12:00:00 AM",
+    "name":"ABC",
+    "partNumber":1234,
+    "trait":50,
+    "blocks":[
+      {
+        "id":1,
+        "section":"00",
+        "subSection":"NULL",
+        "number":3,
+        "name":"TOC",
+        "code":1
+      },
+      {
+        "id":2,
+        "section":"04",
+        "subSection":"NULL",
+        "number":2,
+        "name":"Episódio 3 ",
+        "code":2
+      },
+      {
+        "id":3,
+        "section":"03",
+        "subSection":"",
+        "number":3,
+        "name":"Episódio 2",
+        "code":14
+      },
+      {
+        "id":4,
+        "section":"S03",
+        "subSection":"NULL",
+        "number":10,
+        "name":"Copyright",
+        "code":1
+      },
+      {
+        "id":5,
+        "section":"00",
+        "subSection":"NULL",
+        "number":1,
+        "name":"Cover",
+        "code":1
+      },
+      {
+        "id":6,
+        "section":"02",
+        "subSection":"NULL",
+        "number":4,
+        "name":"Introduction",
+        "code":1
+      },
+      {
+        "id":7,
+        "section":"00",
+        "subSection":"NULL",
+        "number":2,
+        "name":"LEP",
+        "code":1
+      },
+      {
+        "id":8,
+        "section":"05",
+        "subSection":"",
+        "number":8,
+        "name":"Episódio 1",
+        "code":12
+      },
+      {
+        "id":9,
+        "section":"AP01",
+        "subSection":"NULL",
+        "number":2,
+        "name":"Appendix",
+        "code":1
+      },
+      {
+        "id":10,
+        "section":"00",
+        "subSection":"NULL",
+        "number":0,
+        "name":"Letter",
+        "code":50
+      },
+      {
+        "id":11,
+        "section":"S03",
+        "subSection":"NULL",
+        "number":5,
+        "name":"Mars",
+        "code":1
+      },
+      {
+        "id":12,
+        "section":"05",
+        "subSection":"",
+        "number":3,
+        "name":"Episódio 4",
+        "code":2
+      }
+    ]
+  },
+
+  {"id":2,
+    "createdDate":"Mar 23, 2021, 12:00:00 AM",
+    "name":"ABC",
+    "partNumber":1234,
+    "trait":55,
+    "blocks":[
+    {"id":13,
+      "section":"00",
+      "subSection":"NULL",
+      "number":3,
+      "name":"TOC",
+      "code":2},
+
+    {"id":14,
+      "section":"02",
+      "subSection":"NULL",
+      "number":4,
+      "name":"Introduction",
+      "code":2},
+
+    {"id":15,
+      "section":"04",
+      "subSection":"NULL",
+      "number":2,
+      "name":"Episódio 3 ",
+      "code":3},
+
+    {"id":4,
+      "section":"S03",
+      "subSection":"NULL",
+      "number":10,
+      "name":"Copyright",
+      "code":1},
+
+    {"id":16,
+      "section":"00",
+      "subSection":"NULL",
+      "number":2,
+      "name":"LEP",
+      "code":2},
+
+    {"id":8,
+      "section":"05",
+      "subSection":"",
+      "number":8,
+      "name":"Episódio 1",
+      "code":12},
+
+    {"id":9,
+      "section":"AP01",
+      "subSection":"NULL",
+      "number":2,
+      "name":"Appendix",
+      "code":1},
+
+    {"id":17,
+      "section":"00",
+      "subSection":"NULL",
+      "number":0,
+      "name":"Letter",
+      "code":55},
+
+    {"id":18,
+      "section":"03",
+      "subSection":"",
+      "number":3,
+      "name":"Episódio 2",
+      "code":15},
+
+    {"id":11,
+      "section":"S03",
+      "subSection":"NULL",
+      "number":5,
+      "name":"Mars",
+      "code":1},
+
+    {"id":19,
+      "section":"00",
+      "subSection":"NULL",
+      "number":1,
+      "name":"Cover",
+      "code":2}]},
+
+  {"id":3,
+    "createdDate":"Mar 23, 2021, 12:00:00 AM",
+    "name":"ABC",
+    "partNumber":1234,
+    "trait":60,
+    "blocks":[
+      {"id":20,
+        "section":"05",
+        "subSection":"",
+        "number":3,
+        "name":"Episódio 4",
+        "code":1},
+
+      {"id":1,
+        "section":"00",
+        "subSection":"NULL",
+        "number":3,
+        "name":"TOC",
+        "code":1},
+
+      {"id":21,
+        "section":"02",
+        "subSection":"NULL",
+        "number":4,
+        "name":"Introduction",
+        "code":3},
+
+      {"id":3,
+        "section":"03",
+        "subSection":"",
+        "number":3,
+        "name":"Episódio 2",
+        "code":14},
+
+      {"id":22,
+        "section":"00",
+        "subSection":"NULL",
+        "number":1,
+        "name":"Cover",
+        "code":3},
+
+      {"id":23,
+        "section":"00",
+        "subSection":"NULL",
+        "number":2,
+        "name":"LEP",
+        "code":3},
+
+      {"id":24,
+        "section":"00",
+        "subSection":"NULL",
+        "number":0,
+        "name":"Letter",
+        "code":60},
+
+      {"id":8,
+        "section":"05",
+        "subSection":"",
+        "number":8,
+        "name":"Episódio 1",
+        "code":12},
+
+      {"id":9,
+        "section":"AP01",
+        "subSection":"NULL",
+        "number":2,
+        "name":"Appendix",
+        "code":1},
+
+      {"id":25,
+        "section":"04",
+        "subSection":"NULL",
+        "number":2,
+        "name":"Episódio 3",
+        "code":1},
+
+      {"id":11,
+        "section":"S03",
+        "subSection":"NULL",
+        "number":5,
+        "name":"Mars",
+        "code":1},
+
+      {"id":26,
+        "section":"S03",
+        "subSection":"NULL",
+        "number":10,
+        "name":"Copyright",
+        "code":2}
+    ]
+  }
+]

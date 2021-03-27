@@ -1,7 +1,7 @@
 package com.fatec.mom.domain.codelist.converter.filters;
 
 import com.fatec.mom.domain.document.Document;
-import com.fatec.mom.domain.document.DocumentRepository;
+import com.fatec.mom.domain.document.DocumentService;
 import com.fatec.mom.domain.file.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,11 +13,11 @@ import java.util.List;
 public class DocumentPersisterFilter extends AbstractConverterFilter {
 
     @Autowired
-    private DocumentRepository documentRepository;
+    private DocumentService documentService;
 
     @Override
     public void doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
-        var savedDocuments = documentRepository.saveAll(documents);
+        var savedDocuments = documentService.saveAll(documents);
 
         doNextFilter(referenceDocument, fileInfo, savedDocuments);
     }

@@ -2,17 +2,23 @@ package com.fatec.mom.test.domain.codelist;
 
 import com.fatec.mom.domain.codelist.CodelistConverterService;
 import com.fatec.mom.domain.document.Document;
-import com.fatec.mom.domain.document.DocumentRepository;
+import com.fatec.mom.domain.document.DocumentService;
 import com.fatec.mom.domain.file.FileInfo;
 import com.fatec.mom.domain.file.Reader;
-import com.fatec.mom.domain.utils.JsonBuilder;
 import com.fatec.mom.test.integration.AbstractIntegrationTest;
 import com.fatec.mom.test.integration.IntegrationTest;
+import com.google.gson.Gson;
+import org.json.JSONException;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 @IntegrationTest
 public class CodelistConverterTest extends AbstractIntegrationTest {
@@ -21,17 +27,20 @@ public class CodelistConverterTest extends AbstractIntegrationTest {
     private CodelistConverterService converterService;
 
     @Autowired
-    private DocumentRepository documentRepository;
+    private DocumentService documentService;
 
     @Autowired
     private Reader xlsReader;
 
     @Test
     @Sql(value = "/com/fatec/mom/test/sql/docs-blocks-tables.sql")
-    public void convertAllCodelistFileDataIntoDocuments() throws IOException {
+    public void convertAllCodelistFileDataIntoDocuments() throws IOException, JSONException, ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         var doc = Document.builder()
                 .name("ABC")
-                .partNumber(1234).build();
+                .partNumber(1234)
+                .createdDate(simpleDateFormat.parse("2021-03-23 12:00:00"))
+                .build();
 
         var fileInfo = FileInfo.builder()
                 .fileName("Codelist.xlsx")
@@ -42,10 +51,18 @@ public class CodelistConverterTest extends AbstractIntegrationTest {
 
         converterService.convertFileDataIntoDocuments(doc, fileInfo);
 
-        var result = documentRepository.findAll();
-        for (var i : result) {
-            System.out.println(JsonBuilder.toJsonWithExcludeExpose(i));
-        }
+        var result = documentService.findAll();
+        var json = new Gson().toJson(result);
+
+        assertThat(result.size(), equalTo(3));
+        assertThat(result.get(0).getBlocks().size(), equalTo(12));
+        assertThat(result.get(1).getBlocks().size(), equalTo(11));
+        assertThat(result.get(2).getBlocks().size(), equalTo(12));
+        assertThat(result.get(0).getTrait(), equalTo(50));
+        assertThat(result.get(1).getTrait(), equalTo(55));
+        assertThat(result.get(2).getTrait(), equalTo(60));
+
+        JSONAssert.assertEquals(jsonAsString("expected-inserted-docs.json"), json, true);
     }
 
 }
