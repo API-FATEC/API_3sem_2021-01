@@ -10,16 +10,18 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class Reader {
 
-	private final static String DEFAULT_PATH = "D:/Documents/facul/PI III/API/API_3sem_2021-01/doc/Mockup FATEC/%s";
+	@Value("${default-upload-path}")
+	private String defaultPath;
 
 	//metodo criado para ser usado nos outros metodos, reduzindo o código
 	public Iterator<Row> read(String file) throws IOException{
-		File excelfile = new File(String.format(DEFAULT_PATH, file));
+		File excelfile = new File(String.format("%s/%s", defaultPath, file));
 		FileInputStream fis = new FileInputStream(excelfile);
 		XSSFWorkbook workbook = new XSSFWorkbook(fis);
 		XSSFSheet sheet = workbook.getSheetAt(0);

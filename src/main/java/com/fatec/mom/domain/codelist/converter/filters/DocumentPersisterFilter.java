@@ -16,9 +16,9 @@ public class DocumentPersisterFilter extends AbstractConverterFilter {
     private DocumentService documentService;
 
     @Override
-    public void doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
+    public List<Document> doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
         var savedDocuments = documentService.saveAll(documents);
 
-        doNextFilter(referenceDocument, fileInfo, savedDocuments);
+        return doNextFilter(referenceDocument, fileInfo, savedDocuments);
     }
 }

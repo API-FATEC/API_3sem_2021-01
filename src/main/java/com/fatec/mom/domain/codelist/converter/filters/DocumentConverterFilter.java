@@ -17,7 +17,7 @@ public class DocumentConverterFilter extends AbstractConverterFilter {
     private Reader xlsFileReader;
 
     @Override
-    public void doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
+    public List<Document> doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
         final var fileName = fileInfo.getFileName();
 
         var firstLine = xlsFileReader.getRow(fileName, fileInfo.getActualIndex());
@@ -25,6 +25,6 @@ public class DocumentConverterFilter extends AbstractConverterFilter {
         var convertedDocuments = deserializer.deserializeAll(firstLine);
 
         fileInfo.setActualIndex(2);
-        doNextFilter(referenceDocument, fileInfo, convertedDocuments);
+        return doNextFilter(referenceDocument, fileInfo, convertedDocuments);
     }
 }

@@ -16,7 +16,7 @@ public class CodelistConverterChain {
     @Getter @Setter
     private AbstractConverterFilter converterFilter;
 
-    public void doFilters(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
-        converterFilter.doFilter(referenceDocument, fileInfo, documents);
+    public List<Document> doFilters(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
+        return converterFilter.doFilter(referenceDocument, fileInfo, documents);
     }
 }

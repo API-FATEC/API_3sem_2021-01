@@ -19,14 +19,14 @@ public abstract class AbstractConverterFilter {
         return abstractConverterFilter;
     }
 
-    public abstract void doFilter(final Document referenceDocument,
+    public abstract List<Document> doFilter(final Document referenceDocument,
                                   final FileInfo fileInfo,
                                   final List<Document> documents) throws IOException;
 
-    protected void doNextFilter(final Document referenceDocument,
+    protected List<Document> doNextFilter(final Document referenceDocument,
                              final FileInfo fileInfo,
                              final List<Document> documents) throws IOException {
-        if (next == null) return;
-        next.doFilter(referenceDocument, fileInfo, documents);
+        if (next == null) return documents;
+        return next.doFilter(referenceDocument, fileInfo, documents);
     }
 }

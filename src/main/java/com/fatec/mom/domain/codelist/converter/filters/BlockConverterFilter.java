@@ -20,7 +20,7 @@ public class BlockConverterFilter extends AbstractConverterFilter {
     private Reader xlsReader;
 
     @Override
-    public void doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
+    public List<Document> doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
         for (int row = fileInfo.getActualIndex(); row < fileInfo.getTotalRows(); ++row) {
             var cells = xlsReader.getRow(fileInfo.getFileName(), row);
 
@@ -33,6 +33,6 @@ public class BlockConverterFilter extends AbstractConverterFilter {
             }
         }
 
-        doNextFilter(referenceDocument, fileInfo, documents);
+        return doNextFilter(referenceDocument, fileInfo, documents);
     }
 }
