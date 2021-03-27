@@ -1,10 +1,8 @@
 package com.fatec.mom.domain.block;
 
-import com.fatec.mom.domain.document.Document;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "MOM_BLOCO")
@@ -33,6 +31,6 @@ public class Block {
     @Column(name = "BLC_CODIGO", nullable = false)
     private Integer code;
 
-    @ManyToMany(mappedBy = "blocks")
-    private Set<Document> documents;
+    @Column(name = "BLC_ORDER")
+    private Integer order;
 }

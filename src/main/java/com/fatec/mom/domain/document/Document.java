@@ -1,10 +1,11 @@
 package com.fatec.mom.domain.document;
 
 import com.fatec.mom.domain.block.Block;
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ public class Document {
     private Long id;
 
     @Column(name = "DOC_DATA_CRIA")
-    private LocalDateTime createdDate;
+    private Date createdDate;
 
     @Column(name = "DOC_NOME", nullable = false)
     private String name;
@@ -31,9 +32,13 @@ public class Document {
     @Column(name = "DOC_TRACO", nullable = false)
     private Integer trait;
 
-    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
     @JoinTable(name = "MOM_DOC_BLOCO",
         joinColumns = @JoinColumn(name = "DOC_COD"),
         inverseJoinColumns = @JoinColumn(name = "BLC_COD"))
     private Set<Block> blocks;
+
+    public void addBlock(final Block block) {
+        this.blocks.add(block);
+    }
 }
