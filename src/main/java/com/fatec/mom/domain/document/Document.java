@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -23,7 +24,7 @@ public class Document {
 
     @Expose
     @Column(name = "DOC_DATA_CRIA")
-    private LocalDateTime createdDate;
+    private Date createdDate;
 
     @Expose
     @Column(name = "DOC_NOME", nullable = false)
@@ -43,4 +44,8 @@ public class Document {
         joinColumns = @JoinColumn(name = "DOC_COD"),
         inverseJoinColumns = @JoinColumn(name = "BLC_COD"))
     private Set<Block> blocks;
+
+    public void addBlock(final Block block) {
+        this.blocks.add(block);
+    }
 }
