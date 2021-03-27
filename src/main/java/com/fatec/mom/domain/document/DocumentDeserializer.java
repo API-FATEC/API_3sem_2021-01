@@ -18,7 +18,7 @@ public class DocumentDeserializer implements ModelDeserializer<Document> {
     private final Date referenceDocumentDate;
 
     @Override
-    public Document deserialize(List<String> rowCells) {
+    public Document deserialize(List<String> rowCells, int order) {
         return null;
     }
 

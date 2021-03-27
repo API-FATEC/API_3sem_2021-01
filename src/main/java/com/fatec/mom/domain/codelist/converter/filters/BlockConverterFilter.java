@@ -21,10 +21,10 @@ public class BlockConverterFilter extends AbstractConverterFilter {
 
     @Override
     public List<Document> doFilter(Document referenceDocument, FileInfo fileInfo, List<Document> documents) throws IOException {
-        for (int row = fileInfo.getActualIndex(); row < fileInfo.getTotalRows(); ++row) {
+        for (int row = fileInfo.getActualIndex(), order = 0; row < fileInfo.getTotalRows(); ++row, ++order) {
             var cells = xlsReader.getRow(fileInfo.getFileName(), row);
 
-            var block = new BlockDeserializer().deserialize(cells);
+            var block = new BlockDeserializer().deserialize(cells, order);
 
             for (int i = DEFAULT_COLUMN_INDEX, traitIndex = 0; i < cells.size(); ++i, ++traitIndex) {
                 if (!cells.get(i).equals(NULLABLE_CELL)) {

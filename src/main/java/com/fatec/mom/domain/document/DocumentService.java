@@ -21,4 +21,9 @@ public class DocumentService {
     public List<Document> saveAll(Iterable<Document> documents) {
         return documentRepository.saveAll(documents);
     }
+
+    @Transactional
+    public List<Document> findAllByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait) {
+        return documentRepository.findAllByNameAndPartNumberAndTrait(name, partNumber, trait);
+    }
 }

@@ -1,11 +1,8 @@
 package com.fatec.mom.domain.block;
 
-import com.fatec.mom.domain.document.Document;
-import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "MOM_BLOCO")
@@ -33,4 +30,7 @@ public class Block {
 
     @Column(name = "BLC_CODIGO", nullable = false)
     private Integer code;
+
+    @Column(name = "BLC_ORDER")
+    private Integer order;
 }

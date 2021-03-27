@@ -12,7 +12,7 @@ public class BlockDeserializer implements ModelDeserializer<Block> {
     }
 
     @Override
-    public Block deserialize(List<String> rowCells) {
+    public Block deserialize(List<String> rowCells, int order) {
         final String section = rowCells.get(0);
         String subSection = "";
 
@@ -29,6 +29,7 @@ public class BlockDeserializer implements ModelDeserializer<Block> {
                 .number(Integer.parseInt(number))
                 .name(name)
                 .code(Integer.parseInt(code))
+                .order(order)
                 .build();
     }
 }
