@@ -1,0 +1,93 @@
+{
+  "id": 1,
+  "name": "ABC",
+  "partNumber": 1234,
+  "trait": 50,
+  "blocks": [
+    {
+      "id":1,
+      "section":"0",
+      "number":1,
+      "name":"Cover",
+      "code":1
+    },
+    {
+      "id":2,
+      "section":"S03",
+      "number":0,
+      "name":"Mars",
+      "code":1
+    },
+    {
+      "id":3,
+      "section":"0",
+      "number":0, "name":"Letter", "code":50
+    },
+    {
+      "id":4,
+      "section":"2",
+      "number":4,
+      "name":"Introduction",
+      "code":1
+    },
+    {
+      "id":5,
+      "section":"0",
+      "number":2,
+      "name":"LEP",
+      "code":1
+    },
+    {
+      "id":6,
+      "section":"3",
+      "subSection":"1",
+      "number":3,
+      "name":"Episodio 2",
+      "code":14
+    },
+    {
+      "id":7,
+      "section":"5",
+      "subSection":"6",
+      "number":3,
+      "name":"Episodio 4",
+      "code":2
+    },
+    {
+      "id":8,
+      "section":"AP01",
+      "number":2,
+      "name":"Appendix",
+      "code":1
+    },
+    {
+      "id":9,
+      "section":"4",
+      "number":2,
+      "name":"Episodio 3",
+      "code":2
+    },
+    {
+      "id":10,
+      "section":"0",
+      "number":3,
+      "name":"TOC",
+      "code":1
+    },
+    {
+      "id":11,
+      "section":"5",
+      "subSection":"4",
+      "number":8,
+      "name":"Episodio 1",
+      "code":12
+    },
+    {
+      "id":12,
+      "section":"S03",
+      "number":0,
+      "name":"Copyright",
+      "code":2
+    }
+  ]
+}

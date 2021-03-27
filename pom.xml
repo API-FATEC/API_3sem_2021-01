@@ -130,6 +130,14 @@
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
+		
+		<!-- Poi Ooxml -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>5.0.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -171,8 +179,8 @@
 					<changeLogFile>${resources.folder}/${liquibase.scripts.folder}/${liquibase.changelog.file}</changeLogFile>
 					<verbose>true</verbose>
 					<promptOnNonLocalDatabase>true</promptOnNonLocalDatabase>
-					<driver>oracle.jdbc.OracleDriver</driver>
-					<url>jdbc:postgresql://localhost:5432/sgt</url>
+					<driver>org.postgresql.Driver</driver>
+					<url>jdbc:postgresql://localhost:5432/mom</url>
 					<username>postgres</username>
 					<password>postgres</password>
 				</configuration>
@@ -183,15 +191,6 @@
 						<version>3.5.3</version>
 					</dependency>
 				</dependencies>
-				<executions>
-					<execution>
-						<id>liquibase-update</id>
-						<phase>install</phase>
-						<goals>
-							<goal>update</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

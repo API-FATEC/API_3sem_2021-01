@@ -15,32 +15,23 @@ Os documentos também passam por revisões, esta é uma característica deste ti
 ## Objetivo
 Desenvolver um sistema que permita customizar, controlar e revisar documentos formados por fragmentos armazenados em rquivos PDF, usando regras específicas para gerar o documento final.
 
-# Produto final
-[ link do site de produção ]
-
 #### Membros e papéis:
-- Tobias Lino      -> Scrum Master
-- Wallace Caetano  -> Product Owner
-- Ruan César       -> Developer
-- Jonatas Ferreira -> Developer
-- Devanir Ramos    -> Developer
-- Tairik Johnny    -> Developer
-- Gabriel Timoteo  -> Developer
-
-### Observações: 
-#### As atas de reunião, localização de bugs, planejamento e tarefas serão registradas na aba Issues.
-#### Informações sobre tecnologias (framework, versão, banco de dados, servidor de aplicação, backend, frontend, etc.) serão registradas na aba Wiki.
+- Tobias Lino      -> Scrum Master, Java Developer
+- Wallace Caetano  -> Product Owner, Java Developer
+- Devanir Ramos    -> Java Developer
+- Tairik Johnny    -> Frontend Developer
+- Gabriel Timoteo  -> Frontend Developer
 
 ## Configuração do Ambiente
 > **Pre-requisitos:**
 - Java 11
 - Maven 3
-- Oracle XE 11g ou superior
+- Postgres
 - Docker e Docker Compose
 > **Preparação do Banco de dados**
-- criar uma base de dados no Oracle com o usuário `mom` e senha `mom`
-  > Se utilizar o Oracle no Docker, subir o container do banco com o comando `docker-compose -f docker/docker-compose.yml up -d`
-- Executar o comando `mvn liquibase:update -Plocal` para construir os objetos do banco
+- criar uma base de dados no postgres com o usuário `mom` e senha `mom`
+  > Se utilizar o Postgres no Docker, subir o container do banco com o comando `docker-compose -f docker/docker-compose.yml up -d`
+- Executar o comando `mvn liquibase:update` para construir os objetos do banco
 > **Subindo o sistema**
 - Executar o comando `mvn clean package spring-boot:run`
 - A aplicação estará em execução no `locahost:9090`
@@ -50,6 +41,16 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 ## Organização de Sprints
 
 ### Sprint 1
+##### O entregável
+O sistema permite a importação de uma codelist existente (em formato Excel), garantindo que o usuário consiga continuar 
+o seu trabalho da forma que é feita atualmente, sem grandes necessidades de mudanças ou ter o trabalho de inserir novos 
+documentos manualmente no novo sistema.
+
+A importação é feita fornecendo o nome do documento e o part number correspondente e inserindo o arquivo da codelist.
+O sistema então irá tratar o arquivo, gerar os documentos e seus blocos correspondentes e salvá-los no banco de dados.
+
+O usuário poderá visualizar os seus documentos em uma estrutura de listas mais confortável e confiável.
+
 ### Sprint 2
 ### Sprint 3
 ### Sprint 4
