@@ -14,7 +14,8 @@ export default {
             //v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
         trait: '',
-        response: []
+        response: [],
+        documentBlocks: [],
         
     }),
 
@@ -28,13 +29,31 @@ export default {
         searchDoc() {
             this.validate();
 
-            const formData = new FormData();
-            formData.append("document_name", this.name);
-            formData.append("part_number", this.partNumber);
-            formData.append("trait", this.trait);
+            const params = new URLSearchParams();
+            params.append("document_name", this.name);
+            params.append("part_number", this.partNumber);
+            params.append("trait", this.trait);
 
-            http.get('/document/find',formData).then(response => this.response = response.data);
+            http.get('/document/find', {
+                params: {
+                    document_name: this.name,
+                    part_number: this.partNumber,
+                    trait: this.trait
+                }
+            }).then(response => {
+                console.log(response.data)
+                this.response = this.sortedArray(response.data[0].blocks);
+            });
+        }, sortedArray: function(array) {
+            function compare(a, b) {
+                if (a.order < b.order)
+                    return -1;
+                if (a.order > b.order)
+                    return 1;
+                return 0;
+            }
+
+            return array.sort(compare);
         }
     },
-
 }

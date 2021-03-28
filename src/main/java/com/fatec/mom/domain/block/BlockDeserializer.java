@@ -23,7 +23,7 @@ public class BlockDeserializer implements ModelDeserializer<Block> {
         final String section = rowCells.get(0);
         String subSection = "";
 
-        if (rowCells.get(1).equalsIgnoreCase("NULL")) {
+        if (!rowCells.get(1).equalsIgnoreCase("NULL")) {
             subSection = rowCells.get(1);
         }
         final String number = rowCells.get(2);

@@ -18,7 +18,7 @@
                                             <v-text-field v-model="name" placeholder="Documento"></v-text-field>
                                             <v-text-field v-model="partNumber" placeholder="Part Number"></v-text-field>
                                             <v-text-field v-model="trait" placeholder="Traço"></v-text-field>
-                                            <v-btn color="primary" @click="searchDoc">Buscar</v-btn>
+                                            <v-btn color="primary" @click="searchDoc" id="botao-buscar">Buscar</v-btn>
                                         </v-form>
                                         <br>
                                         <v-card>
@@ -35,10 +35,13 @@
                                             <tbody>
                                                 <tr
                                                     v-for="item in response"
-                                                    :key="item.block"
+                                                    :key="item.order"
                                                 >
+                                                    <td>{{ item.section }}</td>
+                                                    <td>{{ item.subSection }}</td>
+                                                    <td>{{ item.number }}</td>
                                                     <td>{{ item.name }}</td>
-                                                    <td>{{ item.calories }}</td>
+                                                    <td>{{ item.code }}</td>
                                                 </tr>
                                             </tbody>
                                           </v-simple-table>
@@ -53,3 +56,6 @@
         </v-col>
     </div>
 </template>
+
+
+<script src="./docsearch.js" ></script>

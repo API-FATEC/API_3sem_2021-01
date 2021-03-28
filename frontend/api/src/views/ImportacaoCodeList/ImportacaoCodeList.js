@@ -19,7 +19,7 @@ export default {
         ],
         file: [],
 
-        result: [],
+        response: [],
     }),
 
     methods: {
@@ -41,7 +41,7 @@ export default {
             http.post(this.IMPORT_URI, formData).then(
                 response => {
                     console.log(response);
-                    alert("Salvo com sucesso!!")
+                    this.response = response.data;
                     this.reset();
                 }
             );

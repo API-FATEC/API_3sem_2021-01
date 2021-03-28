@@ -58,6 +58,31 @@
               </v-card-text>
             </v-card>
           </v-card>
+          <v-card>
+            <v-simple-table>
+              <thead>
+              <tr>
+                <th class="text-left">Id</th>
+                <th class="text-left">Nome</th>
+                <th class="text-left">Part Number</th>
+                <th class="text-left">Traço</th>
+                <th class="text-left">Total de Blocos</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr
+                  v-for="item in response"
+                  :key="item.id"
+              >
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.partNumber }}</td>
+                <td>{{ item.trait }}</td>
+                <td>{{ item.blocks.length }}</td>
+              </tr>
+              </tbody>
+            </v-simple-table>
+          </v-card>
         </v-col>
       </v-row>
     </v-col>
