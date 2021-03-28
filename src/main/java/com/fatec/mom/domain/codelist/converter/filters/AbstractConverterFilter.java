@@ -8,6 +8,13 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * A classe abstrata <code>AbstractConverterFilter</code> representa o modelo de Handler que converte os dados
+ * do arquivo de codelist em objetos.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 @Data
 @Component
 public abstract class AbstractConverterFilter {
