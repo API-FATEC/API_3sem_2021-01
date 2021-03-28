@@ -28,15 +28,27 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 - Maven 3
 - Postgres
 - Docker e Docker Compose
+- NodeJs versão 14.16
 > **Preparação do Banco de dados**
-- criar uma base de dados no postgres com o usuário `mom` e senha `mom`
+- criar uma base de dados no postgres com nome `mom` e criar o usuário `mom` e senha `mom`
   > Se utilizar o Postgres no Docker, subir o container do banco com o comando `docker-compose -f docker/docker-compose.yml up -d`
 - Executar o comando `mvn liquibase:update` para construir os objetos do banco
-> **Subindo o sistema**
+> **Subindo o backend**
+
+**Especificar a pasta de upload de documentos**
+> - Abrir o arquivo `src/main/resources/application.properties`
+> - Definir a variável `defaultupload-path` para a pasta desejada
+
+> **Obs: é necessário especificar o caminho completo para a pasta**
 - Executar o comando `mvn clean package spring-boot:run`
 - A aplicação estará em execução no `locahost:9090`
 > **Testando a aplicação**
 - Executar o comando `mvn test`
+> **Subindo o frontend**
+- Entrar na pasta /frontend
+- Executar o comando `npm install` para instalar as dependências.
+- Executar o comando `npm run serve` para rodar o sistema
+- Poderá ser acessado no endereço `localhost:5500`
 
 ## Organização de Sprints
 
