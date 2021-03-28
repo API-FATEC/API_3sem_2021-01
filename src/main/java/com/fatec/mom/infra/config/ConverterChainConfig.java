@@ -7,6 +7,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * A classe <code>ConverterChainConfig</code> configura os filtros que farão parte da corrente de conversores de documentos.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 @Configuration
 public class ConverterChainConfig {
 

@@ -4,6 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * A classe <code>Block</code> representa a entidade MOM_BLOCO do banco de dados.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 @Entity
 @Table(name = "MOM_BLOCO")
 @SequenceGenerator(sequenceName = "MOM_BLOCO_SQ", name = "MOM_BLOCO_SQ", allocationSize = 1)
