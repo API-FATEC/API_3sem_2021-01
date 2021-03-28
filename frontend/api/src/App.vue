@@ -2,20 +2,21 @@
   <div id="app">
     <v-app>
       <v-main>
-        <v-app-bar color="#006494" dark>
+        <v-app-bar color="#0266B1" dark>
           <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-
+          <!--
           <v-img
-            src="@/assets/Logo-teste.jpg"
+            src="@/assets/logo-mom.png"
             contain
             max-height="64px"
             max-width="64px"
           >
           </v-img>
+          -->
           <v-toolbar-title class="black--text">MOM</v-toolbar-title>
         </v-app-bar>
 
-        <v-navigation-drawer v-model="drawer" absolute temporary width="320px">
+        <v-navigation-drawer v-model="drawer" absolute temporary width="250px">
           <v-list nav dense>
             <v-list-item>
               <v-list-item-title>Menu</v-list-item-title>
