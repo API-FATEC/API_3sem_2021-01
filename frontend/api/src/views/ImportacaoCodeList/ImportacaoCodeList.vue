@@ -17,7 +17,7 @@
                     <v-form ref="form" v-model="valid" lazy-validation>
                       <v-text-field
                         v-model="name"
-                        :counter="3"
+                        :counter="nameCounter"
                         :rules="nameRules"
                         label="Nome do documento"
                         required
@@ -25,7 +25,7 @@
 
                       <v-text-field
                         v-model="partNumber"
-                        :counter="4"
+                        :counter="partNumberCounter"
                         :rules="partNumberRuler"
                         label="Part Number"
                         required
@@ -35,7 +35,7 @@
                         :disabled="!valid"
                         color="primary"
                         class="mr-4"
-                        @click="validate"
+                        @click="sendFile"
                         id="botao-enviar"
                       >
                         Enviar
@@ -51,6 +51,7 @@
                       label="Inserir o CodeList"
                       outlined
                       dense
+                      v-model="file"
                     ></v-file-input>
                   </v-col>
                 </v-row>

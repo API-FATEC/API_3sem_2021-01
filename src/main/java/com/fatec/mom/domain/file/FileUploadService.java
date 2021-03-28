@@ -7,6 +7,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Serviço responsável por salvar os arquivos importados.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 @Service
 public class FileUploadService {
 

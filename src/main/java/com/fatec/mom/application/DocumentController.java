@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * A classe <code>DocumentController</code> é responsável por fornecer uma api para realização de buscas em documentos
+ * específicos.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 @RestController
 @RequestMapping("/document")
 public class DocumentController {

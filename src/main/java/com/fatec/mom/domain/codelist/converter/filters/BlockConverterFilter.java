@@ -10,6 +10,14 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * A classe <code>BlockConverterFilter</code> é responsável por converter as células do arquivo de codelist em objetos
+ * do tipo <code>Block</code>.
+ * Representa um handler dentro da corrente.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 @Component
 public class BlockConverterFilter extends AbstractConverterFilter {
 
