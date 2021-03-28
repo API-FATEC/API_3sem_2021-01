@@ -48,4 +48,7 @@ export default {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
 }
+#logo{
+  margin-top: 10px;
+}
 </style>
