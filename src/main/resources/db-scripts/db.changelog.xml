@@ -6,9 +6,9 @@
  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <preConditions>
-        <dbms type="oracle" />
+        <dbms type="postgresql" />
     </preConditions>
 
     <!-- Sprint 0 -->
-    <include file="src/main/resources/db-scripts/scripts/sprint0/db.changelog-01-21-03-2021-users.sql"/>
+    <include file="src/main/resources/db-scripts/scripts/sprint0/db.changelog-01-25-03-2021-doc-tables.sql"/>
 </databaseChangeLog>
