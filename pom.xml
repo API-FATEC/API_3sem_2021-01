@@ -209,7 +209,9 @@
 					<verbose>true</verbose>
 					<promptOnNonLocalDatabase>true</promptOnNonLocalDatabase>
 					<driver>org.postgresql.Driver</driver>
-					<url>postgres://ctjkljhavybuju:68a469b8f94608e01102b7fe3a8d755bc6573df6a51aac1a9a12b1f369d09905@ec2-54-242-43-231.compute-1.amazonaws.com:5432/d7kekgr8t5qjni</url>
+					<url>jdbc:postgres://ec2-54-242-43-231.compute-1.amazonaws.com:5432/d7kekgr8t5qjni</url>
+					<username>ctjkljhavybuju</username>
+					<password>68a469b8f94608e01102b7fe3a8d755bc6573df6a51aac1a9a12b1f369d09905</password>
 				</configuration>
 				<dependencies>
 					<dependency>
