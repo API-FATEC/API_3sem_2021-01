@@ -18,7 +18,7 @@ CREATE TABLE MOM_DOCUMENTO (
 
    CONSTRAINT UK_DOC_PN_TRACO_NOM UNIQUE (DOC_NOME, DOC_PN, DOC_TRACO)
 );
-CREATE SEQUENCE MOM_DOCUMENTO_SQ;
+CREATE SEQUENCE MOM_DOCUMENTO_SQ start with 1 increment by 1 maxvalue 9999999999 no cycle;
 
 
 --changeset tslino:3
@@ -29,7 +29,8 @@ CREATE TABLE MOM_BLOCO (
    BLC_SUB_SECAO VARCHAR(10),
    BLC_NUMERO INTEGER NOT NULL,
    BLC_NOME VARCHAR(30),
-   BLC_CODIGO INTEGER NOT NULL
+   BLC_CODIGO INTEGER NOT NULL,
+   BLC_ORDER INTEGER
 );
 CREATE SEQUENCE mom.MOM_BLOCO_SQ;
 
@@ -39,38 +40,3 @@ CREATE TABLE MOM_DOC_BLOCO (
    DOC_COD SERIAL CONSTRAINT FK_DOC_BLOCO_DOC_COD REFERENCES MOM_DOCUMENTO(DOC_COD),
    BLC_COD SERIAL CONSTRAINT FK_DOC_BLOCO_BLC_COD REFERENCES MOM_BLOCO(BLC_COD)
 );
-
---changeset tslino:5
---comment: Inserts documents based on the model codelist
-INSERT INTO MOM_DOCUMENTO(doc_cod, doc_nome, doc_pn, doc_traco) VALUES (nextval('MOM_DOCUMENTO_SQ'), 'ABC', 1234, 50);
-INSERT INTO MOM_DOCUMENTO(doc_cod, doc_nome, doc_pn, doc_traco) VALUES (nextval('MOM_DOCUMENTO_SQ'), 'ABC', 1234, 55);
-INSERT INTO MOM_DOCUMENTO(doc_cod, doc_nome, doc_pn, doc_traco) VALUES (nextval('MOM_DOCUMENTO_SQ'), 'ABC', 5555, 50);
-
---changeset tslino:6
--- --comment: Inserts blocks based on the model codelist
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 0, 'Letter', 50);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 0, 'Letter', 55);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 0, 'Letter', 60);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 1, 'Cover', 1);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 1, 'Cover', 2);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 1, 'Cover', 3);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 2, 'LEP', 1);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 2, 'LEP', 2);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 2, 'LEP', 3);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 3, 'TOC', 1);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 0, 3, 'TOC', 2);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 2, 4, 'Introduction', 1);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 2, 4, 'Introduction', 2);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 2, 4, 'Introduction', 3);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_sub_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 3, 1, 3, 'Episodio 2', 14);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_sub_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 3, 1, 3, 'Episodio 2', 15);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 4, 2, 'Episodio 3', 1);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 4, 2, 'Episodio 3', 2);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 4, 2, 'Episodio 3', 3);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_sub_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 5, 4, 8, 'Episodio 1', 12);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_sub_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 5, 6, 3, 'Episodio 4', 1);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_sub_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 5, 6, 3, 'Episodio 4', 2);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 'AP01', 2, 'Appendix', 1);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 'S03', 5, 'Mars', 1);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 'S03', 10, 'Copyright', 1);
-INSERT INTO MOM_BLOCO(blc_cod, blc_secao, blc_numero, blc_nome, blc_codigo) VALUES (nextval('MOM_BLOCO_SQ'), 'S03', 10, 'Copyright', 2);

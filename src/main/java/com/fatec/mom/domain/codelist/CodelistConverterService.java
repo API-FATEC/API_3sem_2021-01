@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Serviço responsável por realizar uma requisição dentro da corrente de conversores de documentos.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 @Service
 public class CodelistConverterService {
 

@@ -10,6 +10,14 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * A classe <code>DocumentConverterFilter</code> é responsável por obter todos os traços definidos no arquivo de
+ * codelist e convertê-los em objetos do tipo <code>Document</code>, utilizando o <code>referenceDocument</code>
+ * para criar os documentos corretos.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 @Component
 public class DocumentConverterFilter extends AbstractConverterFilter {
 

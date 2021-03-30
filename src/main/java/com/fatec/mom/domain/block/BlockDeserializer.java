@@ -4,6 +4,13 @@ import com.fatec.mom.domain.utils.ModelDeserializer;
 
 import java.util.List;
 
+/**
+ * A classe <code>BlockDeserializer</code> é responsável por transformar os valores das células do arquivo de codelist
+ * em objetos do tipo <code>Block</code>.
+ *
+ * @author Tobias Lino
+ * @version v01 26/03/2021
+ */
 public class BlockDeserializer implements ModelDeserializer<Block> {
 
     @Override
@@ -16,7 +23,7 @@ public class BlockDeserializer implements ModelDeserializer<Block> {
         final String section = rowCells.get(0);
         String subSection = "";
 
-        if (rowCells.get(1).equalsIgnoreCase("NULL")) {
+        if (!rowCells.get(1).equalsIgnoreCase("NULL")) {
             subSection = rowCells.get(1);
         }
         final String number = rowCells.get(2);
