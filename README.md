@@ -1,4 +1,10 @@
-# Projeto API 3º semestre Banco de Dados.
+# MOM - Management of Operational Manuals.
+![Maven Central](https://img.shields.io/maven-central/v/org.apache.maven/apache-maven)
+![](https://img.shields.io/badge/java-jdk11-green)
+![](https://img.shields.io/badge/postgres-13-blue)
+![](https://img.shields.io/badge/spring--boot-2.4.3-brightgreen)
+![](https://img.shields.io/badge/nodejs-14.16-darkgreen)
+## Projeto API 3º semestre Banco de Dados.
 
 Projeto realizado em parceria com a FATEC de São José dos Campos, alunos do curso de Banco de Dados e com a EMBRAER.
 
@@ -23,28 +29,28 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 - Gabriel Timoteo  -> Frontend Developer
 
 ## Configuração do Ambiente
-> **Pre-requisitos:**
+### **Pre-requisitos:**
 - Java 11
-- Maven 3
+- Maven 3 
 - Postgres
 - Docker e Docker Compose
 - NodeJs versão 14.16
-> **Preparação do Banco de dados**
+### **Preparação do Banco de dados**
 - criar uma base de dados no postgres com nome `mom` e criar o usuário `mom` e senha `mom`
   > Se utilizar o Postgres no Docker, subir o container do banco com o comando `docker-compose -f docker/docker-compose.yml up -d`
 - Executar o comando `mvn liquibase:update` para construir os objetos do banco
-> **Subindo o backend**
+## **Subindo o backend**
 
-**Especificar a pasta de upload de documentos**
+### **Especificar a pasta de upload de documentos**
 > - Abrir o arquivo `src/main/resources/application.properties`
 > - Definir a variável `defaultupload-path` para a pasta desejada
 
 > **Obs: é necessário especificar o caminho completo para a pasta**
 - Executar o comando `mvn clean package spring-boot:run`
 - A aplicação estará em execução no `locahost:9090`
-> **Testando a aplicação**
+#### **Testando a aplicação**
 - Executar o comando `mvn test`
-> **Subindo o frontend**
+## **Subindo o frontend**
 - Entrar na pasta /frontend
 - Executar o comando `npm install` para instalar as dependências.
 - Executar o comando `npm run serve` para rodar o sistema
@@ -68,19 +74,19 @@ documentos manualmente no novo sistema.
 A importação é feita fornecendo o nome do documento e o part number correspondente e inserindo o arquivo da codelist.
 O sistema então irá tratar o arquivo, gerar os documentos e seus blocos correspondentes e salvá-los no banco de dados.
 
-### Tela de importação de documentos
-![Tela de importação do codelist](https://user-images.githubusercontent.com/50988433/112736254-18ab1700-8f30-11eb-9cba-3f8e4d472026.png)
-### O resultado dos documentos inseridos é mostrado, bem como a contagem de blocos que foram inseridos.
-![resultado da importação](https://user-images.githubusercontent.com/50988433/112739901-86fed200-8f4e-11eb-8e2c-a20f50b7bb72.png)
-### Tela Para realização de buscas
-![tela de busca](https://user-images.githubusercontent.com/50988433/112739902-87976880-8f4e-11eb-9e14-384da115073f.png)
-### A busca retorna todos os blocos para o documento pesquisado
-![resultado da busca](https://user-images.githubusercontent.com/50988433/112739899-86663b80-8f4e-11eb-89e2-96e4a5d977e8.png)
-
 O usuário poderá visualizar os seus documentos em uma estrutura de listas mais confortável e confiável.
+
+### As telas podem ser visualizadas em: [frontend](https://github.com/API-FATEC/API_3sem_2021-01/tree/main/frontend/api)
 
 ## Sprint 2
 ***
-O entregável para a segunda Sprint será a geração automática da LEP e um comparador de blocos.
+### **User stories**
+**Eu como parte do time de publicação, desejo visualizar um codelist de um documento específico como um todo, para que seja fácil gerenciar quais blocos compõem determinado traço.**
+
+**Eu como parte do time de publicação, desejo editar um codelist de um determinado documento, para que seja possível modificar a estrutura de um documento salvo na aplicação.**
+
+**Eu como responsável por um documento, desejo criar um codelist para um determinado documento dentro da aplicação, pois é muito mais eficaz manter o gerenciamento de codelists no sistema, desde sua criação.**
+***
+> Entrega de um sistema de visualização, edição e criação de codelists.
 ## Sprint 3
 ## Sprint 4
