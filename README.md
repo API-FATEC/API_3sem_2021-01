@@ -42,14 +42,18 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 ## **Subindo o backend**
 
 ### **Especificar a pasta de upload de documentos**
-> - Abrir o arquivo `src/main/resources/application.properties`
-> - Definir a variável `defaultupload-path` para a pasta desejada
+- Abrir o arquivo `src/main/resources/application.properties`
+- Definir a variável `defaultupload-path` para a pasta desejada
 
 > **Obs: é necessário especificar o caminho completo para a pasta**
 - Executar o comando `mvn clean package spring-boot:run`
 - A aplicação estará em execução no `locahost:9090`
-#### **Testando a aplicação**
-- Executar o comando `mvn test`
+### **Testando a aplicação**
+- Executar o comando `mvn clean test jacoco:report` para gerar os arquivos de cobertura de testes.
+- Rodar o servidor local do SonarQube (Estamos utilizando a versão community).
+- Assim que o servidor do sonar estiver com status `up`, executar o comando `mvn sonar:sonar`
+> Obs: será necessário adicionar o token de acesso do sonar no comando acima com `-Dsonar.login=<seu_token>.
+- A url com o resultado será mostrada no console do Maven (possívelmente `localhost:9000`)
 ## **Subindo o frontend**
 - Entrar na pasta /frontend
 - Executar o comando `npm install` para instalar as dependências.

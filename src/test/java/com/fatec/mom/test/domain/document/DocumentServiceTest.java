@@ -26,4 +26,15 @@ public class DocumentServiceTest extends AbstractIntegrationTest {
 
         JSONAssert.assertEquals(jsonAsString("expected-doc-search-result-as-list.json"), json, true);
     }
+
+    @Test
+    @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql",
+        config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
+    public void returnsAllDocumentsByNameAndPartNumberAndTrait() throws JSONException {
+        var doc = documentService.findByNameAndPartNumberAndTrait("ABC", 1234, 50);
+        var json = new Gson().toJson(doc);
+
+        JSONAssert.assertEquals(jsonAsString("expected-document-with-trait-50.json"), json, true);
+    }
+
 }

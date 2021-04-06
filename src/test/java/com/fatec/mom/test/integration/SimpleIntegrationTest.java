@@ -23,7 +23,7 @@ public class SimpleIntegrationTest extends AbstractIntegrationTest {
     }
 }
 
-@Data @AllArgsConstructor
+@AllArgsConstructor
 class SimpleObject {
 
     private Long id;

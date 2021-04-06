@@ -27,8 +27,35 @@ public class DocumentSearchTest extends AbstractIntegrationTest {
 
         var result = documentRepository.findAll(DocumentSpecification.searchByName(docName));
         var json = new Gson().toJson(result);
+        System.out.println(json);
 
         JSONAssert.assertEquals(jsonAsString("expected-doc-search-result-as-list.json"), json, true);
+    }
+
+    @Test
+    @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql")
+    @Transactional
+    public void givenSomeDocumentsMustPerformANonSpecificSearchByPartNumber() throws JSONException {
+        var partNumber = 1234;
+
+        var result = documentRepository.findAll(DocumentSpecification.searchByPartNumber(partNumber));
+        var json = new Gson().toJson(result);
+        System.out.println(json);
+
+        JSONAssert.assertEquals(jsonAsString("expected-doc-search-result-as-list.json"), json, true);
+    }
+
+    @Test
+    @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql")
+    @Transactional
+    public void givenSomeDocumentsMustPerformANonSpecificSearchByTrait() throws JSONException {
+        var trait = 50;
+
+        var result = documentRepository.findAll(DocumentSpecification.searchByTrait(trait));
+        var json = new Gson().toJson(result);
+        System.out.println(json);
+
+        JSONAssert.assertEquals(jsonAsString("expected-document-with-trait-50-as-list.json"), json, true);
     }
 
     @Test

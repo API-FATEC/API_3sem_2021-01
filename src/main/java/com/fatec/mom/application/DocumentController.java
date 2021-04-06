@@ -37,15 +37,15 @@ public class DocumentController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<Document>> findDocuments(
+    public ResponseEntity<Document> findDocuments(
             @RequestParam("document_name") String documentName,
             @RequestParam("part_number") Integer partNumber,
             @RequestParam("trait") Integer trait) {
-        var docs = documentService.findAllByNameAndPartNumberAndTrait(documentName, partNumber, trait);
+        var doc = documentService.findByNameAndPartNumberAndTrait(documentName, partNumber, trait);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(docs);
+                .body(doc);
     }
 
     @GetMapping("/find/all/by")
