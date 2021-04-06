@@ -20,6 +20,31 @@
 				<role>Java Developer</role>
 			</roles>
 		</developer>
+		<developer>
+			<name>Wallace Caetano</name>
+			<organization>Faculdade de Tecnologia de São José dos Campos FATEC Jessen Vidal</organization>
+			<email>wallace.santos13@fatec.sp.gov.br</email>
+			<roles>
+				<role>Product Owner</role>
+				<role>FullStack Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Devanir Ramos</name>
+			<organization>Faculdade de Tecnologia de São José dos Campos FATEC Jessen Vidal</organization>
+			<email>devanir.ramos@fatec.sp.gov.br</email>
+			<roles>
+				<role>Java Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Tairik Johnny</name>
+			<organization>Faculdade de Tecnologia de São José dos Campos FATEC Jessen Vidal</organization>
+			<email>tairikjohnny@gmail.com</email>
+			<roles>
+				<role>Frontend Developer</role>
+			</roles>
+		</developer>
 	</developers>
 
 	<parent>
@@ -50,6 +75,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -180,9 +209,9 @@
 					<verbose>true</verbose>
 					<promptOnNonLocalDatabase>true</promptOnNonLocalDatabase>
 					<driver>org.postgresql.Driver</driver>
-					<url>jdbc:postgresql://localhost:5432/mom</url>
-					<username>postgres</username>
-					<password>postgres</password>
+					<url>jdbc:postgres://ec2-54-242-43-231.compute-1.amazonaws.com:5432/d7kekgr8t5qjni</url>
+					<username>ctjkljhavybuju</username>
+					<password>68a469b8f94608e01102b7fe3a8d755bc6573df6a51aac1a9a12b1f369d09905</password>
 				</configuration>
 				<dependencies>
 					<dependency>
