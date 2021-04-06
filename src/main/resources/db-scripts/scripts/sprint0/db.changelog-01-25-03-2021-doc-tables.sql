@@ -32,7 +32,7 @@ CREATE TABLE MOM_BLOCO (
    BLC_CODIGO INTEGER NOT NULL,
    BLC_ORDER INTEGER
 );
-CREATE SEQUENCE MOM_BLOCO_SQ;
+CREATE SEQUENCE MOM_BLOCO_SQ start with 1 increment by 1 maxvalue 9999999999 no cycle;
 
 --changeset tslino:4
 --comment: Create intermediate table between MOM_DOCUMENT and MOM_BLOCO as MOM_DOC_BLOCO

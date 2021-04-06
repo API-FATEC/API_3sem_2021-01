@@ -9,7 +9,7 @@
             </v-row>
             <v-row class="pa-4">
                 <v-col>
-                    <v-card class="pa-6" color="#006494">
+                    <v-card class="pa-6" color="#0266B1">
                         <v-card class="pa-2" tile outlined color="white">
                             <v-card-text>
                                 <v-row class="mb-6" no-gutters>
