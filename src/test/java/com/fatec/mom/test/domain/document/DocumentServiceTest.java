@@ -8,8 +8,8 @@ import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 
 @IntegrationTest
 public class DocumentServiceTest extends AbstractIntegrationTest {
@@ -18,7 +18,8 @@ public class DocumentServiceTest extends AbstractIntegrationTest {
     private DocumentService documentService;
 
     @Test
-    @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql")
+    @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql",
+        config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
     public void returnsAllDocumentsByNameAndPartNumber() throws JSONException {
         var docs = documentService.findAllByNameAndPartNumber("ABC", 1234);
         var json = new Gson().toJson(docs);
