@@ -31,9 +31,11 @@ public class DocumentControllerTest extends AbstractControllerTest {
         MockHttpServletResponse response = result.getResponse();
         var json = new JSONArray(response.getContentAsString());
 
-        JSONAssert.assertEquals(jsonAsString("expected-doc-search-result-as-list.json"), getResultAsJson(result), true);
+        JSONAssert.assertEquals(
+                jsonAsString("expected-doc-search-by-request-as-list.json"),
+                getResultAsJson(result),
+                true);
 
-        assertThat(json.length(), equalTo(2));
-        assertThat(json.get(0).getClass(), instanceOf(Document.class));
+        assertThat(json.length(), equalTo(3));
     }
 }
