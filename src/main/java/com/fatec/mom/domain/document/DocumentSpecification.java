@@ -1,7 +1,9 @@
 package com.fatec.mom.domain.document;
 
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
+@NoArgsConstructor
 public class DocumentSpecification {
 
     public static Specification<Document> searchByName(String name) {

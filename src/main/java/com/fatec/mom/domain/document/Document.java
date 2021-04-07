@@ -1,7 +1,6 @@
 package com.fatec.mom.domain.document;
 
 import com.fatec.mom.domain.block.Block;
-import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import javax.persistence.*;

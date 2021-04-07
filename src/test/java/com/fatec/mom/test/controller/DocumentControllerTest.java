@@ -36,4 +36,37 @@ public class DocumentControllerTest extends AbstractControllerTest {
 
         assertThat(json.length(), equalTo(3));
     }
+
+    @Test
+    @Sql(value = "/com/fatec/mom/test/sql/insert-four-documents.sql",
+            config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
+    public void givenARequestToFindAllDocsShouldReturn200AndAllTheDocuments() throws Exception {
+        var result = getMockMvc().perform(get("/document/find/all"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+        var json = new JSONArray(response.getContentAsString());
+
+        JSONAssert.assertEquals(
+                jsonAsString("expected-four-documents-as-list.json"),
+                getResultAsJson(result),
+                true);
+
+        assertThat(json.length(), equalTo(4));
+    }
+
+    @Test
+    @Sql(value = "/com/fatec/mom/test/sql/insert-four-documents.sql",
+            config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
+    public void givenARequestToFindASpecificDocShouldReturn200AndOnlyOneDocument() throws Exception {
+        var result = getMockMvc().perform(get("/document/find?document_name=Modelo_1&part_number=1234&trait=60"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        JSONAssert.assertEquals(
+                jsonAsString("expected-one-document.json"),
+                getResultAsJson(result),
+                true);
+    }
 }
