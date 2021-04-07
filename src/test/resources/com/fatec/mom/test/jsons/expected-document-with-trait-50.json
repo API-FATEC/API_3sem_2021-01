@@ -1,0 +1,21 @@
+{
+  "id":5,
+  "createdDate":"Jun 23, 2021, 12:00:00 AM",
+  "name":"ABC",
+  "partNumber":1234,
+  "trait":50,
+  "blocks": [
+    {"id":4,"section":"0","number":1,"name":"Cover","code":1,"order":4},
+    {"id":25,"section":"S03","number":10,"name":"Copyright","code":1,"order":25},
+    {"id":1,"section":"0","number":0,"name":"Letter","code":50,"order":1},
+    {"id":12,"section":"2","number":4,"name":"Introduction","code":1,"order":12},
+    {"id":7,"section":"0","number":2,"name":"LEP","code":1,"order":7},
+    {"id":15,"section":"3","subSection":"1","number":3,"name":"Episodio 2","code":14,"order":15},
+    {"id":22,"section":"5","subSection":"6","number":3,"name":"Episodio 4","code":2,"order":22},
+    {"id":23,"section":"AP01","number":2,"name":"Appendix","code":1,"order":23},
+    {"id":24,"section":"S03","number":5,"name":"Mars","code":1,"order":24},
+    {"id":18,"section":"4","number":2,"name":"Episodio 3","code":2,"order":18},
+    {"id":10,"section":"0","number":3,"name":"TOC","code":1,"order":10},
+    {"id":20,"section":"5","subSection":"4","number":8,"name":"Episodio 1","code":12,"order":20}
+  ]
+}

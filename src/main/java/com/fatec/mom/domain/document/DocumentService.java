@@ -23,7 +23,12 @@ public class DocumentService {
     }
 
     @Transactional
-    public List<Document> findAllByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait) {
-        return documentRepository.findAllByNameAndPartNumberAndTrait(name, partNumber, trait);
+    public Document findByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait) {
+        return documentRepository.findByNameAndPartNumberAndTrait(name, partNumber, trait).orElse(null);
+    }
+
+    @Transactional
+    public List<Document> findAllByNameAndPartNumber(final String name, final Integer partNumber) {
+        return documentRepository.findAllByNameAndPartNumber(name, partNumber);
     }
 }

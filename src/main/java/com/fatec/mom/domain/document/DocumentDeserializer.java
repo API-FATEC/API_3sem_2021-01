@@ -1,6 +1,6 @@
 package com.fatec.mom.domain.document;
 
-import com.fatec.mom.domain.utils.ModelDeserializer;
+import com.fatec.mom.domain.utils.ConverterDeserializer;
 import lombok.AllArgsConstructor;
 
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @AllArgsConstructor
-public class DocumentDeserializer implements ModelDeserializer<Document> {
+public class DocumentDeserializer implements ConverterDeserializer<Document> {
 
     private final static String CELL_LIMITER = " - ";
 
@@ -18,12 +18,7 @@ public class DocumentDeserializer implements ModelDeserializer<Document> {
     private final Date referenceDocumentDate;
 
     @Override
-    public Document deserialize(List<String> rowCells, int order) {
-        return null;
-    }
-
-    @Override
-    public List<Document> deserializeAll(List<String> rowCells) {
+    public List<Document> deserialize(List<String> rowCells) {
         var documents = new LinkedList<Document>();
 
         for (int i = 6; i < rowCells.size(); ++i) {

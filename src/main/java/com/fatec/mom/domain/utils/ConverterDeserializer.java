@@ -10,9 +10,7 @@ import java.util.List;
  * @author Tobias Lino
  * @version v01 26/03/2021
  */
-public interface ModelDeserializer<T> {
+public interface ConverterDeserializer<T> {
 
-    T deserialize(List<String> rowCells, int order);
-
-    List<T> deserializeAll(List<String> rowCells);
+    List<T> deserialize(List<String> rowCells);
 }

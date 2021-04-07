@@ -1,6 +1,6 @@
 package com.fatec.mom.domain.block;
 
-import com.fatec.mom.domain.utils.ModelDeserializer;
+import com.fatec.mom.domain.utils.ConverterDeserializerWithOrder;
 
 import java.util.List;
 
@@ -11,12 +11,7 @@ import java.util.List;
  * @author Tobias Lino
  * @version v01 26/03/2021
  */
-public class BlockDeserializer implements ModelDeserializer<Block> {
-
-    @Override
-    public List<Block> deserializeAll(List<String> rowCells) {
-        return null;
-    }
+public class BlockDeserializer implements ConverterDeserializerWithOrder<Block> {
 
     @Override
     public Block deserialize(List<String> rowCells, int order) {

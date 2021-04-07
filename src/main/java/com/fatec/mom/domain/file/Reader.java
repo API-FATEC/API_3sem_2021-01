@@ -31,26 +31,6 @@ public class Reader {
 		return rowit;
 	}
 
-	//printa o arquivo todo. Cada linha do excel é separada por ------
-	//o arquivo das codelist está em "doc/Mockup FATEC/Codelist.xlsx"
-	public void printFile(String file) throws IOException {
-		Iterator<Row> r = read(file);
-		while(r.hasNext()) {
-			Row row = r.next();
-			Iterator<Cell> cellit = row.cellIterator();
-			while(cellit.hasNext()) {
-				Cell cell = cellit.next();
-				if (cell.toString().isBlank()) {
-					System.out.println("NULL");
-				}
-				else {
-					System.out.println(cell.toString());
-				}
-			}
-			System.out.println("\n-----\n");
-		}
-	}
-
 	//retorna uma lista com os dados de um linha do excel. A linha deve ser informada no index
 	//quando uma cell está vazia é adicionado NULL na lista
 	public ArrayList<String> getRow(String file, int index) throws IOException {

@@ -1,4 +1,3 @@
--- docs-blocks-tables.sql
 DROP TABLE IF EXISTS MOM_DOC_BLOCO CASCADE ;
 DROP TABLE IF EXISTS MOM_DOCUMENTO CASCADE ;
 DROP TABLE IF EXISTS MOM_BLOCO CASCADE ;
@@ -36,3 +35,9 @@ CREATE TABLE MOM_DOC_BLOCO (
                                DOC_COD NUMBER(10) CONSTRAINT FK_DOC_BLOCO_DOC_COD REFERENCES MOM_DOCUMENTO(DOC_COD),
                                BLC_COD NUMBER(10) CONSTRAINT FK_DOC_BLOCO_BLC_COD REFERENCES MOM_BLOCO(BLC_COD)
 );
+
+--comment: Inserts documents based on the model codelist
+INSERT INTO MOM_DOCUMENTO(doc_cod, doc_data_cria, doc_nome, doc_pn, doc_traco) VALUES (1, DATE'2021-06-23', 'Documento_Teste', 1111, 50);
+INSERT INTO MOM_DOCUMENTO(doc_cod, doc_data_cria, doc_nome, doc_pn, doc_traco) VALUES (2, DATE'2021-06-23', 'Documento_Teste', 1111, 55);
+INSERT INTO MOM_DOCUMENTO(doc_cod, doc_data_cria, doc_nome, doc_pn, doc_traco) VALUES (3, DATE'2021-06-23', 'Modelo_1', 1234, 60);
+INSERT INTO MOM_DOCUMENTO(doc_cod, doc_data_cria, doc_nome, doc_pn, doc_traco) VALUES (4, DATE'2021-06-23', 'Modelo_1', 1234, 40);
