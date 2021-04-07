@@ -15,7 +15,6 @@ import java.util.List;
  * @author Tobias Lino
  * @version v01 26/03/2021
  */
-@Data
 @Component
 public abstract class AbstractConverterFilter {
 

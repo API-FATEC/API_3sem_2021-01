@@ -30,7 +30,7 @@ public class DocumentConverterFilter extends AbstractConverterFilter {
 
         var firstLine = xlsFileReader.getRow(fileName, fileInfo.getActualIndex());
         var deserializer = new DocumentDeserializer(referenceDocument.getName(), referenceDocument.getPartNumber(), referenceDocument.getCreatedDate());
-        var convertedDocuments = deserializer.deserializeAll(firstLine);
+        var convertedDocuments = deserializer.deserialize(firstLine);
 
         fileInfo.setActualIndex(2);
         return doNextFilter(referenceDocument, fileInfo, convertedDocuments);

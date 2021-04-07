@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSpecificationExecutor<Document> {
@@ -18,5 +19,5 @@ public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSp
     List<Document> findAllByNameAndPartNumber(String name, Integer partNumber);
 
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = "blocks")
-    List<Document> findAllByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait);
+    Optional<Document> findByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait);
 }

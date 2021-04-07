@@ -21,7 +21,7 @@ public abstract class AbstractIntegrationTest {
         return JSONValue.parse(reader).toString();
     }
 
-    protected String getJsonResult(MvcResult result) throws UnsupportedEncodingException {
+    protected String getResultAsJson(MvcResult result) throws UnsupportedEncodingException {
         return result.getResponse().getContentAsString();
     }
 }

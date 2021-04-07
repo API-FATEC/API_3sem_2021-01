@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fatec</groupId>
 	<artifactId>mom</artifactId>
-	<version>0.1</version>
+	<version>0.1.2</version>
 	<packaging>jar</packaging>
 	<name>mom</name>
 	<description>Management of Operational Manuals - MOM</description>
@@ -18,6 +18,31 @@
 				<role>Architect</role>
 				<role>Scrum Master</role>
 				<role>Java Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Wallace Caetano</name>
+			<organization>Faculdade de Tecnologia de São José dos Campos FATEC Jessen Vidal</organization>
+			<email>wallace.santos13@fatec.sp.gov.br</email>
+			<roles>
+				<role>Product Owner</role>
+				<role>FullStack Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Devanir Ramos</name>
+			<organization>Faculdade de Tecnologia de São José dos Campos FATEC Jessen Vidal</organization>
+			<email>devanir.ramos@fatec.sp.gov.br</email>
+			<roles>
+				<role>Java Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Tairik Johnny</name>
+			<organization>Faculdade de Tecnologia de São José dos Campos FATEC Jessen Vidal</organization>
+			<email>tairikjohnny@gmail.com</email>
+			<roles>
+				<role>Frontend Developer</role>
 			</roles>
 		</developer>
 	</developers>
@@ -39,6 +64,11 @@
 		<resources.folder>src/main/resources</resources.folder>
 		<liquibase.scripts.folder>db-scripts</liquibase.scripts.folder>
 		<liquibase.changelog.file>db.changelog.xml</liquibase.changelog.file>
+
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.language>java</sonar.language>
 	</properties>
 
 	<dependencies>
@@ -50,6 +80,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -141,7 +175,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>${project.artifactId}.${version}</finalName>
+		<finalName>${project.artifactId}.${project.version}</finalName>
 		<outputDirectory>${project.basedir}/target</outputDirectory>
 		<plugins>
 			<plugin>
@@ -181,8 +215,8 @@
 					<promptOnNonLocalDatabase>true</promptOnNonLocalDatabase>
 					<driver>org.postgresql.Driver</driver>
 					<url>jdbc:postgresql://localhost:5432/mom</url>
-					<username>postgres</username>
-					<password>postgres</password>
+					<username>mom</username>
+					<password>mom</password>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -192,7 +226,52 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.6</version>
+				<configuration>
+					<destFile>${project.basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+					<dataFile>${project.basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+					<output>file</output>
+					<append>true</append>
+					<excludes>
+						<exclude>*MethodAccess</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<!-- select non-aggregate reports -->
+							<report>report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>

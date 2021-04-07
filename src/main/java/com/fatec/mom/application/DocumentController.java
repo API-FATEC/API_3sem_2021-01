@@ -2,6 +2,7 @@ package com.fatec.mom.application;
 
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.document.DocumentService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,11 +37,23 @@ public class DocumentController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<Document>> findDocuments(
+    public ResponseEntity<Document> findDocuments(
             @RequestParam("document_name") String documentName,
             @RequestParam("part_number") Integer partNumber,
             @RequestParam("trait") Integer trait) {
-        var docs = documentService.findAllByNameAndPartNumberAndTrait(documentName, partNumber, trait);
+        var doc = documentService.findByNameAndPartNumberAndTrait(documentName, partNumber, trait);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(doc);
+    }
+
+    @GetMapping("/find/all/by")
+    @ApiOperation(value = "Retorna todos os documentos e traços de acordo com o nome e partnumber")
+    public ResponseEntity<List<Document>> findAllByNameAndPartNumber(
+            @RequestParam("document_name") String documentName,
+            @RequestParam("part_number") Integer partNumber) {
+        var docs = documentService.findAllByNameAndPartNumber(documentName, partNumber);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
