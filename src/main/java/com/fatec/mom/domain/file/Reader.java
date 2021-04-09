@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class Reader {
 
 	@Value("${default-upload-path}")
@@ -21,22 +24,25 @@ public class Reader {
 	private int page = 0;
 
 	//metodo criado para ser usado nos outros metodos, reduzindo o código
-	public Iterator<Row> read(String file) throws IOException{
+	public Iterator<Row> read(String file) {
 		File excelfile = new File(String.format("%s/%s", defaultPath, file));
-		FileInputStream fis = new FileInputStream(excelfile);
-		XSSFWorkbook workbook = new XSSFWorkbook(fis);
-		XSSFSheet sheet = workbook.getSheetAt(page);
-		Iterator<Row> rowit = sheet.rowIterator();
-		workbook.close();
-		fis.close();
+		Iterator<Row> rowit = null;
+		try (FileInputStream fis = new FileInputStream(excelfile)) {
+			XSSFWorkbook workbook = new XSSFWorkbook(fis);
+			XSSFSheet sheet = workbook.getSheetAt(page);
+			workbook.close();
+			rowit = sheet.rowIterator();
+		} catch (IOException e) {
+			log.error("Não é possível ler o arquivo.", e);
+		}
 		return rowit;
 	}
 
 	//retorna uma lista com os dados de um linha do excel. A linha deve ser informada no index
 	//quando uma cell está vazia é adicionado NULL na lista
 	//a aba/página deve ser informada com setPage, por padrão sempre inicializa na página 0
-	public ArrayList<String> getRow(String file, int index) throws IOException {
-		ArrayList<String> lista = new ArrayList<String>();
+	public List<String> getRow(String file, int index) {
+		ArrayList<String> lista = new ArrayList<>();
 		Iterator<Row> r = read(file);
 		int counter = 0;
 		while(r.hasNext()) {
@@ -61,7 +67,7 @@ public class Reader {
 
 	//retorna o número de linhas existente na tabela do excel
 	//a aba/página deve ser informada com setPage, por padrão sempre inicializa na página 0
-	public int getSize(String file) throws IOException {
+	public int getSize(String file) {
 		Iterator<Row> r = read(file);
 		int counter = 0;
 		while (r.hasNext()) {
@@ -69,19 +75,5 @@ public class Reader {
 			counter += 1;
 		}
 		return counter;
-	}
-	
-	//retorna o número de abas/páginas do arquivo
-	public int getPages(String file) throws IOException{
-		File excelfile = new File(file);
-		FileInputStream fis = new FileInputStream(excelfile);
-		XSSFWorkbook workbook = new XSSFWorkbook(fis);
-		workbook.close();
-		return workbook.getNumberOfSheets();
-	}
-	
-	//modifica a aba/página que é lida
-	public void setPage(int page) {
-		this.page = page;
 	}
 }

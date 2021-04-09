@@ -14,7 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 import javax.transaction.Transactional;
 
 @IntegrationTest
-public class DocumentSearchTest extends AbstractIntegrationTest {
+class DocumentSearchTest extends AbstractIntegrationTest {
 
     @Autowired
     private DocumentRepository documentRepository;
@@ -22,7 +22,7 @@ public class DocumentSearchTest extends AbstractIntegrationTest {
     @Test
     @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql")
     @Transactional
-    public void givenSomeDocumentsMustPerformANonSpecificSearchByName() throws JSONException {
+    void givenSomeDocumentsMustPerformANonSpecificSearchByName() throws JSONException {
         var docName = "AB";
 
         var result = documentRepository.findAll(DocumentSpecification.searchByName(docName));
@@ -35,7 +35,7 @@ public class DocumentSearchTest extends AbstractIntegrationTest {
     @Test
     @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql")
     @Transactional
-    public void givenSomeDocumentsMustPerformANonSpecificSearchByPartNumber() throws JSONException {
+    void givenSomeDocumentsMustPerformANonSpecificSearchByPartNumber() throws JSONException {
         var partNumber = 1234;
 
         var result = documentRepository.findAll(DocumentSpecification.searchByPartNumber(partNumber));
@@ -48,7 +48,7 @@ public class DocumentSearchTest extends AbstractIntegrationTest {
     @Test
     @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql")
     @Transactional
-    public void givenSomeDocumentsMustPerformANonSpecificSearchByTrait() throws JSONException {
+    void givenSomeDocumentsMustPerformANonSpecificSearchByTrait() throws JSONException {
         var trait = 50;
 
         var result = documentRepository.findAll(DocumentSpecification.searchByTrait(trait));
@@ -61,7 +61,7 @@ public class DocumentSearchTest extends AbstractIntegrationTest {
     @Test
     @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql")
     @Transactional
-    public void searchAllDocuments() throws JSONException {
+    void searchAllDocuments() throws JSONException {
         var result = documentRepository.findAll();
         var json = new Gson().toJson(result);
 

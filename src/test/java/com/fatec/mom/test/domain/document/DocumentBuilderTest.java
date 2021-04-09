@@ -11,10 +11,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.util.Date;
 import java.util.HashSet;
 
-public class DocumentBuilderTest {
+class DocumentBuilderTest {
 
     @Test
-    public void constructDocumentUsingBuilder() {
+    void constructDocumentUsingBuilder() {
         var doc = Document.builder()
                 .id(1L)
                 .createdDate(new Date())

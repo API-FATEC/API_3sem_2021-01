@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @IntegrationTest
-public class DocumentRepositoryTest extends AbstractIntegrationTest {
+class DocumentRepositoryTest extends AbstractIntegrationTest {
 
     @Autowired
     private DocumentRepository documentRepository;
@@ -25,7 +25,7 @@ public class DocumentRepositoryTest extends AbstractIntegrationTest {
     @Test
     @Sql(value = "/com/fatec/mom/test/sql/docs-blocks-tables.sql")
     @Transactional
-    public void givenADocumentWithASetOfBlocksShouldPersistAllObjects() throws JSONException {
+    void givenADocumentWithASetOfBlocksShouldPersistAllObjects() throws JSONException {
         var document = sampleDocument();
 
         var savedDocument = documentRepository.save(document);
