@@ -60,6 +60,11 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 - Executar o comando `npm run serve` para rodar o sistema
 - Poderá ser acessado no endereço `localhost:5500`
 
+## Conteúdo importante
+- O vídeo abaixo é uma rápida explicação para os membros do grupo de como iniciar o desenvolvimento com o VueJS.
+
+https://www.loom.com/share/a4e8d3ec7faf48acb58b1ecd6a5e42bd
+
 ## Organização de Sprints
 
 ## Sprint 1
