@@ -11,13 +11,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @IntegrationTest
-public class FileInfoServiceTest {
+class FileInfoServiceTest {
 
     @Autowired
     private FileInfoService fileInfoService;
 
     @Test
-    public void buildFileIndoByCodelistFile() throws IOException {
+    void buildFileIndoByCodelistFile() throws IOException {
         var fileInfo = fileInfoService.build("Codelist.xlsx");
 
         assertThat(fileInfo.getActualIndex(), equalTo(1));

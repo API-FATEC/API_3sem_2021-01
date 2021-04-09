@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 @IntegrationTest
-public class SimpleIntegrationTest extends AbstractIntegrationTest {
+class SimpleIntegrationTest extends AbstractIntegrationTest {
 
     @Test
-    public void givenAJsonObjectItShouldReadTheFileAndValidate() throws JSONException {
+    void givenAJsonObjectItShouldReadTheFileAndValidate() throws JSONException {
         final String actualResult = simpleJsonObject();
 
         JSONAssert.assertEquals(jsonAsString("expected-example-entity.json"), actualResult, true);
