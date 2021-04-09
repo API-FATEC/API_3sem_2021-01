@@ -32,13 +32,11 @@ export default {
             const params = new URLSearchParams();
             params.append("document_name", this.name);
             params.append("part_number", this.partNumber);
-            params.append("trait", this.trait);
 
             http.get('/document/find', {
                 params: {
                     document_name: this.name,
                     part_number: this.partNumber,
-                    trait: this.trait
                 }
             }).then(response => {
                 console.log(response.data)

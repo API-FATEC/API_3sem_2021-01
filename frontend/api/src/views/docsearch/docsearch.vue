@@ -15,10 +15,17 @@
                                 <v-row class="mb-6" no-gutters>
                                     <v-col>
                                         <v-form ref="form" v-model="valid" lazy-validation>
-                                            <v-text-field v-model="name" placeholder="Documento"></v-text-field>
-                                            <v-text-field v-model="partNumber" placeholder="Part Number"></v-text-field>
-                                            <v-text-field v-model="trait" placeholder="Traço"></v-text-field>
-                                            <v-btn color="primary" @click="searchDoc" id="botao-buscar">Buscar</v-btn>
+                                            <v-row>    
+                                                <v-col cols="12" md="5">
+                                                    <v-text-field v-model="name" placeholder="Documento"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" md="5">
+                                                    <v-text-field v-model="partNumber" placeholder="Part Number"></v-text-field>
+                                                </v-col>
+                                                <v-col cols="12" md="2">
+                                                <v-btn color="primary" @click="searchDoc" id="botao-buscar">Buscar</v-btn>
+                                                </v-col>
+                                            </v-row>
                                         </v-form>
                                         <br>
                                         <v-card>
@@ -30,6 +37,8 @@
                                                     <th class="text-left">Bloco</th>
                                                     <th class="text-left">Nome do bloco</th>
                                                     <th class="text-left">Código</th>
+                                                    <th class="text-left">Remarks</th>
+                                                    <th class="text-left">Traços</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

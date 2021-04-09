@@ -215,8 +215,8 @@
 					<promptOnNonLocalDatabase>true</promptOnNonLocalDatabase>
 					<driver>org.postgresql.Driver</driver>
 					<url>jdbc:postgresql://localhost:5432/mom</url>
-					<username>mom</username>
-					<password>mom</password>
+					<username>postgres</username>
+					<password>postgres</password>
 				</configuration>
 				<dependencies>
 					<dependency>
