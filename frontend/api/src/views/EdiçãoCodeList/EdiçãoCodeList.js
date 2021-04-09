@@ -1,5 +1,6 @@
 export default {
     data: () => ({
+        // Formulario
         valid: true,
         name: '',
         nameCounter: 30,
@@ -14,21 +15,22 @@ export default {
             v => (v && v.length <= 10) || 'O Part Number deve possuir no máximo 10 caracteres!',
             //v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
+        // Tabela
         dialog: false,
         dialogDelete: false,
         headers: [
             {
-                text: 'Dessert (100g serving)',
-                align: 'start',
-                sortable: false,
-                value: 'name',
+              text: 'Dessert (100g serving)',
+              align: 'start',
+              sortable: false,
+              value: 'name',
             },
             { text: 'Calories', value: 'calories' },
             { text: 'Fat (g)', value: 'fat' },
             { text: 'Carbs (g)', value: 'carbs' },
-            { text: 'Protein (g)', value: 'protein' },
-            { text: 'Actions', value: 'actions', sortable: false },
+            { text: 'Protein (g)', value: 'protein' }
         ],
+        teste: [{ text: 'Actions', value: 'actions', sortable: false }],
         desserts: [],
         editedIndex: -1,
         editedItem: {
@@ -67,7 +69,7 @@ export default {
     },
 
     methods: {
-
+        // Formulario
         validate() {
             this.$refs.form.validate()
         },
@@ -75,7 +77,14 @@ export default {
         reset() {
             this.$refs.form.reset()
         },
-        
+
+        // Tabela
+        novaColuna(){
+            this.headers.push({text: "Size", value: "size"})
+            this.desserts=this.desserts.map(item => {
+              return {...item,size:0}
+            })
+          },
         initialize() {
             this.desserts = [
                 {
@@ -140,6 +149,55 @@ export default {
                     fat: 25.0,
                     carbs: 51,
                     protein: 4.9,
+                },
+                {
+                    name: 'KitKat',
+                    calories: 518,
+                    fat: 26.0,
+                    carbs: 65,
+                    protein: 7,
+                },
+                {
+                    name: 'KitKat',
+                    calories: 518,
+                    fat: 26.0,
+                    carbs: 65,
+                    protein: 7,
+                },
+                {
+                    name: 'KitKat',
+                    calories: 518,
+                    fat: 26.0,
+                    carbs: 65,
+                    protein: 7,
+                },
+                {
+                    name: 'KitKat',
+                    calories: 518,
+                    fat: 26.0,
+                    carbs: 65,
+                    protein: 7,
+                },
+                {
+                    name: 'KitKat',
+                    calories: 518,
+                    fat: 26.0,
+                    carbs: 65,
+                    protein: 7,
+                },
+                {
+                    name: 'KitKat',
+                    calories: 518,
+                    fat: 26.0,
+                    carbs: 65,
+                    protein: 7,
+                },
+                {
+                    name: 'KitKat',
+                    calories: 518,
+                    fat: 26.0,
+                    carbs: 65,
+                    protein: 7,
                 },
                 {
                     name: 'KitKat',
