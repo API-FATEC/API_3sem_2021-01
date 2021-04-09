@@ -16,13 +16,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @IntegrationTest
-public class FileUploadServiceTest {
+class FileUploadServiceTest {
 
     @Autowired
     private FileUploadService fileUploadService;
 
     @Test
-    public void givenAMultipartFileItMustBeSavedInsideTheFolderDefinedByTheApplication() throws IOException {
+    void givenAMultipartFileItMustBeSavedInsideTheFolderDefinedByTheApplication() throws IOException {
         var file = new MockMultipartFile(
                 "ABC-1234-00-00c50",
                 "ABC-1234-00-00c50.pdf",

@@ -15,10 +15,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class DocumentTest {
+class DocumentTest {
 
     @Test
-    public void testAllGeneratedMethods() throws ParseException {
+    void testAllGeneratedMethods() throws ParseException {
         var blocks = new HashSet<Block>();
         var doc1 = new Document();
         var doc2 = simpleDocument(blocks);

@@ -6,10 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -54,6 +51,16 @@ public class DocumentController {
             @RequestParam("document_name") String documentName,
             @RequestParam("part_number") Integer partNumber) {
         var docs = documentService.findAllByNameAndPartNumber(documentName, partNumber);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(docs);
+    }
+
+    @PutMapping("/update/all")
+    @ApiOperation(value = "Atualiza todos os documentos de uma lista, bem como todos os seus blocos")
+    public ResponseEntity<List<Document>> updateAllDocs(@RequestBody final List<Document> documents) {
+        var docs = documentService.saveAll(documents);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
