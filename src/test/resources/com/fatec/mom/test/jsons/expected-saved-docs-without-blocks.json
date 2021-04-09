@@ -1,0 +1,26 @@
+[
+  {
+    "id":1,
+    "createdDate":"Jun 23, 2021, 12:00:00 AM",
+    "name":"test",
+    "partNumber":123,
+    "trait":50,
+    "blocks": []
+  },
+  {
+    "id":2,
+    "createdDate":"Jun 23, 2021, 12:00:00 AM",
+    "name":"test",
+    "partNumber":123,
+    "trait":55,
+    "blocks": []
+  },
+  {
+    "id":3,
+    "createdDate":"Jun 23, 2021, 12:00:00 AM",
+    "name":"test",
+    "partNumber":123,
+    "trait":60,
+    "blocks": []
+  }
+]
