@@ -103,13 +103,13 @@
                                   </v-row>
                                   <v-spacer></v-spacer>
                                 </template>
+                                <!--pop up do botão Novo Bloco-->
                                 <v-card>
                                   <v-card-title>
                                     <span class="headline">{{
                                       formTitle
                                     }}</span>
                                   </v-card-title>
-
                                   <v-card-text>
                                     <v-container>
                                       <v-row>
@@ -149,6 +149,51 @@
                                     </v-btn>
                                   </v-card-actions>
                                 </v-card>
+                                <!--pop up do botão Novo Traço-->
+                                <!--
+                                <v-card>
+                                  <v-card-title>
+                                    <span class="headline">{{
+                                      formTitle1
+                                    }}</span>
+                                  </v-card-title>
+
+                                  <v-card-text>
+                                    <v-container>
+                                      <v-row>
+                                        <v-col
+                                          cols="12"
+                                          sm="6"
+                                          md="4"
+                                        >
+                                          <v-text-field
+                                            v-model="editedTraco.nomeTraco"
+                                            label="Nome do Traço"
+                                          ></v-text-field>
+                                        </v-col>
+                                      </v-row>
+                                    </v-container>
+                                  </v-card-text>
+
+                                  <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn
+                                      color="blue darken-1"
+                                      text
+                                      @click="close"
+                                    >
+                                      Cancelar
+                                    </v-btn>
+                                    <v-btn
+                                      color="blue darken-1"
+                                      text
+                                      @click="save"
+                                    >
+                                      Salvar
+                                    </v-btn>
+                                  </v-card-actions>
+                                </v-card>
+                                -->
                               </v-dialog>
                               <v-dialog
                                 v-model="dialogDelete"
@@ -156,7 +201,8 @@
                               >
                                 <v-card>
                                   <v-card-title class="headline"
-                                    >Você tem certeza que deseja excluir o item?</v-card-title
+                                    >Você tem certeza que deseja excluir o
+                                    item?</v-card-title
                                   >
                                   <v-card-actions>
                                     <v-spacer></v-spacer>
