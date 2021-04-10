@@ -50,12 +50,18 @@ export default {
             code: '',
             remarks: '',
         },
+        //editedTraco: {
+        //    nomeTraco: ''
+        //},
     }),
 
     computed: {
         formTitle() {
             return this.editedIndex === -1 ? 'Novo Bloco' : 'Editar Bloco'
         },
+        //formTitle1() {
+        //    return this.editedIndex === -1 ? 'Novo Traço' : 'Editar Traço'
+        //},
     },
 
     watch: {
@@ -83,11 +89,11 @@ export default {
 
         // Tabela
         novaColuna(){
-            this.headers.push({text: "Size", value: "size"})
+            this.headers.push({text: "Nome Traço", value: "novo_traco"})
             this.desserts=this.desserts.map(item => {
-              return {...item,size:0}
+              return {...item,novo_traco:0}
             })
-          },
+        },
         initialize() {
             this.desserts = [
                 {
