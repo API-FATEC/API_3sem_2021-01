@@ -18,6 +18,7 @@ export default {
         // Tabela
         dialog: false,
         dialogDelete: false,
+        dialogNovoTraco: false,
         headers: [
             {
               text: 'Nº SEÇÃO',
@@ -33,6 +34,7 @@ export default {
         ],
         teste: [{ text: 'Actions', value: 'actions', sortable: false }],
         desserts: [],
+        traco: [],
         editedIndex: -1,
         editedItem: {
             numero_secao: '',
@@ -50,22 +52,30 @@ export default {
             code: '',
             remarks: '',
         },
-        //editedTraco: {
-        //    nomeTraco: ''
-        //},
+        editedTraco: {
+            nomeTraco: '',
+            valorDefault: '',
+        },
+        tracoRules: [
+            v => !!v || 'O Nome do traço é obrigatório!',
+            v => (v && v.length <= 30) || 'O Nome deve possuir no máximo 30 caracteres!',
+        ],
     }),
 
     computed: {
         formTitle() {
             return this.editedIndex === -1 ? 'Novo Bloco' : 'Editar Bloco'
         },
-        //formTitle1() {
-        //    return this.editedIndex === -1 ? 'Novo Traço' : 'Editar Traço'
-        //},
+        formTitle1() {
+            return this.editedIndex === -1 ? 'Novo Traço' : 'Editar Traço'
+        },
     },
 
     watch: {
         dialog(val) {
+            val || this.close()
+        },
+        dialogTraco(val) {
             val || this.close()
         },
         dialogDelete(val) {
@@ -89,10 +99,20 @@ export default {
 
         // Tabela
         novaColuna(){
-            this.headers.push({text: "Nome Traço", value: "novo_traco"})
+            if(this.editedTraco.nomeTraco.length === 0){
+                //this.closeTraco()
+                return
+            }
+            var nomeValue = this.editedTraco.nomeTraco.valueOf()
+            nomeValue = nomeValue.toLowerCase()
+            nomeValue = nomeValue.replaceAll(' ', '_')
+            this.headers.push({text: this.editedTraco.nomeTraco, value: nomeValue})
             this.desserts=this.desserts.map(item => {
-              return {...item,novo_traco:0}
+              var objeto = {}
+              objeto[nomeValue] = 0
+              return {...item,...objeto}
             })
+            this.closeTraco()
         },
         initialize() {
             this.desserts = [
@@ -332,6 +352,14 @@ export default {
             })
         },
 
+        closeTraco() {
+            this.dialogNovoTraco = false
+            this.$nextTick(() => {
+                this.editedTraco.nomeTraco = ''
+                this.editedTraco.valorDefault = ''
+            })
+        },
+
         closeDelete() {
             this.dialogDelete = false
             this.$nextTick(() => {
@@ -348,5 +376,9 @@ export default {
             }
             this.close()
         },
+
+        sendFile(){
+
+        }
     },
 }

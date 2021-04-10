@@ -3,7 +3,7 @@
     <v-col>
       <v-row justify="center" class="pa-2">
         <div id="titulo">
-          <titulo class="display-1">Edição CodeList</titulo>
+          <h1 class="display-1">Edição CodeList</h1>
         </div>
       </v-row>
       <v-row class="pa-4">
@@ -77,30 +77,15 @@
                               <v-spacer></v-spacer>
                               <v-dialog v-model="dialog" max-width="500px">
                                 <template v-slot:activator="{ on, attrs }">
-                                  <v-row>
-                                    <v-col></v-col>
-                                    <v-col>
-                                      <v-btn
-                                        color="primary"
-                                        dark
-                                        class="mb-2"
-                                        @click="novaColuna"
-                                      >
-                                        Novo Traço
-                                      </v-btn>
-                                    </v-col>
-                                    <v-col>
-                                      <v-btn
-                                        color="primary"
-                                        dark
-                                        class="mb-2"
-                                        v-bind="attrs"
-                                        v-on="on"
-                                      >
-                                        Novo Bloco
-                                      </v-btn>
-                                    </v-col>
-                                  </v-row>
+                                  <v-btn
+                                    color="primary"
+                                    dark
+                                    class="mb-2"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                  >
+                                    Novo Bloco
+                                  </v-btn>
                                   <v-spacer></v-spacer>
                                 </template>
                                 <!--pop up do botão Novo Bloco-->
@@ -130,7 +115,6 @@
                                       </v-row>
                                     </v-container>
                                   </v-card-text>
-
                                   <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn
@@ -149,51 +133,67 @@
                                     </v-btn>
                                   </v-card-actions>
                                 </v-card>
-                                <!--pop up do botão Novo Traço-->
-                                <!--
+                              </v-dialog>
+                              <!--Dialog Novo Traço-->
+                              <v-dialog
+                                v-model="dialogNovoTraco"
+                                max-width="400px"
+                              >
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-row>
+                                    <v-col></v-col>
+                                    <v-col>
+                                      <v-btn
+                                        color="primary"
+                                        dark
+                                        class="mb-2"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                      >
+                                        Novo Traço
+                                      </v-btn>
+                                    </v-col>
+                                  </v-row>
+                                  <v-spacer></v-spacer>
+                                </template>
                                 <v-card>
                                   <v-card-title>
                                     <span class="headline">{{
                                       formTitle1
                                     }}</span>
                                   </v-card-title>
-
                                   <v-card-text>
                                     <v-container>
                                       <v-row>
-                                        <v-col
-                                          cols="12"
-                                          sm="6"
-                                          md="4"
-                                        >
+                                        <v-col cols="12" sm="6" md="12">
                                           <v-text-field
                                             v-model="editedTraco.nomeTraco"
-                                            label="Nome do Traço"
+                                            label="Nome Traço"
+                                            :rules="tracoRules"
+                                            required
                                           ></v-text-field>
                                         </v-col>
                                       </v-row>
                                     </v-container>
                                   </v-card-text>
-
                                   <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn
                                       color="blue darken-1"
                                       text
-                                      @click="close"
+                                      @click="closeTraco"
                                     >
                                       Cancelar
                                     </v-btn>
                                     <v-btn
                                       color="blue darken-1"
                                       text
-                                      @click="save"
+                                      @click="novaColuna"
                                     >
                                       Salvar
                                     </v-btn>
                                   </v-card-actions>
                                 </v-card>
-                                -->
                               </v-dialog>
                               <v-dialog
                                 v-model="dialogDelete"
