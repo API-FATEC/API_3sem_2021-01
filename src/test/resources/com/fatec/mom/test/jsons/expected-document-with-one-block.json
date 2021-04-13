@@ -1,0 +1,8 @@
+{
+  "id":4,
+  "createdDate":"2021-06-23T03:00:00.000+00:00",
+  "name":"Modelo_1",
+  "partNumber":1234,
+  "trait":40,
+  "blocks":[{"id":null,"section":"00","subSection":"","number":0,"name":"Letter","code":40,"order":0}]
+}

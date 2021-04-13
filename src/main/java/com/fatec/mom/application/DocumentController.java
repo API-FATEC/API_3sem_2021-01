@@ -66,4 +66,21 @@ public class DocumentController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(docs);
     }
+
+    @PutMapping("/update/add/block")
+    @ApiOperation(value = "Adiciona um bloco novo a um documento existente")
+    public ResponseEntity<Document> updateAddBlock(
+            @RequestParam("block_secao") String secao,
+            @RequestParam("block_sub_secao") String subSecao,
+            @RequestParam("block_numero") int numero,
+            @RequestParam("block_nome") String nome,
+            @RequestParam("block_codigo") int codigo,
+            @RequestParam("block_order") int order,
+            @RequestBody Document doc){
+        var document = documentService.addBlock(doc, secao, subSecao, numero, nome, codigo, order);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(document);
+    }
 }

@@ -109,4 +109,25 @@ class DocumentControllerTest extends AbstractControllerTest {
         blocks.add(Block.builder().section("0").number(10).name("testeBloco1").code(50).order(1).build());
         documentsToEdit.get(0).setBlocks(blocks);
     }
+
+    @Test
+    @Sql(value = "/com/fatec/mom/test/sql/insert-four-documents.sql",
+            config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
+    void shouldAddNewBlock() throws Exception {
+        Document document = documentService.findByNameAndPartNumberAndTrait("Modelo_1", 1234, 40);
+        var result = getMockMvc().perform(
+                put("/document/update/add/block?block_secao=00&block_sub_secao=&block_numero=00&block_nome=Letter&block_codigo=40&block_order=0", document)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(document))
+        )
+                .andExpect(status().isOk())
+                .andReturn();
+
+        System.out.println(getResultAsJson(result));
+
+        JSONAssert.assertEquals(
+                jsonAsString("expected-document-with-one-block.json"),
+                getResultAsJson(result),
+                true);
+    }
 }
