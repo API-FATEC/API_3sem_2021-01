@@ -2,7 +2,6 @@ package com.fatec.mom.domain.codelist.converter.filters;
 
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.file.FileInfo;
-import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

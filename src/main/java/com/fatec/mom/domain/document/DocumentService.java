@@ -18,11 +18,6 @@ public class DocumentService {
     }
 
     @Transactional
-    public List<Document> saveAll(Iterable<Document> documents) {
-        return documentRepository.saveAll(documents);
-    }
-
-    @Transactional
     public Document findByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait) {
         return documentRepository.findByNameAndPartNumberAndTrait(name, partNumber, trait).orElse(null);
     }
@@ -30,5 +25,10 @@ public class DocumentService {
     @Transactional
     public List<Document> findAllByNameAndPartNumber(final String name, final Integer partNumber) {
         return documentRepository.findAllByNameAndPartNumber(name, partNumber);
+    }
+
+    @Transactional
+    public List<Document> saveAll(final List<Document> documents) {
+        return documentRepository.saveAll(documents);
     }
 }

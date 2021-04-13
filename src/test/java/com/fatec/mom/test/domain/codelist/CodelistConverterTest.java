@@ -21,7 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 @IntegrationTest
-public class CodelistConverterTest extends AbstractIntegrationTest {
+class CodelistConverterTest extends AbstractIntegrationTest {
 
     @Autowired
     private CodelistConverterService converterService;
@@ -34,7 +34,7 @@ public class CodelistConverterTest extends AbstractIntegrationTest {
 
     @Test
     @Sql(value = "/com/fatec/mom/test/sql/docs-blocks-tables.sql")
-    public void convertAllCodelistFileDataIntoDocuments() throws IOException, JSONException, ParseException {
+    void convertAllCodelistFileDataIntoDocuments() throws IOException, JSONException, ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         var doc = Document.builder()
                 .name("ABC")
