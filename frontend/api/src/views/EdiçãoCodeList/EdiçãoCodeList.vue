@@ -16,37 +16,37 @@
                     <v-row>
                       <v-col>
                         <v-form ref="form" v-model="valid" lazy-validation>
-                          <v-text-field
-                            v-model="name"
-                            :counter="nameCounter"
-                            :rules="nameRules"
-                            label="Nome do documento"
-                            required
-                          ></v-text-field>
+                          <v-autocomplete
+                              v-model="name"
+                              :items="findedDocs"
+                              filled
+                              label="Nome do documento"
+                              :search-input="findDocs"
+                          ></v-autocomplete>
 
-                          <v-text-field
-                            v-model="partNumber"
-                            :counter="partNumberCounter"
-                            :rules="partNumberRuler"
-                            label="Part Number"
-                            required
-                          ></v-text-field>
+                          <v-select
+                              v-model="partNumber"
+                              :items="findedPartNumbers"
+                              filled
+                              label="Part Number"
+                              @change="findedPartNumbers" >
+                          </v-select>
 
                           <v-btn
-                            :disabled="!valid"
-                            color="primary"
-                            class="mr-4"
-                            @click="sendFile"
-                            id="botao-enviar"
+                              :disabled="!valid"
+                              color="primary"
+                              class="mr-4"
+                              @click="sendFile"
+                              id="botao-enviar"
                           >
                             Enviar
                           </v-btn>
 
                           <v-btn
-                            color="error"
-                            class="mr-4"
-                            @click="reset"
-                            id="botao-limpar"
+                              color="error"
+                              class="mr-4"
+                              @click="reset"
+                              id="botao-limpar"
                           >
                             Limpar Formulário
                           </v-btn>

@@ -1,3 +1,7 @@
+import { http } from "../../services/config";
+import { Block } from "../../scripts/domain/Block"
+import {DocumentsEndpoints} from "../../model/endpoints/EndpointsMapping";
+
 export default {
     data: () => ({
         // Formulario
@@ -21,14 +25,14 @@ export default {
         dialogNovoTraco: false,
         headers: [
             {
-              text: 'Nº SEÇÃO',
-              align: 'start',
-              sortable: false,
-              value: 'numero_secao',
+                text: 'Nº SEÇÃO',
+                align: 'start',
+                sortable: false,
+                value: 'section',
             },
-            { text: 'Nº SUB SEÇÃO', value: 'numero_sub_secao' },
-            { text: 'Nº BLOCK', value: 'numero_block' },
-            { text: 'BLOCK NAME', value: 'block_name' },
+            { text: 'Nº SUB SEÇÃO', value: 'subSection' },
+            { text: 'Nº BLOCK', value: 'number' },
+            { text: 'BLOCK NAME', value: 'name' },
             { text: 'CODE', value: 'code' },
             { text: 'Remarks', value: 'remarks' }
         ],
@@ -60,6 +64,8 @@ export default {
             v => !!v || 'O Nome do traço é obrigatório!',
             v => (v && v.length <= 30) || 'O Nome deve possuir no máximo 30 caracteres!',
         ],
+        findedPartNumbers: [],
+        findedDocs: []
     }),
 
     computed: {
@@ -69,6 +75,9 @@ export default {
         formTitle1() {
             return this.editedIndex === -1 ? 'Novo Traço' : 'Editar Traço'
         },
+        findDocs: function () {
+            this.searchDocs();
+        }
     },
 
     watch: {
@@ -81,6 +90,9 @@ export default {
         dialogDelete(val) {
             val || this.closeDelete()
         },
+        name: function (docName) {
+            this.searchPartNumbers(docName);
+        }
     },
 
     created() {
@@ -108,9 +120,9 @@ export default {
             nomeValue = nomeValue.replaceAll(' ', '_')
             this.headers.push({text: this.editedTraco.nomeTraco, value: nomeValue})
             this.desserts=this.desserts.map(item => {
-              var objeto = {}
-              objeto[nomeValue] = 0
-              return {...item,...objeto}
+                var objeto = {}
+                objeto[nomeValue] = 0
+                return {...item,...objeto}
             })
             this.closeTraco()
         },
@@ -378,7 +390,48 @@ export default {
         },
 
         sendFile(){
+            this.validate();
 
+            http.get(DocumentsEndpoints.FIND_ALL_BY, {
+                params: {
+                    document_name: this.name,
+                    part_number: this.partNumber
+                }
+            }).then(response => {
+                console.log(response.data);
+                this.desserts = this.getAllBlocksFromResponse(response);
+                console.log(this.desserts);
+            }).catch(error => console.log(error));
+        },
+
+        getAllBlocksFromResponse(response) {
+            const blocks = [];
+            response.data.forEach(function (doc) {
+                doc.blocks.forEach(function (block) {
+                    blocks.push(block);
+                })
+            });
+            console.log(blocks);
+            return blocks.sort(Block.compare)
+        },
+
+        searchPartNumbers(documentName) {
+            http.get(DocumentsEndpoints.FIND_PART_NUMBER_BY_NAME, {
+                params: {
+                    document_name: documentName
+                }
+            }).then(response => {
+                console.log(response.data);
+                this.findedPartNumbers = response.data;
+            }).catch(error => console.log(error));
+        },
+
+        searchDocs() {
+            http.get(DocumentsEndpoints.FIND_ALL_DOCS)
+                .then(response => {
+                    console.log(response.data);
+                    this.findedDocs = response.data;
+                }).catch(error => console.log(error));
         }
     },
 }

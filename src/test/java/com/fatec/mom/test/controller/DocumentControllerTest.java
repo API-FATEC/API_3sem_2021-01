@@ -109,4 +109,18 @@ class DocumentControllerTest extends AbstractControllerTest {
         blocks.add(Block.builder().section("0").number(10).name("testeBloco1").code(50).order(1).build());
         documentsToEdit.get(0).setBlocks(blocks);
     }
+
+    @Test
+    @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql",
+            config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
+    void givenADocumentNameShouldReturnAllPartNumbers() throws Exception {
+        var result = getMockMvc().perform(get("/document/find/part_number/by/name?document_name=ABC"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        JSONAssert.assertEquals(
+                jsonAsString("expected-part-numbers.json"),
+                getResultAsJson(result),
+                true);
+    }
 }

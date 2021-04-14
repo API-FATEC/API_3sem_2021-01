@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class DocumentService {
@@ -30,5 +32,17 @@ public class DocumentService {
     @Transactional
     public List<Document> saveAll(final List<Document> documents) {
         return documentRepository.saveAll(documents);
+    }
+
+    @Transactional
+    public Set<Integer> findAllPartNumbersByName(final String name) {
+        var docs = documentRepository.findAll(DocumentSpecification.searchByName(name));
+        return docs.stream().map(Document::getPartNumber).collect(Collectors.toSet());
+    }
+
+    @Transactional
+    public Set<String> findAllNames() {
+        var docs = documentRepository.findAll();
+        return docs.stream().map(Document::getName).collect(Collectors.toSet());
     }
 }

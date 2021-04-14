@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * A classe <code>DocumentController</code> é responsável por fornecer uma api para realização de buscas em documentos
@@ -65,5 +66,24 @@ public class DocumentController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(docs);
+    }
+
+    @GetMapping("/find/part_number/by/name")
+    public ResponseEntity<Set<Integer>> findAllPartNumberByDocumentName(
+            @RequestParam("document_name") String documentName) {
+        var docs = documentService.findAllPartNumbersByName(documentName);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(docs);
+    }
+
+    @GetMapping("find/name/all")
+    public ResponseEntity<Set<String>> findAllNames() {
+        var names = documentService.findAllNames();
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(names);
     }
 }
