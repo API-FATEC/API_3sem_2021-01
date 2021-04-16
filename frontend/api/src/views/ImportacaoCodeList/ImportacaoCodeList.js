@@ -18,7 +18,7 @@ export default {
             //v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
         file: [],
-
+        files: [],
         response: [],
     }),
 
@@ -45,6 +45,26 @@ export default {
                     this.reset();
                 }
             );
+        },
+
+        handleFileDrop(e) {
+            let droppedFiles = e.dataTransfer.files;
+            if (!droppedFiles) return;
+            ([...droppedFiles]).forEach(f => {
+                this.files.push(f);
+            });
+        },
+
+        handleFileInput(e) {
+            let files = e.target.files
+            if (!files) return;
+            ([...files]).forEach(f => {
+                this.files.push(f);
+            });
+        },
+
+        removeFile(fileKey) {
+            this.files.splice(fileKey, 1)
         },
     },
 }
