@@ -36,6 +36,6 @@ public class DocumentService {
     @Transactional
     public Document addBlock(Document document, String secao, String subSecao, int numero, String nome, int codigo, int order){
         document.addBlock(Block.builder().section(secao).subSection(subSecao).number(numero).name(nome).code(codigo).order(order).build());
-        return document;
+        return documentRepository.save(document);
     }
 }

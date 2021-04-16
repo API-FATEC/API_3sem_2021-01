@@ -67,7 +67,7 @@ public class DocumentController {
                 .body(docs);
     }
 
-    @PutMapping("/update/add/block")
+    @PostMapping("/update/add/block")
     @ApiOperation(value = "Adiciona um bloco novo a um documento existente")
     public ResponseEntity<Document> updateAddBlock(
             @RequestParam("block_secao") String secao,

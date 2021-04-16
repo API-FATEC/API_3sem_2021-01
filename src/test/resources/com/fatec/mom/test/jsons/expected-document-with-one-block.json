@@ -4,5 +4,5 @@
   "name":"Modelo_1",
   "partNumber":1234,
   "trait":40,
-  "blocks":[{"id":null,"section":"00","subSection":"","number":0,"name":"Letter","code":40,"order":0}]
+  "blocks":[{"id":1,"section":"00","subSection":"","number":0,"name":"Letter","code":40,"order":0}]
 }

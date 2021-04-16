@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -116,14 +117,12 @@ class DocumentControllerTest extends AbstractControllerTest {
     void shouldAddNewBlock() throws Exception {
         Document document = documentService.findByNameAndPartNumberAndTrait("Modelo_1", 1234, 40);
         var result = getMockMvc().perform(
-                put("/document/update/add/block?block_secao=00&block_sub_secao=&block_numero=00&block_nome=Letter&block_codigo=40&block_order=0", document)
+                post("/document/update/add/block?block_secao=00&block_sub_secao=&block_numero=00&block_nome=Letter&block_codigo=40&block_order=0", document)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(document))
         )
                 .andExpect(status().isOk())
                 .andReturn();
-
-        System.out.println(getResultAsJson(result));
 
         JSONAssert.assertEquals(
                 jsonAsString("expected-document-with-one-block.json"),
