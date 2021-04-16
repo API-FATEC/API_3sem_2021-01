@@ -28,15 +28,14 @@
                               v-model="partNumber"
                               :items="findedPartNumbers"
                               filled
-                              label="Part Number"
-                              @change="findedPartNumbers" >
+                              label="Part Number" >
                           </v-select>
 
                           <v-btn
                               :disabled="!valid"
                               color="primary"
                               class="mr-4"
-                              @click="sendFile"
+                              @click="getCodelist"
                               id="botao-enviar"
                           >
                             Enviar

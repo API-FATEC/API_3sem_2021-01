@@ -1,6 +1,8 @@
 import { http } from "../../services/config";
-import { Block } from "../../scripts/domain/Block"
-import {DocumentsEndpoints} from "../../model/endpoints/EndpointsMapping";
+// import { Block } from "../../scripts/domain/Block"
+import {CodelistEndpoints, DocumentsEndpoints} from "../../model/endpoints/EndpointsMapping";
+// import { Document } from "../../scripts/domain/Document";
+import {CodelistFactory} from "../../scripts/domain/Codelist";
 
 export default {
     data: () => ({
@@ -33,8 +35,7 @@ export default {
             { text: 'Nº SUB SEÇÃO', value: 'subSection' },
             { text: 'Nº BLOCK', value: 'number' },
             { text: 'BLOCK NAME', value: 'name' },
-            { text: 'CODE', value: 'code' },
-            { text: 'Remarks', value: 'remarks' }
+            { text: 'CODE', value: 'code' }
         ],
         teste: [{ text: 'Actions', value: 'actions', sortable: false }],
         desserts: [],
@@ -65,8 +66,14 @@ export default {
             v => (v && v.length <= 30) || 'O Nome deve possuir no máximo 30 caracteres!',
         ],
         findedPartNumbers: [],
-        findedDocs: []
+        findedDocs: [],
+        allDocumentsResponse: [],
+        allBlocksResponse: []
     }),
+
+    created() {
+        this.initialize();
+    },
 
     computed: {
         formTitle() {
@@ -95,10 +102,6 @@ export default {
         }
     },
 
-    created() {
-        this.initialize()
-    },
-
     methods: {
         // Formulario
         validate() {
@@ -107,6 +110,10 @@ export default {
 
         reset() {
             this.$refs.form.reset()
+        },
+
+        initialize() {
+            this.desserts = [];
         },
 
         // Tabela
@@ -125,218 +132,6 @@ export default {
                 return {...item,...objeto}
             })
             this.closeTraco()
-        },
-        initialize() {
-            this.desserts = [
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '00',
-                    block_name: 'Letter',
-                    code: '50',
-                    remarks: '-50',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '00',
-                    block_name: 'Letter',
-                    code: '55',
-                    remarks: '-55',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '00',
-                    block_name: 'Letter',
-                    code: '60',
-                    remarks: '-60',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '01',
-                    block_name: 'Cover',
-                    code: '01',
-                    remarks: '-50',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '01',
-                    block_name: 'Cover',
-                    code: '02',
-                    remarks: '-55',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '01',
-                    block_name: 'Cover',
-                    code: '03',
-                    remarks: '-60',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '02',
-                    block_name: 'LEP',
-                    code: '01',
-                    remarks: '-50',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '02',
-                    block_name: 'LEP',
-                    code: '02',
-                    remarks: '-55',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '02',
-                    block_name: 'LEP',
-                    code: '03',
-                    remarks: '-60',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '03',
-                    block_name: 'TOC',
-                    code: '01',
-                    remarks: '-50,-60',
-                },
-                {
-                    numero_secao: '00',
-                    numero_sub_secao: '',
-                    numero_block: '03',
-                    block_name: 'TOC',
-                    code: '02',
-                    remarks: '-55',
-                },
-                {
-                    numero_secao: '02',
-                    numero_sub_secao: '',
-                    numero_block: '04',
-                    block_name: 'Introduction',
-                    code: '01',
-                    remarks: '-50',
-                },
-                {
-                    numero_secao: '02',
-                    numero_sub_secao: '',
-                    numero_block: '04',
-                    block_name: 'Introduction',
-                    code: '02',
-                    remarks: '-55',
-                },
-                {
-                    numero_secao: '02',
-                    numero_sub_secao: '',
-                    numero_block: '04',
-                    block_name: 'Introduction',
-                    code: '03',
-                    remarks: '-60',
-                },
-                {
-                    numero_secao: '03',
-                    numero_sub_secao: '01',
-                    numero_block: '03',
-                    block_name: 'Episódio 2',
-                    code: '14',
-                    remarks: '-50,-60',
-                },
-                {
-                    numero_secao: '03',
-                    numero_sub_secao: '01',
-                    numero_block: '03',
-                    block_name: 'Episódio 2',
-                    code: '15',
-                    remarks: '-55',
-                },
-                {
-                    numero_secao: '04',
-                    numero_sub_secao: '',
-                    numero_block: '02',
-                    block_name: 'Episódio 3',
-                    code: '01',
-                    remarks: '-60',
-                },
-                {
-                    numero_secao: '04',
-                    numero_sub_secao: '',
-                    numero_block: '02',
-                    block_name: 'Episódio 3',
-                    code: '02',
-                    remarks: '-50',
-                },
-                {
-                    numero_secao: '04',
-                    numero_sub_secao: '',
-                    numero_block: '02',
-                    block_name: 'Episódio 3',
-                    code: '03',
-                    remarks: '-55',
-                },
-                {
-                    numero_secao: '05',
-                    numero_sub_secao: '04',
-                    numero_block: '08',
-                    block_name: 'Episódio 1',
-                    code: '12',
-                    remarks: 'ALL',
-                },
-                {
-                    numero_secao: '05',
-                    numero_sub_secao: '06',
-                    numero_block: '03',
-                    block_name: 'Episódio 4',
-                    code: '01',
-                    remarks: '-60',
-                },
-                {
-                    numero_secao: '05',
-                    numero_sub_secao: '06',
-                    numero_block: '03',
-                    block_name: 'Episódio 4',
-                    code: '02',
-                    remarks: '-50',
-                },
-                {
-                    numero_secao: 'AP01',
-                    numero_sub_secao: '',
-                    numero_block: '02',
-                    block_name: 'Appendix',
-                    code: '01',
-                    remarks: 'ALL',
-                },
-                {
-                    numero_secao: 'S03',
-                    numero_sub_secao: '',
-                    numero_block: '05',
-                    block_name: 'Mars',
-                    code: '01',
-                    remarks: 'ALL',
-                },
-                {
-                    numero_secao: 'S03',
-                    numero_sub_secao: '',
-                    numero_block: '10',
-                    block_name: 'Copyright',
-                    code: '01',
-                    remarks: '-50,-55',
-                },
-                {
-                    numero_secao: 'S03',
-                    numero_sub_secao: '',
-                    numero_block: '10',
-                    block_name: 'Copyright',
-                    code: '02',
-                    remarks: '-60',
-                },
-            ]
         },
 
         editItem(item) {
@@ -389,30 +184,38 @@ export default {
             this.close()
         },
 
-        sendFile(){
+        getCodelist(){
             this.validate();
 
-            http.get(DocumentsEndpoints.FIND_ALL_BY, {
+            http.get(CodelistEndpoints.FIND_BY, {
                 params: {
                     document_name: this.name,
                     part_number: this.partNumber
                 }
             }).then(response => {
-                console.log(response.data);
-                this.desserts = this.getAllBlocksFromResponse(response);
-                console.log(this.desserts);
-            }).catch(error => console.log(error));
-        },
+                const codelist = CodelistFactory.createFromResponse(response.data);
+                console.log(codelist);
 
-        getAllBlocksFromResponse(response) {
-            const blocks = [];
-            response.data.forEach(function (doc) {
-                doc.blocks.forEach(function (block) {
-                    blocks.push(block);
-                })
-            });
-            console.log(blocks);
-            return blocks.sort(Block.compare)
+
+                let columnsToAdd = [];
+                for (let i = 0; i < codelist.documents.length; ++i) {
+                    let value = codelist.documents[i].trait
+                    this.headers.push({text: value, value: value});
+                    columnsToAdd.push(value);
+                }
+
+                let codelistBlocks = [];
+                codelist.codelistBlocks.forEach(function (codelistBlock) {
+                    let objeto = {...codelistBlock.block};
+                    for (let i = 0; i < columnsToAdd.length; ++i) {
+                        objeto[columnsToAdd[i]] = codelistBlock.checklist[i];
+                    }
+                    codelistBlocks.push(objeto);
+                });
+                console.log(codelistBlocks);
+
+                this.desserts = codelistBlocks;
+            }).catch(error => console.log(error));
         },
 
         searchPartNumbers(documentName) {
@@ -421,7 +224,6 @@ export default {
                     document_name: documentName
                 }
             }).then(response => {
-                console.log(response.data);
                 this.findedPartNumbers = response.data;
             }).catch(error => console.log(error));
         },
@@ -429,9 +231,8 @@ export default {
         searchDocs() {
             http.get(DocumentsEndpoints.FIND_ALL_DOCS)
                 .then(response => {
-                    console.log(response.data);
                     this.findedDocs = response.data;
                 }).catch(error => console.log(error));
-        }
+        },
     },
 }
