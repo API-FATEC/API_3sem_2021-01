@@ -1,8 +1,10 @@
-import { http } from "../../services/config";
+import {http} from "../../services/config";
 // import { Block } from "../../scripts/domain/Block"
 import {CodelistEndpoints, DocumentsEndpoints} from "../../model/endpoints/EndpointsMapping";
 // import { Document } from "../../scripts/domain/Document";
 import {CodelistFactory} from "../../scripts/domain/Codelist";
+import {BlockFactory} from "../../scripts/domain/Block";
+import {DocumentFactory, DocumentRequestBody} from "../../scripts/domain/Document";
 
 export default {
     data: () => ({
@@ -21,10 +23,17 @@ export default {
             v => (v && v.length <= 10) || 'O Part Number deve possuir no máximo 10 caracteres!',
             //v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
+        emailRuler: [
+            v => !!v || 'O e-mail é obrigatório!',
+            v => /.+@.+\..+/.test(v) || 'E-mail inválido',
+        ],
         // Tabela
+        editMode: false,
         dialog: false,
         dialogDelete: false,
         dialogNovoTraco: false,
+        dialogSalvar: false,
+        dialogCancelar: false,
         headers: [
             {
                 text: 'Nº SEÇÃO',
@@ -38,7 +47,10 @@ export default {
             { text: 'CODE', value: 'code' }
         ],
         teste: [{ text: 'Actions', value: 'actions', sortable: false }],
+        documents: [],
+        traits: [],
         desserts: [],
+        editedDesserts: [],
         traco: [],
         editedIndex: -1,
         editedItem: {
@@ -68,7 +80,8 @@ export default {
         findedPartNumbers: [],
         findedDocs: [],
         allDocumentsResponse: [],
-        allBlocksResponse: []
+        allBlocksResponse: [],
+        email: '',
     }),
 
     created() {
@@ -103,6 +116,20 @@ export default {
     },
 
     methods: {
+        defaultHeaders: function () {
+            this.headers = [
+                {
+                    text: 'Nº SEÇÃO',
+                    align: 'start',
+                    sortable: false,
+                    value: 'section',
+                },
+                { text: 'Nº SUB SEÇÃO', value: 'subSection' },
+                { text: 'Nº BLOCK', value: 'number' },
+                { text: 'BLOCK NAME', value: 'name' },
+                { text: 'CODE', value: 'code' }
+            ];
+        },
         // Formulario
         validate() {
             this.$refs.form.validate()
@@ -110,6 +137,13 @@ export default {
 
         reset() {
             this.$refs.form.reset()
+            this.desserts = [];
+            this.defaultHeaders();
+        },
+
+        resetTableToDefault: function () {
+            this.defaultHeaders();
+            this.desserts = [];
         },
 
         initialize() {
@@ -177,10 +211,11 @@ export default {
 
         save() {
             if (this.editedIndex > -1) {
-                Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                Object.assign(this.editedDesserts[this.editedIndex], this.editedItem)
             } else {
-                this.desserts.push(this.editedItem)
+                this.editedDesserts.push(this.editedItem)
             }
+            this.editMode = true;
             this.close()
         },
 
@@ -193,7 +228,9 @@ export default {
                     part_number: this.partNumber
                 }
             }).then(response => {
+                this.resetTableToDefault();
                 const codelist = CodelistFactory.createFromResponse(response.data);
+                this.documents = codelist.documents;
 
                 let columnsToAdd = [];
                 let headersToAdd = [];
@@ -201,6 +238,7 @@ export default {
                     let value = codelist.documents[i].trait
                     headersToAdd.push({text: 'Traço: ' + value, value: 'trait_' + value});
                     columnsToAdd.push(value);
+                    this.traits.push('trait_' + value);
                 }
 
                 let codelistBlocks = [];
@@ -213,11 +251,13 @@ export default {
                 });
 
                 this.desserts = this.sortedCodelistBlocks(codelistBlocks);
+                this.editedDesserts = this.sortedCodelistBlocks(codelistBlocks);
                 for (let i = 0; i < headersToAdd.length; ++i) {
                     this.headers.push(headersToAdd[i]);
                 }
             }).catch(error => console.log(error));
         },
+
         sortedCodelistBlocks: function (array) {
             function compare(a, b) {
                 if (a.number < b.number) return -1;
@@ -244,5 +284,44 @@ export default {
                     this.findedDocs = response.data;
                 }).catch(error => console.log(error));
         },
+
+        saveCodelist: function () {
+            let codelistToSave = this.editedDesserts;
+            let documents = [];
+            for (let i = 0; i < this.documents.length; ++i) {
+                let doc = this.documents[i];
+                documents.push(DocumentFactory.createWithEmptyBlocks(doc));
+            }
+
+            for (let i = 0; i < codelistToSave.length; ++i) {
+                let codelistBlock = codelistToSave[i];
+                let block = BlockFactory.createFromCodelist(codelistToSave[i]);
+
+                let checklist = [];
+                for (let j = 0; j < this.traits.length; ++j) {
+                    let trait = this.traits[j].valueOf();
+                    checklist.push(Number.parseInt(codelistBlock[trait]));
+                }
+
+                for (let x = 0; x < checklist.length; ++x) {
+                    if (checklist[x] === 1) {
+                        documents[x].addBlock(block);
+                    }
+                }
+            }
+            console.log(documents);
+
+            http.put(DocumentsEndpoints.SAVE_ALL, DocumentRequestBody.createList(documents))
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => console.log(error));
+            this.editMode = false;
+        },
+
+        cancelEdit: function () {
+            this.editedDesserts = this.desserts;
+            this.editMode = false;
+        }
     },
 }

@@ -16,39 +16,11 @@
                     <v-row>
                       <v-col>
                         <v-form ref="form" v-model="valid" lazy-validation>
-                          <v-autocomplete
-                              v-model="name"
-                              :items="findedDocs"
-                              filled
-                              label="Nome do documento"
-                              :search-input="findDocs"
-                          ></v-autocomplete>
+                          <v-autocomplete v-model="name" :items="findedDocs" filled label="Nome do documento" :search-input="findDocs"></v-autocomplete>
+                          <v-select v-model="partNumber" :items="findedPartNumbers" filled label="Part Number" ></v-select>
 
-                          <v-select
-                              v-model="partNumber"
-                              :items="findedPartNumbers"
-                              filled
-                              label="Part Number" >
-                          </v-select>
-
-                          <v-btn
-                              :disabled="!valid"
-                              color="primary"
-                              class="mr-4"
-                              @click="getCodelist"
-                              id="botao-enviar"
-                          >
-                            Enviar
-                          </v-btn>
-
-                          <v-btn
-                              color="error"
-                              class="mr-4"
-                              @click="reset"
-                              id="botao-limpar"
-                          >
-                            Limpar Formulário
-                          </v-btn>
+                          <v-btn :disabled="!valid" color="primary" class="mr-4" @click="getCodelist" id="botao-enviar">Enviar</v-btn>
+                          <v-btn color="error" class="mr-4" @click="reset" id="botao-limpar">Limpar</v-btn>
                         </v-form>
                       </v-col>
                     </v-row>
@@ -66,6 +38,59 @@
                           sort-by="calories"
                           class="elevation-1"
                         >
+                          <template v-slot:footer>
+                            <v-dialog v-model="dialogCancelar" max-width="500px">
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn color="error" dark class="mb-2" v-bind="attrs" v-on="on" v-show="editMode">Cancelar</v-btn>
+                              </template>
+                              <!--pop up do botão Cancelar-->
+                              <v-card>
+                                <v-card-title>
+                                    <span class="headline">Deseja mesmo Apagar todas as alterações?</span>
+                                </v-card-title>
+                                <v-card-text>
+                                  <v-container>
+                                    <v-row>
+                                      <span>Isso irá excluir tudo que você modificou.</span>
+                                    </v-row>
+                                  </v-container>
+                                </v-card-text>
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                  <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
+                                  <v-btn color="blue darken-1" text @click="cancelEdit">Apagar</v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+                            <!--Dialog Salvar-->
+                            <v-dialog v-model="dialogSalvar" max-width="400px">
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-row>
+                                  <v-col>
+                                    <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" v-show="editMode">Salvar</v-btn>
+                                  </v-col>
+                                </v-row>
+                                <v-spacer></v-spacer>
+                              </template>
+                              <v-card>
+                                <v-card-title><span class="headline">Tem certeza que deseja salvar as alterações?</span></v-card-title>
+                                <v-card-text>
+                                  <v-container>
+                                    <v-row>
+                                      <v-col cols="12" sm="6" md="12">
+                                        <v-text-field v-model="email" label="Email" :rules="emailRuler" required></v-text-field>
+                                      </v-col>
+                                    </v-row>
+                                  </v-container>
+                                </v-card-text>
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                  <v-btn color="blue darken-1" text @click="closeTraco">Cancelar</v-btn>
+                                  <v-btn color="blue darken-1" text @click="saveCodelist">Salvar</v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+                          </template>
                           <template v-slot:top>
                             <v-toolbar flat>
                               <v-toolbar-title>CodeList</v-toolbar-title>

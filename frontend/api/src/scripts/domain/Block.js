@@ -1,5 +1,5 @@
 export class Block {
-    constructor(id, section, subSection, number, name, code, order, documents) {
+    constructor(id, section, subSection, number, name, code, order) {
         this._id = id;
         this._section = section;
         this._subSection = subSection;
@@ -7,26 +7,15 @@ export class Block {
         this._name = name;
         this._code = code;
         this._order = order;
-        this._documents = documents;
     }
 
     equals(block) {
-        return block.section() === this.section()
-            && block.subSection() === this.subSection()
-            && block.number() === this.number()
-            && block.name() === this.name()
-            && block.code() === this.code()
-            && block.order() === this.order();
+        return block.section === this.section
+            && block.subSection === this.subSection
+            && block.number === this.number
+            && block.name === this.name
+            && block.code === this.code;
     }
-    
-    static createFromResponse(data) {
-        return new Block(data._id, data._section, data._subSection, data._name, data._code, data._order);
-    }
-
-    set documents(value) {
-        this.documents = value;
-    }
-
 
     get id() {
         return this._id;
@@ -55,8 +44,39 @@ export class Block {
     get order() {
         return this._order;
     }
+}
 
-    get documents() {
-        return this._documents;
+export class BlockFactory {
+
+    static createFromResponse(data) {
+        return new Block(data.id, data.section, data.subSection, data.name, data.code, data.order);
+    }
+
+    static createFromCodelist(codelist) {
+        return new Block(codelist.id, codelist.section, codelist.subSection, codelist.number, codelist.name, codelist.code, codelist.order);
+    }
+
+    static createBodyRequest(block) {
+        return {
+            id: block.id,
+            section: block.section,
+            subSection: block.subSection,
+            number: block.number,
+            name: block.name,
+            code: block.code,
+            order: block.order
+        };
+    }
+}
+
+export class BlockRequestBody {
+
+    static createList(blocks) {
+        let blockList = [];
+        for (let i = 0; i < blocks.length; ++i) {
+            let block = BlockFactory.createBodyRequest(blocks[i]);
+            blockList.push(block);
+        }
+        return blockList;
     }
 }
