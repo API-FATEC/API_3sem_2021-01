@@ -46,7 +46,7 @@ public class User {
         }
 
         public String getDescription(String email, Document document) {
-            return String.format(this.description, email, document.getDocumentName());
+            return String.format(this.description, email, document.getName());
         }
     }
 }

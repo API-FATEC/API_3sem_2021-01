@@ -22,6 +22,7 @@ public class Document {
     @Column(name = "DOC_DATA_CRIA")
     private Date createdDate;
 
+    @Getter
     @Column(name = "DOC_NOME", nullable = false)
     private String name;
 
@@ -41,7 +42,4 @@ public class Document {
         this.blocks.add(block);
     }
 
-    public String getDocumentName() {
-        return this.name;
-    }
 }

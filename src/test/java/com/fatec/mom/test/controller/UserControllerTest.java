@@ -25,22 +25,16 @@ class UserControllerTest extends AbstractControllerTest{
         config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
     void shouldAddOneUser() throws Exception {
         User user = new User(null, "mario.nin@gmail.com", "EDIT_CODELIST", 1);
-        getMockMvc().perform(
+        var result = getMockMvc().perform(
                 post("/user/add", user)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(asJsonString(user))
         ).andExpect(status().isOk())
                 .andReturn();
 
-        System.out.println(userService.findAll());
-
-
-        String result = new Gson().toJson(userService.findAll());
-        System.out.println(result);
-
         JSONAssert.assertEquals(
                 jsonAsString("expected-userTable-with-six-users.json"),
-                result,
+                getResultAsJson(result),
                 true);
     }
 
