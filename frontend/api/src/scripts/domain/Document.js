@@ -1,33 +1,21 @@
 export class Document {
     constructor(id, createdDate, name, partNumber, trait, blocks) {
-        this.id = id;
-        this.createdDate = createdDate;
-        this.name = name;
-        this.partNumber = partNumber;
-        this.trait = trait;
-        this.blocks = blocks;
+        this._id = id;
+        this._createdDate = createdDate;
+        this._name = name;
+        this._partNumber = partNumber;
+        this._trait = trait;
+        this._blocks = blocks;
     }
 
-    getBlocksChecklist(blocksToCheck) {
-        if (this.blocks === undefined) { return []; }
-
-        const list = [];
-        blocksToCheck.forEach(function (block) {
-            if (this.blocks.contains(block)) {
-                list.push(1);
-            } else {
-                list.push(0);
-            }
-        });
-
-        return list;
+    get trait() {
+        return this._trait;
     }
+}
 
-    static parseDocuments(jsonResponse) {
-        if (jsonResponse === undefined) {
-            return null;
-        }
+export class DocumentFactory {
 
-        return JSON.parse(jsonResponse);
+    static createFromResponse(data) {
+        return new Document(data.id, data.createdDate, data.name, data.partNumber, data.trait, data.blocks);
     }
 }

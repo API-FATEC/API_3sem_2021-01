@@ -4,4 +4,9 @@ DocumentsEndpoints = Object.freeze({
     "FIND_ALL_DOCS": "/document/find/name/all",
 });
 
+CodelistEndpoints = Object.freeze({
+    "FIND_BY": "/codelist/find/by",
+});
+
 export let DocumentsEndpoints;
+export let CodelistEndpoints;

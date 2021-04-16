@@ -1,20 +1,62 @@
 export class Block {
-    constructor(id, section, subSection, number, name, code, order) {
-        this.id = id;
-        this.section = section;
-        this.subSection = subSection;
-        this.number = number;
-        this.name = name;
-        this.code = code;
-        this.order = order;
-
+    constructor(id, section, subSection, number, name, code, order, documents) {
+        this._id = id;
+        this._section = section;
+        this._subSection = subSection;
+        this._number = number;
+        this._name = name;
+        this._code = code;
+        this._order = order;
+        this._documents = documents;
     }
 
-    static compare(a, b) {
-        if (a.order < b.order)
-            return -1;
-        if (a.order > b.order)
-            return 1;
-        return 0;
+    equals(block) {
+        return block.section() === this.section()
+            && block.subSection() === this.subSection()
+            && block.number() === this.number()
+            && block.name() === this.name()
+            && block.code() === this.code()
+            && block.order() === this.order();
+    }
+    
+    static createFromResponse(data) {
+        return new Block(data._id, data._section, data._subSection, data._name, data._code, data._order);
+    }
+
+    set documents(value) {
+        this.documents = value;
+    }
+
+
+    get id() {
+        return this._id;
+    }
+
+    get section() {
+        return this._section;
+    }
+
+    get subSection() {
+        return this._subSection;
+    }
+
+    get number() {
+        return this._number;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get code() {
+        return this._code;
+    }
+
+    get order() {
+        return this._order;
+    }
+
+    get documents() {
+        return this._documents;
     }
 }
