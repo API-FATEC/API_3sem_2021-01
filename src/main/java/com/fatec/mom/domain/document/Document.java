@@ -40,4 +40,8 @@ public class Document {
     public void addBlock(final Block block) {
         this.blocks.add(block);
     }
+
+    public String getDocumentName() {
+        return this.name;
+    }
 }
