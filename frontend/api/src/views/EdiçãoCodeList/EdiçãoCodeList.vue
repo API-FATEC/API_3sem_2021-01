@@ -60,6 +60,7 @@
                     <v-row>
                       <v-col>
                         <v-data-table
+                            dense
                           :headers="[...headers, ...teste]"
                           :items="desserts"
                           sort-by="calories"

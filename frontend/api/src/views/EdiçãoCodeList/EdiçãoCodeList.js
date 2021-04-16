@@ -194,13 +194,12 @@ export default {
                 }
             }).then(response => {
                 const codelist = CodelistFactory.createFromResponse(response.data);
-                console.log(codelist);
-
 
                 let columnsToAdd = [];
+                let headersToAdd = [];
                 for (let i = 0; i < codelist.documents.length; ++i) {
                     let value = codelist.documents[i].trait
-                    this.headers.push({text: value, value: value});
+                    headersToAdd.push({text: 'Traço: ' + value, value: 'trait_' + value});
                     columnsToAdd.push(value);
                 }
 
@@ -208,14 +207,25 @@ export default {
                 codelist.codelistBlocks.forEach(function (codelistBlock) {
                     let objeto = {...codelistBlock.block};
                     for (let i = 0; i < columnsToAdd.length; ++i) {
-                        objeto[columnsToAdd[i]] = codelistBlock.checklist[i];
+                        objeto['trait_' + columnsToAdd[i]] = codelistBlock.checklist[i].valueOf();
                     }
                     codelistBlocks.push(objeto);
                 });
-                console.log(codelistBlocks);
 
-                this.desserts = codelistBlocks;
+                this.desserts = this.sortedCodelistBlocks(codelistBlocks);
+                for (let i = 0; i < headersToAdd.length; ++i) {
+                    this.headers.push(headersToAdd[i]);
+                }
             }).catch(error => console.log(error));
+        },
+        sortedCodelistBlocks: function (array) {
+            function compare(a, b) {
+                if (a.number < b.number) return -1;
+                if (a.number > b.number) return 1;
+                return 0;
+            }
+
+            return array.sort(compare);
         },
 
         searchPartNumbers(documentName) {
