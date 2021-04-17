@@ -52,30 +52,28 @@
                     </v-form>
                   </v-col>
                   <v-col>
-                    <v-file-input
-                      label="Inserir o CodeList"
-                      outlined
-                      dense
-                      v-model="file"
-                    ></v-file-input>
                     <div id="app" @dragover.prevent @drop.prevent>
                       <div class="container" @drop="handleFileDrop">
-                        Add your files here:
-                        <br />
                         <div class="file-wrapper">
                           <input
                             type="file"
                             name="file-input"
                             multiple="True"
                             @change="handleFileInput"
+                            accept=".xlsx"
                           />
-                          Click or drag to insert.
+                          Clique ou arraste os arquivos
                         </div>
                         <ul>
-                          <li v-for="(file, index) in files" :key="(file, index)">
-                            {{ file.name }} ({{ file.size }} b)
+                          <li
+                            v-for="(file, index) in files"
+                            :key="(file, index)"
+                          >
+                            {{ file.name }} ({{ converteMB(file.size) }})
                             <button @click="removeFile(index)" title="Remove">
-                              X
+                              <v-icon>
+                                mdi-close-circle
+                              </v-icon>
                             </button>
                           </li>
                         </ul>
@@ -124,15 +122,21 @@
   margin-top: 20px;
 }
 
+.container{
+  margin-left: 20px;
+}
+
 .file-wrapper {
   text-align: center;
-  width: 200px;
-  height: 3em;
+  width: 600px;
+  height: 200px;
   vertical-align: middle;
   display: table-cell;
   position: relative;
   overflow: hidden;
-  background: gray; /* and other things to make it pretty */
+  background: #0266b1;
+  color: white;
+  font-size: 24px;
 }
 .file-wrapper input {
   position: absolute;
