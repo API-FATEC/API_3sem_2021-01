@@ -260,8 +260,8 @@ export default {
 
         sortedCodelistBlocks: function (array) {
             function compare(a, b) {
-                if (a.number < b.number) return -1;
-                if (a.number > b.number) return 1;
+                if (a.order < b.order) return -1;
+                if (a.order > b.order) return 1;
                 return 0;
             }
 
@@ -322,6 +322,14 @@ export default {
         cancelEdit: function () {
             this.editedDesserts = this.desserts;
             this.editMode = false;
+        },
+
+        enterEditMode: function() {
+            this.editMode = true;
+        },
+
+        redirectToImportPage: function () {
+            this.$router.push('ImportacaoCodeList').then().catch(error => console.log(error));
         }
     },
 }

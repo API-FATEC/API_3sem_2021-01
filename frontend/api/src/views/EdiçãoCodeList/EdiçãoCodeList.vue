@@ -21,6 +21,9 @@
 
                           <v-btn :disabled="!valid" color="primary" class="mr-4" @click="getCodelist" id="botao-enviar">Enviar</v-btn>
                           <v-btn color="error" class="mr-4" @click="reset" id="botao-limpar">Limpar</v-btn>
+
+                          <v-btn color="primary" class="mr-4" @click="enterEditMode" id="botao_editar">Editar</v-btn>
+                          <v-btn color="primary" class="mr-4" @click="redirectToImportPage" id="botao-importar">Importar codelist</v-btn>
                         </v-form>
                       </v-col>
                     </v-row>
@@ -102,24 +105,12 @@
                               <v-spacer></v-spacer>
                               <v-dialog v-model="dialog" max-width="500px">
                                 <template v-slot:activator="{ on, attrs }">
-                                  <v-btn
-                                    color="primary"
-                                    dark
-                                    class="mb-2"
-                                    v-bind="attrs"
-                                    v-on="on"
-                                  >
-                                    Novo Bloco
-                                  </v-btn>
+                                  <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" v-show="editMode">Novo Bloco</v-btn>
                                   <v-spacer></v-spacer>
                                 </template>
                                 <!--pop up do botão Novo Bloco-->
                                 <v-card>
-                                  <v-card-title>
-                                    <span class="headline">{{
-                                      formTitle
-                                    }}</span>
-                                  </v-card-title>
+                                  <v-card-title><span class="headline">{{ formTitle }}</span></v-card-title>
                                   <v-card-text>
                                     <v-container>
                                       <v-row>
@@ -160,24 +151,11 @@
                                 </v-card>
                               </v-dialog>
                               <!--Dialog Novo Traço-->
-                              <v-dialog
-                                v-model="dialogNovoTraco"
-                                max-width="400px"
-                              >
+                              <v-dialog v-model="dialogNovoTraco" max-width="400px">
                                 <template v-slot:activator="{ on, attrs }">
                                   <v-row>
                                     <v-col></v-col>
-                                    <v-col>
-                                      <v-btn
-                                        color="primary"
-                                        dark
-                                        class="mb-2"
-                                        v-bind="attrs"
-                                        v-on="on"
-                                      >
-                                        Novo Traço
-                                      </v-btn>
-                                    </v-col>
+                                    <v-col><v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on" v-show="editMode">Novo Traço</v-btn></v-col>
                                   </v-row>
                                   <v-spacer></v-spacer>
                                 </template>
@@ -249,18 +227,12 @@
                               </v-dialog>
                             </v-toolbar>
                           </template>
-                          <template v-slot:item.actions="{ item }">
-                            <v-icon small class="mr-2" @click="editItem(item)">
-                              mdi-pencil
-                            </v-icon>
-                            <v-icon small @click="deleteItem(item)">
-                              mdi-delete
-                            </v-icon>
+                          <template v-slot:item.actions="{ item }" v-show="editMode">
+                            <v-icon small class="mr-2" @click="editItem(item)" v-show="editMode">mdi-pencil</v-icon>
+                            <v-icon small @click="deleteItem(item)" v-show="editMode">mdi-delete</v-icon>
                           </template>
                           <template v-slot:no-data>
-                            <v-btn color="primary" @click="initialize">
-                              Reset
-                            </v-btn>
+                            <v-btn color="primary" @click="initialize">Reset</v-btn>
                           </template>
                         </v-data-table>
                       </v-col>
