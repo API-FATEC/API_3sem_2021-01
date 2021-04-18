@@ -35,9 +35,6 @@ public class CodelistImporterTest {
 
         final var result = documentService.saveAll(documents);
 
-        var json = new Gson().toJson(documents);
-        System.out.println(json);
-
         assertThat(result.size(), equalTo(3));
 
         assertThat(result.get(0).getName(), equalTo("ABC"));
@@ -60,8 +57,6 @@ public class CodelistImporterTest {
         final var documents = reader.readCodelist(CodelistConfigType.DEFAULT, stream);
 
         final var result = documentService.saveAll(documents);
-        var json = new Gson().toJson(documents);
-        System.out.println(json);
 
         assertThat(result.size(), equalTo(9));
 
