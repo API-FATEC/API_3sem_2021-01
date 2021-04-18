@@ -1,7 +1,6 @@
 package com.fatec.mom.infra.codelist.reader;
 
 import com.fatec.mom.domain.document.Document;
-import com.fatec.mom.infra.codelist.reader.config.CodelistConfig;
 import com.fatec.mom.infra.codelist.reader.config.CodelistConfigLocator;
 import com.fatec.mom.infra.codelist.reader.config.CodelistConfigType;
 import com.fatec.mom.infra.codelist.reader.contentsretrievers.CodelistContentRetriever;

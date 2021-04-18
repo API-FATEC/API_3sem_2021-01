@@ -84,12 +84,6 @@ public class CodelistImportConfig {
                         new DocumentNameOnSheetNameRetriever(),
                         new PartNumberOnSheetNameRetriever(),
                         new DocumentTraitOnCellRetriever(new SingleCellData(6, 0))
-//                        new BlockSectionOnCellRetriever(new SingleCellData(1, 2)),
-//                        new BlockSubSectionOnCellRetriever(new SingleCellData(2, 2)),
-//                        new BlockNumberOnCellRetriever(new SingleCellData(3, 2)),
-//                        new BlockNameOnCellRetriever(new SingleCellData(4, 2)),
-//                        new BlockCodeOnCellRetriever(new SingleCellData(5, 2)),
-//                        new BlockRemarksOnCellRetriever(new SingleCellData(6, 2))
                 ));
 
         final CodelistBuiderInvoker invoker = new CodelistBuiderInvoker(new CodelistBuilder(metadataIndexes));

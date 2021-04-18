@@ -13,10 +13,9 @@ public class CodelistBuilder extends AbstractCodelistBuilder {
         super(metadataIndexes);
     }
 
-    @Getter
-    private List<Document> documents = new LinkedList<>();
+    public List<Document> transposeValues(final SheetContent content) {
+        List<Document> documents = new LinkedList<>();
 
-    public void transposeValues(final SheetContent content) {
         final List<ColumnDescriptor> columns = content.getColumns();
         final List<Integer> traits = (List<Integer>) content.getMetadata(SheetMetadataType.DOCUMENT_TRAITS).getValue();
         final String documentName = (String) content.getMetadata(SheetMetadataType.DOCUMENT_NAME).getValue();
@@ -37,10 +36,8 @@ public class CodelistBuilder extends AbstractCodelistBuilder {
                 }
             }
         }
-    }
 
-    public List<Document> build() {
-        return this.documents;
+        return documents;
     }
 
     private List<Document> getDocuments(List<Integer> traits, String documentName, Integer documentPartNumber) {

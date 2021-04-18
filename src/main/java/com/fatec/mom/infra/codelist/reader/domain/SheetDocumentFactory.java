@@ -13,7 +13,7 @@ public class SheetDocumentFactory {
     }
 
     public static Integer getPartNumberFrom(String sheetName) {
-        var limiter = sheetName.lastIndexOf("-");
+        var limiter = sheetName.indexOf("-") + 1;
         return Integer.parseInt(sheetName.substring(limiter));
     }
 
