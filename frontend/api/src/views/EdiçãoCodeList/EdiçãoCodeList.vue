@@ -40,28 +40,29 @@
                           :items="desserts"
                           sort-by="calories"
                           class="elevation-1"
+                            :items-per-page="50"
                         >
                           <template v-slot:footer>
                             <v-dialog v-model="dialogCancelar" max-width="500px">
                               <template v-slot:activator="{ on, attrs }">
-                                <v-btn color="error" dark class="mb-2" v-bind="attrs" v-on="on" v-show="editMode">Cancelar</v-btn>
+                                <v-btn color="error" dark class="mb-2" v-bind="attrs" v-on="on" v-show="editMode">Descartar</v-btn>
                               </template>
                               <!--pop up do botão Cancelar-->
                               <v-card>
                                 <v-card-title>
-                                    <span class="headline">Deseja mesmo Apagar todas as alterações?</span>
+                                    <span class="headline">Podem existir alterações não salvas.</span>
                                 </v-card-title>
                                 <v-card-text>
                                   <v-container>
                                     <v-row>
-                                      <span>Isso irá excluir tudo que você modificou.</span>
+                                      <span>Deseja realmente cancelar todas as alterações?</span>
                                     </v-row>
                                   </v-container>
                                 </v-card-text>
                                 <v-card-actions>
                                   <v-spacer></v-spacer>
-                                  <v-btn color="blue darken-1" text @click="close">Cancelar</v-btn>
-                                  <v-btn color="blue darken-1" text @click="cancelEdit">Apagar</v-btn>
+                                  <v-btn color="blue darken-1" text @click="closeDialogCancel">Voltar</v-btn>
+                                  <v-btn color="blue darken-1" text @click="cancelEdit">Descartar</v-btn>
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
@@ -76,20 +77,38 @@
                                 <v-spacer></v-spacer>
                               </template>
                               <v-card>
-                                <v-card-title><span class="headline">Tem certeza que deseja salvar as alterações?</span></v-card-title>
+                                <v-card-title><span class="headline">Tem certeza?</span></v-card-title>
                                 <v-card-text>
                                   <v-container>
-                                    <v-row>
-                                      <v-col cols="12" sm="6" md="12">
-                                        <v-text-field v-model="email" label="Email" :rules="emailRuler" required></v-text-field>
-                                      </v-col>
-                                    </v-row>
+                                    <v-row><span>Deseja realmente salvar as alterações?</span></v-row>
                                   </v-container>
                                 </v-card-text>
                                 <v-card-actions>
                                   <v-spacer></v-spacer>
-                                  <v-btn color="blue darken-1" text @click="closeTraco">Cancelar</v-btn>
+                                  <v-btn color="blue darken-1" text @click="closeSalvarDialog">Voltar</v-btn>
                                   <v-btn color="blue darken-1" text @click="saveCodelist">Salvar</v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+
+                            <!--Dialog Salvo-->
+                            <v-dialog v-model="dialogSaved" max-width="400px">
+                              <v-card>
+                                <v-card-title><span class="headline">Salvo com Sucesso!</span></v-card-title>
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                  <v-btn color="blue darken-1" text @click="closeSavedDialog">Ok</v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+
+                            <!--Dialog Error-->
+                            <v-dialog v-model="dialogError" max-width="400px">
+                              <v-card color="red" dark>
+                                <v-card-title><span class="headline">Ocorreu um erro inesperado.</span></v-card-title>
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                  <v-btn color="white" text @click="closeDialogError">Sair</v-btn>
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
