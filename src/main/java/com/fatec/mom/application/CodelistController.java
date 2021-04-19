@@ -1,6 +1,8 @@
 package com.fatec.mom.application;
 
+import com.fatec.mom.domain.codelist.Codelist;
 import com.fatec.mom.domain.codelist.CodelistConverterService;
+import com.fatec.mom.domain.codelist.CodelistService;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.file.FileInfoService;
 import com.fatec.mom.domain.file.FileUploadService;
@@ -8,10 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -38,6 +37,9 @@ public class CodelistController {
     @Autowired
     private FileInfoService fileInfoService;
 
+    @Autowired
+    private CodelistService codelistService;
+
     @PostMapping("/import")
     @ApiOperation(value = "Realiza a importação dos arquivos de codelist (que devem estar em formato Excel) " +
             "e salva os blocos/documentos de acordo com a especificação do codelist.",
@@ -63,5 +65,17 @@ public class CodelistController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(savedDocs);
+    }
+
+    @GetMapping("/find/by")
+    @ApiOperation(value = "Retorna uma codelist completa com todos os documentos encontrados")
+    public ResponseEntity<Codelist> findCodelist(
+            @RequestParam("document_name") String documentName,
+            @RequestParam("part_number") Integer partNumber) {
+        var codelist = codelistService.findCodelist(documentName, partNumber);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(codelist);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DocumentDeserializer implements ConverterDeserializer<Document> {
 
-    private final static String CELL_LIMITER = " - ";
+    private static final String CELL_LIMITER = " - ";
 
     private final String referenceDocumentName;
     private final Integer referenceDocumentPartNumber;

@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fatec</groupId>
 	<artifactId>mom</artifactId>
-	<version>0.1.2</version>
+	<version>2.1.2</version>
 	<packaging>jar</packaging>
 	<name>mom</name>
 	<description>Management of Operational Manuals - MOM</description>
@@ -69,6 +69,22 @@
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.language>java</sonar.language>
+		<sonar.exclusions>
+			src/main/java/com/fatec/mom/MomApplication.java
+			src/main/java/com/fatec/mom/ServletInitializer.java
+			src/main/java/com/fatec/mom/infra/config/DefaultJpaConfig.java
+			src/main/java/com/fatec/mom/infra/config/DatabaseConfig.java
+			src/main/java/com/fatec/mom/domain/file/Reader.java
+			src/main/java/com/fatec/mom/domain/block/Block.java
+		</sonar.exclusions>
+		<sonar.coverage.exclusions>
+			src/main/java/com/fatec/mom/MomApplication.java
+			src/main/java/com/fatec/mom/ServletInitializer.java
+			src/main/java/com/fatec/mom/infra/config/DefaultJpaConfig.java
+			src/main/java/com/fatec/mom/infra/config/DatabaseConfig.java
+			src/main/java/com/fatec/mom/domain/file/Reader.java
+			src/main/java/com/fatec/mom/domain/block/Block.java
+		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>

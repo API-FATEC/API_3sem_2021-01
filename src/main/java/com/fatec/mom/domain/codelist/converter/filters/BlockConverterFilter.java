@@ -21,8 +21,8 @@ import java.util.List;
 @Component
 public class BlockConverterFilter extends AbstractConverterFilter {
 
-    private final static int DEFAULT_COLUMN_INDEX = 6;
-    private final static String NULLABLE_CELL = "NULL";
+    private static final int DEFAULT_COLUMN_INDEX = 6;
+    private static final String NULLABLE_CELL = "NULL";
 
     @Autowired
     private Reader xlsReader;
