@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fatec</groupId>
 	<artifactId>mom</artifactId>
-	<version>0.1.2</version>
+	<version>2.1.2</version>
 	<packaging>jar</packaging>
 	<name>mom</name>
 	<description>Management of Operational Manuals - MOM</description>
