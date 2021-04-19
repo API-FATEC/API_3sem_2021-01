@@ -156,7 +156,6 @@ export default {
         novaColuna: function(){
             this.originalHeaders = [...this.headers];
             if(this.editedTraco.nomeTraco.length === 0){
-                //this.closeTraco()
                 return
             }
             var nomeValue = this.editedTraco.nomeTraco.valueOf()
@@ -164,19 +163,19 @@ export default {
             nomeValue = nomeValue.replaceAll(' ', '_')
             this.headers.push({text: 'Traço: ' + this.editedTraco.nomeTraco, value: "trait_" + nomeValue})
 
-            this.editedDesserts = this.desserts.map(item => {
+            this.editedDesserts = this.editedDesserts.map(item => {
                 var objeto = {}
                 objeto[nomeValue] = 0
                 return {...item,...objeto}
             })
             let obj = {...this.editedItem};
             obj["trait_" + nomeValue] = 0;
-            this.editedItem = {...this.editedItem, ...obj};
+            this.defaultItem = {...obj};
             this.closeTraco()
         },
 
         editItem(item) {
-            this.editedIndex = this.desserts.indexOf(item)
+            this.editedIndex = this.editedDesserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialog = true
         },
@@ -287,6 +286,7 @@ export default {
                 }
 
                 this.editedItem = blockEditedItem;
+                this.defaultItem = {...blockEditedItem};
             }).catch(error => {
                 this.dialogSalvar = false;
                 this.dialogError = true;
