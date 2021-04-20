@@ -32,7 +32,7 @@ export class CodelistBlock {
 
 export class CodelistFactory {
 
-    static createFromResponse(responseData) {
+    createFromResponse(responseData) {
         const documents = [];
         responseData.documents.forEach(function (doc) {
             documents.push(DocumentFactory.createFromResponse(doc))

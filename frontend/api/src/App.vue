@@ -64,7 +64,7 @@ export default {
     menus: [
       {conteudo: "Home", url: "/", icon: "mdi-home-variant"},
       {conteudo: "Importação CodeList", url: "/ImportacaoCodeList", icon: "mdi-file"},
-      {conteudo: "Edição CodeList", url: "/EdiçãoCodeList", icon: "mdi-file-edit"},
+      {conteudo: "Codelist", url: "/codelistPage", icon: "mdi-file-edit"},
       {conteudo: "Busca", url: "/docsearch", icon: "mdi-search-web"},
     ]
   }),

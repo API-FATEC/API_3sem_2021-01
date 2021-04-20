@@ -62,13 +62,6 @@ export default {
             name: '',
             code: '',
         },
-        defaultItem: {
-            section: '',
-            sub_section: '',
-            number: '',
-            name: '',
-            code: '',
-        },
         editedTraco: {
             nomeTraco: '',
             valorDefault: '',

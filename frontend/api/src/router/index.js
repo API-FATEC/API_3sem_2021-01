@@ -16,9 +16,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/ImportacaoCodeList/ImportacaoCodeList.vue')
   },
   {
-    path: '/EdiçãoCodeList',
-    name: 'EdiçãoCodeList',
-    component: () => import(/* webpackChunkName: "about" */ '../views/EdiçãoCodeList/EdiçãoCodeList.vue')
+    path: '/codelistPage',
+    name: 'codelistPage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/codelist/codelistPage.vue')
   },
   {
     path: '/docsearch',
