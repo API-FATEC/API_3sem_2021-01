@@ -17,14 +17,12 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import { CodelistService } from "../../../scripts/domain/codelist/CodelistService";
 import { HttpRequester } from "../../../scripts/domain/http/HttpRequester";
 import { http } from "../../../services/config";
 import { CodelistTableGenerator } from "../../../scripts/domain/codelist/CodelistTableGenerator";
 import { CodelistFactory } from "../../../scripts/domain/Codelist";
-
-const eventBus = new Vue();
+import {eventBus} from "../codelistPage.js";
 
 export default ({
   name: "codelistVisualizer",
@@ -60,10 +58,15 @@ export default ({
     codelistTableGenerator: new CodelistTableGenerator(new CodelistFactory()),
   }),
 
-  created() {
+  mounted() {
     eventBus.$on('seeCodelist', function({name, partNumber}) {
       this.name = name;
       this.partNumber = partNumber;
+    });
+
+    console.log({
+      name: this.name,
+      pn: this.pn
     });
 
     this.getCodelist();
@@ -74,11 +77,13 @@ export default ({
     getCodelist: function() {
       const codelist = this.codelistService.getCodelist(this.name, this.partNumber)
           .then(response => {
+            console.log(response.data);
             return response.data;
           }).catch(error => {
             console.log(error);
           });
 
+      console.log(codelist);
       const codelistDescriptor = this.codelistTableGenerator.generateCodelistTable(codelist, this.defaultItem);
 
       this.headers = codelistDescriptor.headers;

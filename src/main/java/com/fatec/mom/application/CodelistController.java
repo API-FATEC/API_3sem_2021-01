@@ -67,7 +67,7 @@ public class CodelistController {
                 .body(savedDocs);
     }
 
-    @GetMapping("/find/by")
+    @GetMapping("/find")
     @ApiOperation(value = "Retorna uma codelist completa com todos os documentos encontrados")
     public ResponseEntity<Codelist> findCodelist(
             @RequestParam("document_name") String documentName,

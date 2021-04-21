@@ -17,12 +17,11 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import {http} from "../../../services/config";
 import {CodelistService} from "../../../scripts/domain/codelist/CodelistService";
 import {HttpRequester} from "../../../scripts/domain/http/HttpRequester";
+import {eventBus} from "../codelistPage.js";
 
-const eventBus = new Vue();
 
 export default {
   name: "codelistEditor",
@@ -37,7 +36,7 @@ export default {
     codelistService: new CodelistService(new HttpRequester(http)),
   }),
 
-  created() {
+  mounted() {
     eventBus.$on("editCodelist", function ({name, partNumber}) {
       this.name = name;
       this.partNumber = partNumber;

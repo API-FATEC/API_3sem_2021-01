@@ -32,21 +32,7 @@
   </div>
 </template>
 
-<script>
-import searchCodelist from "./search/searchCodelist.vue";
-import codelistVisualizer from "./visualizer/codelistVisualizer.vue";
-import codelistEditor from "./editor/codelistEditor.vue";
-
-export default {
-  name: "codelistPage",
-
-  components: {
-    searchCodelist,
-    codelistVisualizer,
-    codelistEditor
-  }
-}
-</script>
+<script src="./codelistPage.js"></script>
 
 <style scoped>
 

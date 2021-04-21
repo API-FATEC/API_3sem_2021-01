@@ -8,8 +8,10 @@ export class CodelistService {
 
     getCodelist(documentName, partNumber) {
         return this.http.getWithParams(`${defaultPath}/find`, {
-            document_name: documentName,
-            part_number: partNumber
+            params: {
+                document_name: documentName,
+                part_number: partNumber
+            }
         });
     }
 

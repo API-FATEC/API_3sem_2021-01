@@ -1,6 +1,7 @@
-import Vue from 'vue';
-
-const eventBus = new Vue();
+import {http} from "../../../services/config";
+import {DocumentService} from "../../../scripts/domain/document/DocumentService";
+import {HttpRequester} from "../../../scripts/domain/http/HttpRequester";
+import {eventBus} from "../codelistPage.js";
 
 export default {
     name: "search-codelist",
@@ -11,6 +12,8 @@ export default {
         codelistFound: false,
         findedDocs: [],
         findedPartNumbers: [],
+
+        documentService: new DocumentService(new HttpRequester(http)),
     }),
 
     computed: {
@@ -25,7 +28,7 @@ export default {
         }
     },
 
-    created() {
+    mounted() {
         eventBus.$on('codelistFound', function (traits) {
             this.setCodelistFound();
             this.traits = traits;
@@ -34,6 +37,11 @@ export default {
 
     methods: {
         searchCodelist: function() {
+            console.log({
+                name: this.name,
+                partNumber: this.partNumber
+            });
+
             eventBus.$emit('seeCodelist', {
                 name: this.name,
                 partNumber: this.partNumber
@@ -45,11 +53,21 @@ export default {
         },
 
         searchDocs: function() {
-
+            this.documentService.getDocNames()
+                .then(response => {
+                    this.findedDocs = response.data;
+                }).catch(error => {
+                    console.log(error);
+            });
         },
 
         searchPartNumbers: function() {
-
+            this.documentService.getPartNumbers(this.name)
+                .then(response => {
+                    this.findedPartNumbers = response.data;
+                }).catch(erro => {
+                    console.log(erro);
+            });
         },
 
         enterEditMode: function() {
@@ -58,6 +76,6 @@ export default {
                 partNumber: this.partNumber,
                 traits: this.traits
             });
-        }
+        },
     }
 }
