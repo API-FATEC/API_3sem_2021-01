@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import searchCodelist from "./search/searchCodelist";
-import codelistVisualizer from "./visualizer/codelistVisualizer";
-import codelistEditor from "./editor/codelistEditor";
+import searchCodelist from "./search/searchCodelist.vue";
+import codelistVisualizer from "./visualizer/codelistVisualizer.vue";
+import codelistEditor from "./editor/codelistEditor.vue";
 
 export default {
   name: "codelistPage",

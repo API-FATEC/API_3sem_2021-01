@@ -11,7 +11,7 @@
     </v-form>
 </template>
 
-<script src="searchCodelist.js"></script>
+<script src="./searchCodelist.js"></script>
 
 <style scoped>
 
