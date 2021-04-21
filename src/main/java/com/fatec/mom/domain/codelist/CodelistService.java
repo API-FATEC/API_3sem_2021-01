@@ -43,4 +43,43 @@ public class CodelistService {
         codelistBlocks.forEach(codelistBlock -> codelistBlock.setChecklist(calculateChecklist(documents, codelistBlock.getBlock())));
         return codelistBlocks;
     }
+
+    public List<Document> saveCodelist(final Codelist codelist, final String documentName, final Integer partNumber, final List<String> traits) {
+        var doc = Document.builder()
+                .name(documentName)
+                .partNumber(partNumber)
+                .build();
+        var docs = generateAllDocuments(doc, traits);
+        var codelistBlocks = codelist.getCodelistBlocks();
+        var populatedDocs = insertBlockFromCodelist(codelistBlocks, docs);
+
+        return documentService.saveAll(populatedDocs);
+    }
+
+    private List<Document> generateAllDocuments(final Document defaultDocument, final List<String> traits) {
+        var docs = new LinkedList<Document>();
+        traits.stream().mapToInt(trait -> Integer.parseInt(trait.substring(trait.indexOf("_") + 1))).forEach(value -> {
+            var document = Document.builder()
+                    .name(defaultDocument.getName())
+                    .partNumber(defaultDocument.getPartNumber())
+                    .trait(value)
+                    .blocks(new HashSet<>())
+                    .build();
+            docs.add(document);
+        });
+        return docs;
+    }
+
+    private List<Document> insertBlockFromCodelist(final Set<CodelistBlock> codelistBlocks, final List<Document> documents) {
+        var docs = new LinkedList<>(documents);
+
+        codelistBlocks.forEach(block -> {
+            block.getChecklist().forEach(item -> {
+                if (item == 1)
+                    docs.get(item).addBlock(block.getBlock());
+            });
+        });
+
+        return docs;
+    }
 }

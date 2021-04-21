@@ -67,7 +67,7 @@ public class CodelistController {
                 .body(savedDocs);
     }
 
-    @GetMapping("/find/by")
+    @GetMapping("/find")
     @ApiOperation(value = "Retorna uma codelist completa com todos os documentos encontrados")
     public ResponseEntity<Codelist> findCodelist(
             @RequestParam("document_name") String documentName,
@@ -77,5 +77,17 @@ public class CodelistController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(codelist);
+    }
+
+    @PutMapping("/save")
+    @ApiOperation(value = "")
+    public ResponseEntity<List<Document>> saveCodelist(
+            @RequestParam("document_name") String documentName,
+            @RequestParam("part_number") Integer partNumber,
+            @RequestParam("traits") List<String> traits,
+            @RequestBody Codelist codelist) {
+        var savedCodelist = codelistService.saveCodelist(codelist, documentName, partNumber, traits);
+
+        return ResponseEntity.ok(savedCodelist);
     }
 }
