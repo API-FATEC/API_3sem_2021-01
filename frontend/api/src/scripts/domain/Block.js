@@ -48,35 +48,7 @@ export class Block {
 
 export class BlockFactory {
 
-    static createFromResponse(data) {
-        return new Block(data.id, data.section, data.subSection, data.name, data.code, data.order);
-    }
-
-    static createFromCodelist(codelist) {
+    createFromCodelistBlock(codelist) {
         return new Block(codelist.id, codelist.section, codelist.subSection, codelist.number, codelist.name, codelist.code, codelist.order);
-    }
-
-    static createBodyRequest(block) {
-        return {
-            id: block.id,
-            section: block.section,
-            subSection: block.subSection,
-            number: block.number,
-            name: block.name,
-            code: block.code,
-            order: block.order
-        };
-    }
-}
-
-export class BlockRequestBody {
-
-    static createList(blocks) {
-        let blockList = [];
-        for (let i = 0; i < blocks.length; ++i) {
-            let block = BlockFactory.createBodyRequest(blocks[i]);
-            blockList.push(block);
-        }
-        return blockList;
     }
 }

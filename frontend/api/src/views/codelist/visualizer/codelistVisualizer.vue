@@ -22,7 +22,7 @@ import { CodelistService } from "../../../scripts/domain/codelist/CodelistServic
 import { HttpRequester } from "../../../scripts/domain/http/HttpRequester";
 import { http } from "../../../services/config";
 import { CodelistTableGenerator } from "../../../scripts/domain/codelist/CodelistTableGenerator";
-import {CodelistFactory} from "../../../scripts/domain/Codelist";
+import { CodelistFactory } from "../../../scripts/domain/Codelist";
 
 const eventBus = new Vue();
 
@@ -67,13 +67,13 @@ export default ({
     });
 
     this.getCodelist();
+    this.resolveDefaultTraits();
   },
 
   methods: {
     getCodelist: function() {
       const codelist = this.codelistService.getCodelist(this.name, this.partNumber)
           .then(response => {
-            eventBus.$emit('codelistFound');
             return response.data;
           }).catch(error => {
             console.log(error);
@@ -85,6 +85,10 @@ export default ({
       this.desserts = codelistDescriptor.desserts;
       this.defaultItem = codelistDescriptor.defaultItem;
       this.traits = codelistDescriptor.traits;
+    },
+
+    resolveDefaultTraits() {
+      eventBus.$emit('codelistFound', this.traits);
     }
   }
 })

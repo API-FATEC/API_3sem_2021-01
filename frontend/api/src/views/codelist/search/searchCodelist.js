@@ -7,6 +7,7 @@ export default {
     data: () => ({
         name: '',
         partNumber: '',
+        traits: [],
         codelistFound: false,
         findedDocs: [],
         findedPartNumbers: [],
@@ -25,8 +26,9 @@ export default {
     },
 
     created() {
-        eventBus.$on('codelistFound', function () {
+        eventBus.$on('codelistFound', function (traits) {
             this.setCodelistFound();
+            this.traits = traits;
         });
     },
 
@@ -53,7 +55,8 @@ export default {
         enterEditMode: function() {
             eventBus.$emit('editCodelist', {
                 name: this.name,
-                partNumber: this.partNumber
+                partNumber: this.partNumber,
+                traits: this.traits
             });
         }
     }

@@ -49,7 +49,21 @@ export class CodelistFactory {
 
 export class CodelistBlockFactory {
 
-    static createFromResponse(data) {
-        return new CodelistBlock(data.block, data.checklist);
+    constructor(blockFactory) {
+        this.blockFactory = blockFactory;
+    }
+
+    createFromCodelistDessert(dessert, traits) {
+        return new CodelistBlock(this.blockFactory.createFromCodelistBlock(dessert),
+            this.createBlocksChecklistFromCodelistDessert(dessert, traits));
+    }
+
+    createBlocksChecklistFromCodelistDessert(dessert, traits) {
+        const checklist = [];
+        traits.forEach(function (trait) {
+            let value = trait.substring(trait.indexOf('_'), trait.length);
+            checklist.push(value);
+        });
+        return checklist;
     }
 }

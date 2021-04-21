@@ -18,6 +18,9 @@
 
 <script>
 import Vue from 'vue';
+import {http} from "../../../services/config";
+import {CodelistService} from "../../../scripts/domain/codelist/CodelistService";
+import {HttpRequester} from "../../../scripts/domain/http/HttpRequester";
 
 const eventBus = new Vue();
 
@@ -29,6 +32,9 @@ export default {
     partNumber: '',
     desserts: [],
     headers: [],
+    traits: [],
+
+    codelistService: new CodelistService(new HttpRequester(http)),
   }),
 
   created() {
@@ -36,6 +42,16 @@ export default {
       this.name = name;
       this.partNumber = partNumber;
     });
+  },
+
+  methods: {
+    saveCodelist: function() {
+      this.codelistService.saveCodelist(this.desserts, {
+        name: this.name,
+        partNumber: this.partNumber,
+        traits: this.traits
+      });
+    }
   }
 }
 </script>

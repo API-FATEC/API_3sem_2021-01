@@ -15,4 +15,8 @@ export class HttpRequester {
     getWithParams(path, params) {
         return this.http.get(path, params);
     }
+
+    putWithParams(path, obj, params) {
+        return this.http.put(path, obj, params);
+    }
 }
