@@ -157,9 +157,13 @@
 
 		<!-- Database -->
 		<!-- Postres Driver -->
-		<dependency>
+		<!--dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+		</dependency-->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
 		</dependency>
 		<!-- H2 -->
 		<dependency>
@@ -186,6 +190,13 @@
 		    <groupId>org.apache.poi</groupId>
 		    <artifactId>poi-ooxml</artifactId>
 		    <version>5.0.0</version>
+		</dependency>
+
+		<!-- Git -->
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>5.11.0.202103091610-r</version>
 		</dependency>
 
 	</dependencies>
