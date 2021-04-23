@@ -14,7 +14,6 @@ import java.io.IOException;
 @Service
 public class RevisionService {
 
-    private static final String MASTER = "master";
 
     private Git gitExecutor;
     private GitRepositoryManager repositoryManager;

@@ -6,14 +6,17 @@ import com.fatec.mom.domain.git.handler.GitHandler;
 import com.fatec.mom.domain.git.repository.GitRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 @Slf4j
+@Component
 public class GitImpl implements Git {
 
     private static final String MERGED = "%s MERGED";
+    private static final String MASTER = "master";
 
     @Override
     public void addAll(@NotNull final GitRepository repository) throws GitAPIException {
@@ -45,7 +48,11 @@ public class GitImpl implements Git {
     @Override
     public void mergeIntoMaster(@NotNull GitRepository repository, GitBranch branchToMerge) throws IOException, GitAPIException {
         final GitHandler handler = new GitHandler(repository.getGitInstance());
-        handler.mergeToMaster(repository.resolveChanges(), String.format(MERGED, branchToMerge.getName()));
+        final GitBranch currentBranch = repository.getBranch();
+        if (currentBranch.getName().equalsIgnoreCase(MASTER)) {
+
+        }
+        handler.mergeLastCommit(repository.resolveChanges(), String.format(MERGED, branchToMerge.getName()));
     }
 
     @Override

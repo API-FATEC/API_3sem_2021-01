@@ -43,7 +43,7 @@ public class GitHandler {
                 .call();
     }
 
-    public void mergeToMaster(final ObjectId mergeBase, final String message) throws GitAPIException {
+    public void mergeLastCommit(final ObjectId mergeBase, final String message) throws GitAPIException {
         final var result = gitInstance.merge()
                 .include(mergeBase)
                 .setCommit(true)

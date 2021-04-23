@@ -4,12 +4,9 @@ import com.fatec.mom.domain.git.commands.branch.GitBranch;
 import com.fatec.mom.domain.git.commands.commit.GitCommitType;
 import com.fatec.mom.domain.git.repository.GitRepository;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.springframework.stereotype.Component;
-
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
-@Component
 public interface Git {
 
     void addAll(@NotNull final GitRepository repository) throws GitAPIException;

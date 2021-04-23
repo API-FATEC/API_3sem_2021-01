@@ -2,6 +2,7 @@ package com.fatec.mom.domain.git.repository;
 
 import com.fatec.mom.domain.git.commands.branch.GitBranch;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
@@ -10,8 +11,10 @@ import java.io.File;
 import java.io.IOException;
 
 @AllArgsConstructor
+@Getter
 public class GitRepository {
 
+    private final String repositoryName;
     private final Repository repository;
 
     public Git getGitInstance() {
