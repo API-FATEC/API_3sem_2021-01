@@ -44,4 +44,8 @@ public class Document {
     public Boolean hasBlock(final Block block) {
         return getBlocks().contains(block);
     }
+
+    public String getDocumentPath() {
+        return String.format("%s-%s", name, partNumber);
+    }
 }
