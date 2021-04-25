@@ -5,6 +5,8 @@ import com.fatec.mom.infra.gitexecutor.config.GitProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
+
 @Component
 public class GitCommandAdapter {
 
@@ -12,6 +14,27 @@ public class GitCommandAdapter {
 
     @Autowired
     private GitProperties gitProperties;
+
+    public String[] adaptCheckoutCommand(@NotNull final DocumentDescriptor descriptor, final String branchName) {
+        return new String[] {
+                getExecutableCommand(),
+                GitAuxiliaryCommand.PATH.getCommand(),
+                descriptor.getDocumentPath(),
+                GitCommand.CHECKOUT.getName(),
+                branchName
+        };
+    }
+
+    public String[] adaptCheckoutNewBranchCommand(@NotNull final DocumentDescriptor descriptor, final String branchName) {
+        return new String[] {
+                getExecutableCommand(),
+                GitAuxiliaryCommand.PATH.getCommand(),
+                descriptor.getDocumentPath(),
+                GitCommand.CHECKOUT.getName(),
+                GitAuxiliaryCommand.NEW_BRANCH.getCommand(),
+                branchName
+        };
+    }
 
     public String[] adaptAddAllCommand(final DocumentDescriptor descriptor) {
         return new String[] {
@@ -25,7 +48,7 @@ public class GitCommandAdapter {
 
     public String[] adaptActualBranchCommand(final DocumentDescriptor descriptor) {
         return new String[] {
-            getExecutableCommand(),
+                getExecutableCommand(),
                 GitAuxiliaryCommand.PATH.getCommand(),
                 descriptor.getDocumentPath(),
                 GitCommand.REV_PARSE.getName(),

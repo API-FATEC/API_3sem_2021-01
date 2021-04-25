@@ -5,10 +5,11 @@ import com.fatec.mom.infra.gitprocessor.ProcessManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.constraints.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
@@ -23,15 +24,18 @@ public class GitHandler {
     private final String[] commands;
     private long startTime;
 
+    private Set<GitHandlerListener> listeners = new HashSet<>();
 
-    public GitHandler(GitCommand command, String[] commands) {
+
+    public GitHandler(GitCommand command,
+                      String[] commands) {
         this.command = command;
         this.commands = commands;
     }
 
     public void run() throws IOException {
         try {
-            runCommand();
+            start();
             if (isStarted()) {
                 printOutput();
             }
@@ -42,9 +46,15 @@ public class GitHandler {
         }
     }
 
-    private void runCommand() throws IOException {
-        this.startTime = System.currentTimeMillis();
-        this.process = ProcessManager.run(this.commands);
+    private void start() {
+        try {
+            this.startTime = System.currentTimeMillis();
+            log.info("Running: " + Arrays.toString(commands));
+            this.process = ProcessManager.run(this.commands);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean isStarted() {
@@ -66,14 +76,16 @@ public class GitHandler {
         }
     }
 
-    private void printOutput() throws IOException, InterruptedException {
+    private void printOutput() throws InterruptedException {
         if (process.waitFor(3, TimeUnit.SECONDS)) {
             final BufferedReader output = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = output.readLine();
-            while (line != null) {
-                System.out.println(line);
-                line = output.readLine();
-            }
+            listeners.forEach(listener -> {
+                listener.onLineAvailable(output.lines());
+            });
         }
+    }
+
+    public void addListener(@NotNull GitHandlerListener listener) {
+        listeners.add(listener);
     }
 }
