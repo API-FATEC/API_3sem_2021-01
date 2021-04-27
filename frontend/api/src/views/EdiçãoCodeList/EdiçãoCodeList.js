@@ -34,6 +34,8 @@ export default {
         dialogNovoTraco: false,
         dialogSalvar: false,
         dialogCancelar: false,
+        dialogSaved: false,
+        dialogError: false,
         headers: [
             {
                 text: 'Nº SEÇÃO',
@@ -54,20 +56,18 @@ export default {
         traco: [],
         editedIndex: -1,
         editedItem: {
-            numero_secao: '',
-            numero_sub_secao: '',
-            numero_block: '',
-            block_name: '',
+            section: '',
+            sub_section: '',
+            number: '',
+            name: '',
             code: '',
-            remarks: '',
         },
         defaultItem: {
-            numero_secao: '',
-            numero_sub_secao: '',
-            numero_block: '',
-            block_name: '',
+            section: '',
+            sub_section: '',
+            number: '',
+            name: '',
             code: '',
-            remarks: '',
         },
         editedTraco: {
             nomeTraco: '',
@@ -81,7 +81,8 @@ export default {
         findedDocs: [],
         allDocumentsResponse: [],
         allBlocksResponse: [],
-        email: '',
+        originalDesserts: [],
+        originalHeaders: [],
     }),
 
     created() {
@@ -139,6 +140,7 @@ export default {
             this.$refs.form.reset()
             this.desserts = [];
             this.defaultHeaders();
+            this.dialogError = false;
         },
 
         resetTableToDefault: function () {
@@ -151,25 +153,29 @@ export default {
         },
 
         // Tabela
-        novaColuna(){
+        novaColuna: function(){
+            this.originalHeaders = [...this.headers];
             if(this.editedTraco.nomeTraco.length === 0){
-                //this.closeTraco()
                 return
             }
             var nomeValue = this.editedTraco.nomeTraco.valueOf()
             nomeValue = nomeValue.toLowerCase()
             nomeValue = nomeValue.replaceAll(' ', '_')
-            this.headers.push({text: this.editedTraco.nomeTraco, value: nomeValue})
-            this.desserts=this.desserts.map(item => {
+            this.headers.push({text: 'Traço: ' + this.editedTraco.nomeTraco, value: "trait_" + nomeValue})
+
+            this.editedDesserts = this.editedDesserts.map(item => {
                 var objeto = {}
                 objeto[nomeValue] = 0
                 return {...item,...objeto}
             })
+            let obj = {...this.editedItem};
+            obj["trait_" + nomeValue] = 0;
+            this.defaultItem = {...obj};
             this.closeTraco()
         },
 
         editItem(item) {
-            this.editedIndex = this.desserts.indexOf(item)
+            this.editedIndex = this.editedDesserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialog = true
         },
@@ -199,6 +205,22 @@ export default {
                 this.editedTraco.nomeTraco = ''
                 this.editedTraco.valorDefault = ''
             })
+        },
+
+        closeDialogCancel() {
+            this.dialogCancelar = false;
+        },
+
+        closeSalvarDialog() {
+            this.dialogSalvar = false;
+        },
+
+        closeSavedDialog() {
+            this.dialogSaved = false;
+        },
+
+        closeDialogError() {
+            this.dialogError = false;
         },
 
         closeDelete() {
@@ -251,17 +273,31 @@ export default {
                 });
 
                 this.desserts = this.sortedCodelistBlocks(codelistBlocks);
-                this.editedDesserts = this.sortedCodelistBlocks(codelistBlocks);
+                this.editedDesserts = [...this.desserts];
                 for (let i = 0; i < headersToAdd.length; ++i) {
                     this.headers.push(headersToAdd[i]);
                 }
-            }).catch(error => console.log(error));
+
+                let blockEditedItem = {...this.editedItem};
+                for (let i = 0; i < columnsToAdd.length; ++i) {
+                    let obj = {};
+                    obj['trait_' + columnsToAdd[i]] = 0;
+                    blockEditedItem = {...blockEditedItem, ...obj};
+                }
+
+                this.editedItem = blockEditedItem;
+                this.defaultItem = {...blockEditedItem};
+            }).catch(error => {
+                this.dialogSalvar = false;
+                this.dialogError = true;
+                console.log(error);
+            });
         },
 
         sortedCodelistBlocks: function (array) {
             function compare(a, b) {
-                if (a.number < b.number) return -1;
-                if (a.number > b.number) return 1;
+                if (a.order < b.order) return -1;
+                if (a.order > b.order) return 1;
                 return 0;
             }
 
@@ -275,14 +311,18 @@ export default {
                 }
             }).then(response => {
                 this.findedPartNumbers = response.data;
-            }).catch(error => console.log(error));
+            }).catch(error => {
+                console.log(error)
+            });
         },
 
         searchDocs() {
             http.get(DocumentsEndpoints.FIND_ALL_DOCS)
                 .then(response => {
                     this.findedDocs = response.data;
-                }).catch(error => console.log(error));
+                }).catch(error => {
+                console.log(error)
+            });
         },
 
         saveCodelist: function () {
@@ -314,14 +354,38 @@ export default {
             http.put(DocumentsEndpoints.SAVE_ALL, DocumentRequestBody.createList(documents))
                 .then(response => {
                     console.log(response);
+                    if (response.status === 200) {
+                        this.dialogSalvar = false;
+                        this.dialogSaved = true;
+                    }
                 })
-                .catch(error => console.log(error));
+                .catch(error => {
+                    this.dialogSalvar = false;
+                    this.dialogError = true;
+                    console.log(error)
+                });
+
             this.editMode = false;
         },
 
         cancelEdit: function () {
-            this.editedDesserts = this.desserts;
+            this.desserts = [...this.originalDesserts];
+            this.headers = [...this.originalHeaders];
+            this.editedDesserts = [];
             this.editMode = false;
+            this.dialogCancelar = false;
+
+            this.getCodelist();
+        },
+
+        enterEditMode: function() {
+            this.originalDesserts.push(this.desserts);
+            this.desserts = this.editedDesserts;
+            this.editMode = true;
+        },
+
+        redirectToImportPage: function () {
+            this.$router.push('ImportacaoCodeList').then().catch(error => console.log(error));
         }
     },
 }

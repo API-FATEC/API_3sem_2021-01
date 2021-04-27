@@ -93,9 +93,15 @@ O usuário poderá visualizar os seus documentos em uma estrutura de listas mais
 **Eu como parte do time de publicação, desejo visualizar um codelist de um documento específico como um todo, para que seja fácil gerenciar quais blocos compõem determinado traço.**
 
 **Eu como parte do time de publicação, desejo editar um codelist de um determinado documento, para que seja possível modificar a estrutura de um documento salvo na aplicação.**
-
-**Eu como responsável por um documento, desejo criar um codelist para um determinado documento dentro da aplicação, pois é muito mais eficaz manter o gerenciamento de codelists no sistema, desde sua criação.**
 ***
-> Entrega de um sistema de visualização, edição e criação de codelists.
+### O entregável
+#### **O sistema permite a visualização e edição de um codelist.**
+
+É possível visualizar um codelist no mesmo formato que é feito atualmente, pois isso melhora a adaptação do usuário com o sistema, por causa da maior familiaridade.
+
+É possível editar um codelist, alterando quais traços um determinado bloco pertence, adicionar um novo bloco, adicionar um novo traço, editar um bloco já registrado e deletar um bloco existente.
+
 ## Sprint 3
+***
 ## Sprint 4
+***
