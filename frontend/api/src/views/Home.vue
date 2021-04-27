@@ -8,7 +8,7 @@
       </v-row>
       <v-row justify="center" class="pa-2">
         <div>
-          <titulo class="display-1" id="titulo">MOM - Management of Operation Manuals</titulo>
+          <h1 class="display-1" id="titulo">MOM - Management of Operation Manuals</h1>
         </div>
       </v-row>
       <v-row class="pa-4">

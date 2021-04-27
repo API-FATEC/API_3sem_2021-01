@@ -1,13 +1,13 @@
 package com.fatec.mom.domain.document;
 
-import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-@NoArgsConstructor
 public class DocumentSpecification {
 
+    private DocumentSpecification() {}
+
     public static Specification<Document> searchByName(String name) {
-        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("name") , "%" + name + "%");
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("name")) , "%" + name.toLowerCase() + "%");
     }
 
     public static Specification<Document> searchByPartNumber(Integer pn) {

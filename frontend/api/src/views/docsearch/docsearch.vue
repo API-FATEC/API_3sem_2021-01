@@ -4,7 +4,7 @@
             <v-row justify="center" class="pa-2"></v-row>
             <v-row justify="center" class="pa-2">
                 <div>
-                    <titulo class="display-1">Busca Documentos</titulo>
+                    <h1 class="display-1">Busca Documentos</h1>
                 </div>
             </v-row>
             <v-row class="pa-4">

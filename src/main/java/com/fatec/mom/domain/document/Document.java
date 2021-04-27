@@ -40,4 +40,8 @@ public class Document {
     public void addBlock(final Block block) {
         this.blocks.add(block);
     }
+
+    public Boolean hasBlock(final Block block) {
+        return getBlocks().contains(block);
+    }
 }
