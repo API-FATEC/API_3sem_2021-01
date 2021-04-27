@@ -66,7 +66,7 @@ public class Block {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Trait> traits;
 
-    private String getBlockName() {
+    public String getBlockName() {
         if (getSubSection() == null) {
             return String.format("%s-%s-%s-%sc%s",
                                 getDocument().getName(),

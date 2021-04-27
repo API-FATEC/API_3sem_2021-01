@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -34,4 +36,25 @@ public class BlockLink {
     @ManyToOne
     @JoinColumn(name = "BLC_COD")
     private Block block;
+
+    public static class FilePathBuilder {
+
+        @Value("${default-documents-path}")
+        private String DOCUMENTS_PATH;
+
+        public String getCompleteFilePathFromMaster(@NotNull final BlockLink link) {
+            return String.format("%s/Master/%s/%s",
+                    DOCUMENTS_PATH,
+                    link.block.getBlockName(),
+                    link.fileName);
+        }
+
+        public String getCompleteFilePathFromRev(@NotNull final BlockLink link, final String revPath) {
+            return String.format("%s/Rev/%s/%s/%s",
+                    DOCUMENTS_PATH,
+                    revPath,
+                    link.block.getBlockName(),
+                    link.fileName);
+        }
+    }
 }
