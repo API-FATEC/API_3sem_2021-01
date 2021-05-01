@@ -8,13 +8,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "MOM_TRACO")
+@SequenceGenerator(name = "MOM_TRACO_SQ", sequenceName = "MOM_TRACO_SQ", allocationSize = 1)
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "number")
 public class Trait {
-
 
     @Id
     @GeneratedValue(generator = "MOM_TRACO_SQ", strategy = GenerationType.SEQUENCE)
