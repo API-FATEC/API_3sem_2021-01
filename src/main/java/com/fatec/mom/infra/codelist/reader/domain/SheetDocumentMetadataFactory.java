@@ -6,8 +6,8 @@ import java.util.List;
 public class SheetDocumentMetadataFactory {
 
     public static String getDocumentNameFrom(String sheetName) {
-        String[] splitted = sheetName.split("-");
-        String result = splitted.length > 0 ? splitted[0].replace(" ", "_") : "";
+        String[] split = sheetName.split("-");
+        String result = split.length > 0 ? split[0].replace(" ", "_") : "";
         List<String> resultNames = Arrays.asList(result.split("_"));
         StringBuilder nameBuilder = new StringBuilder();
         for (int i = 0; i < resultNames.size(); i++) {

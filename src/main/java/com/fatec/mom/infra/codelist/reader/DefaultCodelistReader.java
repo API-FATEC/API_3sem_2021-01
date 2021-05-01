@@ -24,16 +24,16 @@ public class DefaultCodelistReader implements CodelistReader {
     private final CodelistConfigLocator locator;
 
     @Override
-    public List<Document> readCodelist(CodelistConfigType type, InputStream stream) {
+    public List<Document> readCodelist(InputStream stream) {
         final SheetContentsholder contentsHolder = new SheetContentsholder();
 
         try (final Workbook workbook = WorkbookFactory.create(stream)) {
-            retriever.addContents(locator.getConfig(type), workbook, contentsHolder);
+            retriever.addContents(locator.getConfig(CodelistConfigType.DEFAULT), workbook, contentsHolder);
         } catch (IOException e) {
             log.error("Error when importing codelist", e);
             throw new CodelistReaderException("Error when importing codelist", e);
         }
 
-        return locator.getConfig(type).getInvoker().assembleDocument(contentsHolder);
+        return locator.getConfig(CodelistConfigType.DEFAULT).getInvoker().assembleDocument(contentsHolder);
     }
 }

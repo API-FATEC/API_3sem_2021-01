@@ -20,11 +20,11 @@ public class DocumentService {
     }
 
     @Transactional
-    public Set<Document> findAllByNameAndPartNumber(final String name, final Integer partNumber) {
+    public Document findByNameAndPartNumber(final String name, final Integer partNumber) {
         final var docs = documentRepository.findAll(DocumentSpecification.searchByName(name));
         return docs.stream()
                 .filter(document -> document.getPartNumber().equals(partNumber))
-                .collect(Collectors.toSet());
+                .findFirst().orElseThrow();
     }
 
     @Transactional
@@ -38,7 +38,7 @@ public class DocumentService {
 
     @Transactional
     public List<Document> saveAll(final List<Document> documents) {
-        return documentRepository.saveAll(documents);
+        return documents.stream().map(document -> documentRepository.save(document)).collect(Collectors.toList());
     }
 
     @Transactional
@@ -51,5 +51,10 @@ public class DocumentService {
     public Set<String> findAllNames() {
         var docs = documentRepository.findAll();
         return docs.stream().map(Document::getName).collect(Collectors.toSet());
+    }
+
+    @Transactional
+    public Document save(Document document) {
+        return documentRepository.save(document);
     }
 }

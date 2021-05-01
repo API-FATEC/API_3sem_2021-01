@@ -1,5 +1,6 @@
 package com.fatec.mom.domain.block;
 
+import com.fatec.mom.domain.document.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,18 +39,18 @@ public class BlockLink {
         @Value("${default-documents-path}")
         private String DOCUMENTS_PATH;
 
-        public String getCompleteFilePathFromMaster(@NotNull final BlockLink link, @NotNull final Block block) {
+        public String getCompleteFilePathFromMaster(@NotNull final BlockLink link, @NotNull final Block block, @NotNull final Document document) {
             return String.format("%s/Master/%s/%s",
                     DOCUMENTS_PATH,
-                    block.getBlockName(),
+                    block.getBlockName(document),
                     link.fileName + link.extension);
         }
 
-        public String getCompleteFilePathFromRev(@NotNull final BlockLink link, @NotNull final Block block, final String revPath) {
+        public String getCompleteFilePathFromRev(@NotNull final BlockLink link, @NotNull final Block block, @NotNull final Document document, final String revPath) {
             return String.format("%s/Rev/%s/%s/%s",
                     DOCUMENTS_PATH,
                     revPath,
-                    block.getBlockName(),
+                    block.getBlockName(document),
                     link.fileName + link.extension);
         }
     }

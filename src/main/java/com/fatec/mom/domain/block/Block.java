@@ -61,19 +61,32 @@ public class Block {
     private Set<Tag> tags;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "MOM_TRACO_BLC",
+            joinColumns = @JoinColumn(name = "BLC_COD"),
+            inverseJoinColumns = @JoinColumn(name = "TRA_COD"))
     private Set<Trait> traits;
 
-    public String getBlockName() {
+    public String getBlockName(Document document) {
         if (getSubSection() == null) {
-            return String.format("%s-%sc%s",
+            return String.format("%s-%s-%sc%s",
+                                document.getDocument(),
                                 getSection(),
                                 getNumber(),
                                 getCode());
         }
-        return String.format("%s-%s-%s-c%s",
+        return String.format("%s-%s-%s-%s-c%s",
+                                document.getDocument(),
                                 getSection(),
                                 getSubSection(),
                                 getNumber(),
                                 getCode());
+    }
+
+    public void addTrait(Trait trait) {
+        traits.add(trait);
+    }
+
+    public boolean hasTrait(Trait trait) {
+        return traits.contains(trait);
     }
 }

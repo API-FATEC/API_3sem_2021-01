@@ -29,7 +29,7 @@ class DocumentServiceTest extends AbstractIntegrationTest {
     @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql",
         config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
     void returnsAllDocumentsByNameAndPartNumber() throws JSONException {
-        var docs = documentService.findAllByNameAndPartNumber("ABC", 1234);
+        var docs = documentService.findByNameAndPartNumber("ABC", 1234);
         var json = new Gson().toJson(docs);
 
         JSONAssert.assertEquals(jsonAsString("expected-doc-search-result-as-list.json"), json, true);
@@ -39,7 +39,7 @@ class DocumentServiceTest extends AbstractIntegrationTest {
     @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql",
         config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
     void returnsAllDocumentsByNameAndPartNumberAndTrait() throws JSONException {
-        var doc = documentService.findAllByNameAndPartNumber("ABC", 1234);
+        var doc = documentService.findByNameAndPartNumber("ABC", 1234);
         var json = new Gson().toJson(doc);
 
         JSONAssert.assertEquals(jsonAsString("expected-document-with-trait-50.json"), json, true);

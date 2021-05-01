@@ -48,10 +48,10 @@ public class DocumentController {
 
     @GetMapping("/find/all/by")
     @ApiOperation(value = "Retorna todos os documentos e traços de acordo com o nome e partnumber")
-    public ResponseEntity<Set<Document>> findAllByNameAndPartNumber(
+    public ResponseEntity<Document> findAllByNameAndPartNumber(
             @RequestParam("document_name") String documentName,
             @RequestParam("part_number") Integer partNumber) {
-        var docs = documentService.findAllByNameAndPartNumber(documentName, partNumber);
+        var docs = documentService.findByNameAndPartNumber(documentName, partNumber);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)

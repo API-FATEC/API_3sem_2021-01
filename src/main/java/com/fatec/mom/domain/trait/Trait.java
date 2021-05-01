@@ -2,10 +2,7 @@ package com.fatec.mom.domain.trait;
 
 import com.fatec.mom.domain.block.Block;
 import com.fatec.mom.domain.document.Document;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,6 +12,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "number")
 public class Trait {
 
 

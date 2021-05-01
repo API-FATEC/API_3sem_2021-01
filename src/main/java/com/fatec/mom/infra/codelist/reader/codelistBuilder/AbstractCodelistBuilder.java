@@ -15,7 +15,7 @@ public class AbstractCodelistBuilder {
         this.metadataIndexes.putAll(metadataIndexes);
     }
 
-    private Map<CodelistMetadata, Object> metadataIndexes = new EnumMap<>(CodelistMetadata.class);
+    private final Map<CodelistMetadata, Object> metadataIndexes = new EnumMap<>(CodelistMetadata.class);
 
     protected int getIndex(final CodelistMetadata metadata) {
         return (int) metadataIndexes.get(metadata);

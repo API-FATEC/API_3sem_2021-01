@@ -15,7 +15,7 @@ public class CodelistBuiderInvoker {
     public List<Document> assembleDocument(final SheetContentsholder contentsholder) {
         final List<Document> documents = new LinkedList<>();
         contentsholder.getSheets().forEach(sheet -> {
-            documents.addAll(builder.transposeValues(sheet));
+            documents.add(builder.transposeValues(sheet));
         });
         return documents;
     }

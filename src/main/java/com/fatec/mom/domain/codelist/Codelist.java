@@ -11,6 +11,6 @@ import java.util.Set;
 @Builder
 public class Codelist {
 
-    private Document documents;
+    private Document document;
     private Set<CodelistBlock> codelistBlocks;
 }

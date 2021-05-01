@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface CodelistReader {
 
-    List<Document> readCodelist(CodelistConfigType type, final InputStream stream);
+    List<Document> readCodelist(final InputStream stream);
 }
