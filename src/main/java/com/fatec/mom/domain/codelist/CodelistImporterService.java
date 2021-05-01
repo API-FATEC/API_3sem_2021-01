@@ -6,10 +6,13 @@ import com.fatec.mom.infra.codelist.reader.CodelistReader;
 import com.fatec.mom.infra.codelist.reader.CodelistReaderLocator;
 import com.fatec.mom.infra.codelist.reader.CodelistReaderType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -22,6 +25,9 @@ public class CodelistImporterService {
 
     private final CodelistReaderLocator readerLocator;
     private final DocumentService documentService;
+
+    @Value("${default-upload-path}")
+    private String UPLOAD_PATH;
 
     @Autowired
     public CodelistImporterService(CodelistReaderLocator readerLocator, DocumentService documentService) {
@@ -68,7 +74,8 @@ public class CodelistImporterService {
     }
 
     private List<Document> readMultiTabFile(MultipartFile multipartFile) throws IOException {
-        final InputStream stream = multipartFile.getInputStream();
+        final File file = new File(String.format("%s/%s", UPLOAD_PATH, multipartFile.getOriginalFilename()));
+        final InputStream stream = new FileInputStream(file);
         final CodelistReader reader = readerLocator.getReader(CodelistReaderType.MULTIPLE_TAB);
 
         return reader.readCodelist(stream);

@@ -6,6 +6,7 @@ import com.fatec.mom.domain.codelist.CodelistConverterService;
 import com.fatec.mom.domain.codelist.CodelistImporterService;
 import com.fatec.mom.domain.codelist.CodelistService;
 import com.fatec.mom.domain.document.Document;
+import com.fatec.mom.domain.document.DocumentService;
 import com.fatec.mom.domain.file.FileInfoService;
 import com.fatec.mom.domain.file.FileUploadService;
 import com.fatec.mom.infra.codelist.reader.CodelistReaderType;
@@ -37,13 +38,17 @@ public class CodelistController {
 
     private final CodelistService codelistService;
 
+    private final DocumentService documentService;
+
     @Autowired
     public CodelistController(FileUploadService fileUploadService,
                               CodelistImporterService importerService,
-                              CodelistService codelistService) {
+                              CodelistService codelistService,
+                              DocumentService documentService) {
         this.fileUploadService = fileUploadService;
         this.importerService = importerService;
         this.codelistService = codelistService;
+        this.documentService = documentService;
     }
 
     @PostMapping("/import")
@@ -54,7 +59,8 @@ public class CodelistController {
             @RequestParam("file") MultipartFile file) throws IOException {
 
         fileUploadService.uploadFile(file);
-        final List<Document> docs = importerService.read(readerType, file);
+        List<Document> docs = importerService.read(readerType, file);
+        docs = documentService.saveAll(docs);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
