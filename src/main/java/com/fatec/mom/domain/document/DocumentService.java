@@ -20,13 +20,20 @@ public class DocumentService {
     }
 
     @Transactional
-    public Document findByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait) {
-        return documentRepository.findByNameAndPartNumberAndTrait(name, partNumber, trait).orElse(null);
+    public Set<Document> findAllByNameAndPartNumber(final String name, final Integer partNumber) {
+        final var docs = documentRepository.findAll(DocumentSpecification.searchByName(name));
+        return docs.stream()
+                .filter(document -> document.getPartNumber().equals(partNumber))
+                .collect(Collectors.toSet());
     }
 
     @Transactional
-    public List<Document> findAllByNameAndPartNumber(final String name, final Integer partNumber) {
-        return documentRepository.findAllByNameAndPartNumber(name, partNumber);
+    public Set<Document> findAllByNameAndPartNumberAndTrait(final String name, final Integer partNumber, Integer trait) {
+        final var docs = documentRepository.findAll(DocumentSpecification.searchByName(name));
+        return docs.stream()
+                .filter(document -> document.getPartNumber().equals(partNumber))
+                .filter(document -> document.containsTrait(trait))
+                .collect(Collectors.toSet());
     }
 
     @Transactional

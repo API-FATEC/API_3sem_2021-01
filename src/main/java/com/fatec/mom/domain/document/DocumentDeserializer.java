@@ -26,7 +26,7 @@ public class DocumentDeserializer implements ConverterDeserializer<Document> {
             var document = Document.builder()
                     .name(referenceDocumentName)
                     .partNumber(referenceDocumentPartNumber)
-                    .trait(formattedTraitCell)
+//                    .trait(formattedTraitCell)
                     .createdDate(referenceDocumentDate)
                     .blocks(new HashSet<>())
                     .build();

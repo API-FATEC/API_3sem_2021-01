@@ -16,8 +16,5 @@ public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSp
     List<Document> findAll();
 
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = "blocks")
-    List<Document> findAllByNameAndPartNumber(String name, Integer partNumber);
-
-    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = "blocks")
-    Optional<Document> findByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait);
+    Optional<Document> findByNameAndPartNumber(String name, Integer partNumber);
 }

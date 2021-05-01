@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -28,11 +27,6 @@ public class Revision {
 
     @Column(name = "REV_NAME")
     private String name;
-
-    @ManyToOne
-    @NotNull
-    @JoinColumn(name = "DOC_COD", nullable = false)
-    private Document document;
 
     @Column(name = "REV_STATUS")
     @Enumerated(EnumType.STRING)

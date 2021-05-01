@@ -1,9 +1,6 @@
 package com.fatec.mom.domain.tag;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -23,4 +20,8 @@ public class TypeTag {
 
     @Column(name = "TIP_NOM", nullable = false)
     private String name;
+
+    public TypeTag(String name) {
+        this.name = name;
+    }
 }

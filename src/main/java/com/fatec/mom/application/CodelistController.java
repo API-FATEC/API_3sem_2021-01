@@ -2,7 +2,7 @@ package com.fatec.mom.application;
 
 import com.fatec.mom.domain.codelist.Codelist;
 import com.fatec.mom.domain.codelist.CodelistConverterService;
-import com.fatec.mom.domain.codelist.CodelistService;
+//import com.fatec.mom.domain.codelist.CodelistService;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.file.FileInfoService;
 import com.fatec.mom.domain.file.FileUploadService;
@@ -37,8 +37,8 @@ public class CodelistController {
     @Autowired
     private FileInfoService fileInfoService;
 
-    @Autowired
-    private CodelistService codelistService;
+//    @Autowired
+//    private CodelistService codelistService;
 
     @PostMapping("/import")
     @ApiOperation(value = "Realiza a importação dos arquivos de codelist (que devem estar em formato Excel) " +
@@ -67,15 +67,15 @@ public class CodelistController {
                 .body(savedDocs);
     }
 
-    @GetMapping("/find/by")
-    @ApiOperation(value = "Retorna uma codelist completa com todos os documentos encontrados")
-    public ResponseEntity<Codelist> findCodelist(
-            @RequestParam("document_name") String documentName,
-            @RequestParam("part_number") Integer partNumber) {
-        var codelist = codelistService.findCodelist(documentName, partNumber);
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(codelist);
-    }
+//    @GetMapping("/find/by")
+//    @ApiOperation(value = "Retorna uma codelist completa com todos os documentos encontrados")
+//    public ResponseEntity<Codelist> findCodelist(
+//            @RequestParam("document_name") String documentName,
+//            @RequestParam("part_number") Integer partNumber) {
+//        var codelist = codelistService.findCodelist(documentName, partNumber);
+//
+//        return ResponseEntity.ok()
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .body(codelist);
+//    }
 }

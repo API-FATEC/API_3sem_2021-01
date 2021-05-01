@@ -33,28 +33,24 @@ public class BlockLink {
     @Column(name = "LNK_UPLOAD_DATE", nullable = false)
     private Date upload;
 
-    @ManyToOne
-    @JoinColumn(name = "BLC_COD")
-    private Block block;
-
     public static class FilePathBuilder {
 
         @Value("${default-documents-path}")
         private String DOCUMENTS_PATH;
 
-        public String getCompleteFilePathFromMaster(@NotNull final BlockLink link) {
+        public String getCompleteFilePathFromMaster(@NotNull final BlockLink link, @NotNull final Block block) {
             return String.format("%s/Master/%s/%s",
                     DOCUMENTS_PATH,
-                    link.block.getBlockName(),
-                    link.fileName);
+                    block.getBlockName(),
+                    link.fileName + link.extension);
         }
 
-        public String getCompleteFilePathFromRev(@NotNull final BlockLink link, final String revPath) {
+        public String getCompleteFilePathFromRev(@NotNull final BlockLink link, @NotNull final Block block, final String revPath) {
             return String.format("%s/Rev/%s/%s/%s",
                     DOCUMENTS_PATH,
                     revPath,
-                    link.block.getBlockName(),
-                    link.fileName);
+                    block.getBlockName(),
+                    link.fileName + link.extension);
         }
     }
 }

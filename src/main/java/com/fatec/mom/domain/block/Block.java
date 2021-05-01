@@ -45,14 +45,11 @@ public class Block {
     private Integer order;
 
     @Column(name = "BLC_STATUS")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private BlockStatus status;
 
     @Column(name = "BLC_BASEPATH", nullable = false)
     private String basePath;
-
-    @ManyToOne
-    @JoinColumn(name = "DOC_COD")
-    private Document document;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<BlockLink> links;
@@ -68,16 +65,12 @@ public class Block {
 
     public String getBlockName() {
         if (getSubSection() == null) {
-            return String.format("%s-%s-%s-%sc%s",
-                                getDocument().getName(),
-                                getDocument().getPartNumber(),
+            return String.format("%s-%sc%s",
                                 getSection(),
                                 getNumber(),
                                 getCode());
         }
-        return String.format("%s-%s-%s-%s-%s-c%s",
-                                getDocument().getName(),
-                                getDocument().getPartNumber(),
+        return String.format("%s-%s-%s-c%s",
                                 getSection(),
                                 getSubSection(),
                                 getNumber(),

@@ -36,7 +36,7 @@ public class BlockConverterFilter extends AbstractConverterFilter {
 
             for (int i = DEFAULT_COLUMN_INDEX, traitIndex = 0; i < cells.size(); ++i, ++traitIndex) {
                 if (!cells.get(i).equals(NULLABLE_CELL)) {
-                    documents.get(traitIndex).addBlock(block);
+//                    documents.get(traitIndex).addBlock(block);
                 }
             }
         }

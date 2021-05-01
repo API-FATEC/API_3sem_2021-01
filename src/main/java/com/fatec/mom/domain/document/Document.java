@@ -9,6 +9,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "MOM_DOCUMENTO")
@@ -48,5 +49,9 @@ public class Document {
 
     public String getDocument() {
         return String.format("%s-%s", name, partNumber);
+    }
+
+    public boolean containsTrait(Integer trait) {
+        return traits.stream().map(trait1 -> trait1.getNumber() == trait).collect(Collectors.toSet()).size() > 0;
     }
 }

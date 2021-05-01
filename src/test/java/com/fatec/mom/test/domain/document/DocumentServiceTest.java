@@ -39,7 +39,7 @@ class DocumentServiceTest extends AbstractIntegrationTest {
     @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql",
         config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
     void returnsAllDocumentsByNameAndPartNumberAndTrait() throws JSONException {
-        var doc = documentService.findByNameAndPartNumberAndTrait("ABC", 1234, 50);
+        var doc = documentService.findAllByNameAndPartNumber("ABC", 1234);
         var json = new Gson().toJson(doc);
 
         JSONAssert.assertEquals(jsonAsString("expected-document-with-trait-50.json"), json, true);
@@ -62,9 +62,9 @@ class DocumentServiceTest extends AbstractIntegrationTest {
         var dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         var docs = new LinkedList<Document>();
 
-        docs.add(Document.builder().id(1L).createdDate(dateFormat.parse("23/06/2021")).name("test").partNumber(123).trait(50).blocks(new HashSet<>()).build());
-        docs.add(Document.builder().id(2L).createdDate(dateFormat.parse("23/06/2021")).name("test").partNumber(123).trait(55).blocks(new HashSet<>()).build());
-        docs.add(Document.builder().id(3L).createdDate(dateFormat.parse("23/06/2021")).name("test").partNumber(123).trait(60).blocks(new HashSet<>()).build());
+//        docs.add(Document.builder().id(1L).createdDate(dateFormat.parse("23/06/2021")).name("test").partNumber(123).trait(50).blocks(new HashSet<>()).build());
+//        docs.add(Document.builder().id(2L).createdDate(dateFormat.parse("23/06/2021")).name("test").partNumber(123).trait(55).blocks(new HashSet<>()).build());
+//        docs.add(Document.builder().id(3L).createdDate(dateFormat.parse("23/06/2021")).name("test").partNumber(123).trait(60).blocks(new HashSet<>()).build());
 
         return docs;
     }
