@@ -24,6 +24,11 @@ const routes = [
     path: '/docsearch',
     name: 'docsearch',
     component: () => import('../views/docsearch/docsearch.vue')
+  },
+  {
+    path: '/CriacaoReview',
+    name: 'CriacaoReview',
+    component: () => import('../views/CriacaoReview/CriacaoReview.vue')
   }
   // {
   //   path: '/about',
