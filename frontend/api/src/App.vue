@@ -66,6 +66,7 @@ export default {
       {conteudo: "Importação CodeList", url: "/ImportacaoCodeList", icon: "mdi-file"},
       {conteudo: "Edição CodeList", url: "/EdiçãoCodeList", icon: "mdi-file-edit"},
       {conteudo: "Busca", url: "/docsearch", icon: "mdi-search-web"},
+      {conteudo: "Criação de Review", url: "/CriacaoReview", icon: "mdi-search-web"},
     ]
   }),
 };
