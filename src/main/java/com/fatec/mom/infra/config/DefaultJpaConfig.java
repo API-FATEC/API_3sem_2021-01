@@ -23,9 +23,9 @@ public class DefaultJpaConfig {
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-        adapter.setDatabase(Database.POSTGRESQL);
+        adapter.setDatabase(Database.ORACLE);
         adapter.setShowSql(false);
-        adapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
+        adapter.setDatabasePlatform("org.hibernate.dialect.Oracle10gDialect");
         return adapter;
     }
 

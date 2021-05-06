@@ -20,18 +20,25 @@ public class DocumentService {
     }
 
     @Transactional
-    public Document findByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait) {
-        return documentRepository.findByNameAndPartNumberAndTrait(name, partNumber, trait).orElse(null);
+    public Document findByNameAndPartNumber(final String name, final Integer partNumber) {
+        final var docs = documentRepository.findAll(DocumentSpecification.searchByName(name));
+        return docs.stream()
+                .filter(document -> document.getPartNumber().equals(partNumber))
+                .findFirst().orElseThrow();
     }
 
     @Transactional
-    public List<Document> findAllByNameAndPartNumber(final String name, final Integer partNumber) {
-        return documentRepository.findAllByNameAndPartNumber(name, partNumber);
+    public Set<Document> findAllByNameAndPartNumberAndTrait(final String name, final Integer partNumber, Integer trait) {
+        final var docs = documentRepository.findAll(DocumentSpecification.searchByName(name));
+        return docs.stream()
+                .filter(document -> document.getPartNumber().equals(partNumber))
+                .filter(document -> document.containsTrait(trait))
+                .collect(Collectors.toSet());
     }
 
     @Transactional
     public List<Document> saveAll(final List<Document> documents) {
-        return documentRepository.saveAll(documents);
+        return documents.stream().map(document -> documentRepository.save(document)).collect(Collectors.toList());
     }
 
     @Transactional
@@ -44,5 +51,10 @@ public class DocumentService {
     public Set<String> findAllNames() {
         var docs = documentRepository.findAll();
         return docs.stream().map(Document::getName).collect(Collectors.toSet());
+    }
+
+    @Transactional
+    public Document save(Document document) {
+        return documentRepository.save(document);
     }
 }

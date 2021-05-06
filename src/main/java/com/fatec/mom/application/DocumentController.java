@@ -35,23 +35,23 @@ public class DocumentController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Document> findDocuments(
+    public ResponseEntity<Set<Document>> findDocuments(
             @RequestParam("document_name") String documentName,
             @RequestParam("part_number") Integer partNumber,
             @RequestParam("trait") Integer trait) {
-        var doc = documentService.findByNameAndPartNumberAndTrait(documentName, partNumber, trait);
+        var docs = documentService.findAllByNameAndPartNumberAndTrait(documentName, partNumber, trait);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(doc);
+                .body(docs);
     }
 
     @GetMapping("/find/all/by")
     @ApiOperation(value = "Retorna todos os documentos e traços de acordo com o nome e partnumber")
-    public ResponseEntity<List<Document>> findAllByNameAndPartNumber(
+    public ResponseEntity<Document> findAllByNameAndPartNumber(
             @RequestParam("document_name") String documentName,
             @RequestParam("part_number") Integer partNumber) {
-        var docs = documentService.findAllByNameAndPartNumber(documentName, partNumber);
+        var docs = documentService.findByNameAndPartNumber(documentName, partNumber);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)

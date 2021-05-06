@@ -3,6 +3,7 @@ package com.fatec.mom.domain.codelist;
 import com.fatec.mom.domain.block.Block;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.document.DocumentService;
+import com.fatec.mom.domain.trait.Trait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,33 +15,25 @@ public class CodelistService {
     @Autowired
     private DocumentService documentService;
 
-    private List<Integer> calculateChecklist(final List<Document> documents, final Block block) {
+    private List<Integer> calculateChecklist(final Set<Trait> traits, final Block block) {
         var checklist = new LinkedList<Integer>();
-        documents.forEach(document -> checklist.add(document.hasBlock(block) ? 1 : 0));
-
+        traits.forEach(trait -> checklist.add(block.hasTrait(trait) ? 1 : 0));
         return checklist;
     }
 
     public Codelist findCodelist(String name, Integer partNumber) {
-        var docs = documentService.findAllByNameAndPartNumber(name, partNumber);
-        docs.sort(Comparator.comparing(Document::getTrait));
+        final Document doc = documentService.findByNameAndPartNumber(name, partNumber);
 
         return Codelist.builder()
-                .documents(docs)
-                .codelistBlocks(getAllCodelistBlocks(getAllBlocks(docs), docs))
+                .document(doc)
+                .codelistBlocks(getAllCodelistBlocks(doc.getBlocks(), doc.getTraits()))
                 .build();
     }
 
-    private List<Block> getAllBlocks(List<Document> documents) {
-        var blocks = new LinkedList<Block>();
-        documents.forEach(document -> blocks.addAll(document.getBlocks()));
-        return blocks;
-    }
-
-    private Set<CodelistBlock> getAllCodelistBlocks(final List<Block> blocks, final List<Document> documents) {
+    private Set<CodelistBlock> getAllCodelistBlocks(final Set<Block> blocks, final Set<Trait> traits) {
         var codelistBlocks = new HashSet<CodelistBlock>();
         blocks.forEach(block -> codelistBlocks.add(CodelistBlock.createCodelistBlock(block)));
-        codelistBlocks.forEach(codelistBlock -> codelistBlock.setChecklist(calculateChecklist(documents, codelistBlock.getBlock())));
+        codelistBlocks.forEach(codelistBlock -> codelistBlock.setChecklist(calculateChecklist(traits, codelistBlock.getBlock())));
         return codelistBlocks;
     }
 }

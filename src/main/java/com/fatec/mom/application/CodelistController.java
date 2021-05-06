@@ -2,10 +2,14 @@ package com.fatec.mom.application;
 
 import com.fatec.mom.domain.codelist.Codelist;
 import com.fatec.mom.domain.codelist.CodelistConverterService;
+//import com.fatec.mom.domain.codelist.CodelistService;
+import com.fatec.mom.domain.codelist.CodelistImporterService;
 import com.fatec.mom.domain.codelist.CodelistService;
 import com.fatec.mom.domain.document.Document;
+import com.fatec.mom.domain.document.DocumentService;
 import com.fatec.mom.domain.file.FileInfoService;
 import com.fatec.mom.domain.file.FileUploadService;
+import com.fatec.mom.infra.codelist.reader.CodelistReaderType;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,43 +32,39 @@ import java.util.List;
 @RequestMapping("/codelist")
 public class CodelistController {
 
-    @Autowired
-    private CodelistConverterService codelistConverterService;
+    private final FileUploadService fileUploadService;
+
+    private final CodelistImporterService importerService;
+
+    private final CodelistService codelistService;
+
+    private final DocumentService documentService;
 
     @Autowired
-    private FileUploadService fileUploadService;
-
-    @Autowired
-    private FileInfoService fileInfoService;
-
-    @Autowired
-    private CodelistService codelistService;
+    public CodelistController(FileUploadService fileUploadService,
+                              CodelistImporterService importerService,
+                              CodelistService codelistService,
+                              DocumentService documentService) {
+        this.fileUploadService = fileUploadService;
+        this.importerService = importerService;
+        this.codelistService = codelistService;
+        this.documentService = documentService;
+    }
 
     @PostMapping("/import")
     @ApiOperation(value = "Realiza a importação dos arquivos de codelist (que devem estar em formato Excel) " +
-            "e salva os blocos/documentos de acordo com a especificação do codelist.",
-            consumes = "Nome do documento (document_name), part number do documento (part_number) " +
-                    "e arquivo codelist em formato excel.")
+            "e salva os blocos/documentos de acordo com a especificação do codelist.")
     public ResponseEntity<List<Document>> importCodelistAsExcel(
-            @RequestParam("document_name") String documentName,
-            @RequestParam("part_number") Integer partNumber,
+            @RequestParam("reader_type")CodelistReaderType readerType,
             @RequestParam("file") MultipartFile file) throws IOException {
 
         fileUploadService.uploadFile(file);
-
-        var doc = Document.builder()
-                .name(documentName)
-                .partNumber(partNumber)
-                .createdDate(new Date())
-                .build();
-
-        var fileInfo = fileInfoService.build(file.getOriginalFilename());
-
-        var savedDocs = codelistConverterService.convertFileDataIntoDocuments(doc, fileInfo);
+        List<Document> docs = importerService.read(readerType, file);
+        docs = documentService.saveAll(docs);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(savedDocs);
+                .body(docs);
     }
 
     @GetMapping("/find/by")

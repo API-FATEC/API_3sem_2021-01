@@ -26,7 +26,7 @@ public class DocumentDeserializer implements ConverterDeserializer<Document> {
             var document = Document.builder()
                     .name(referenceDocumentName)
                     .partNumber(referenceDocumentPartNumber)
-                    .trait(formattedTraitCell)
+//                    .trait(formattedTraitCell)
                     .createdDate(referenceDocumentDate)
                     .blocks(new HashSet<>())
                     .build();
@@ -36,7 +36,7 @@ public class DocumentDeserializer implements ConverterDeserializer<Document> {
         return documents;
     }
 
-    private Integer formatTraitCell(String cell) {
+    public static Integer formatTraitCell(String cell) {
         var limiter = cell.indexOf(CELL_LIMITER);
         return Integer.parseInt(cell.substring(0, limiter));
     }

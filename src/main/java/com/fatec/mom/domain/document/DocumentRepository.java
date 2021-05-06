@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSpecificationExecutor<Document> {
@@ -15,9 +14,11 @@ public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSp
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = "blocks")
     List<Document> findAll();
 
+    @Override
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = "blocks")
-    List<Document> findAllByNameAndPartNumber(String name, Integer partNumber);
+    <S extends Document> List<S> saveAll(Iterable<S> iterable);
 
+    @Override
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, attributePaths = "blocks")
-    Optional<Document> findByNameAndPartNumberAndTrait(String name, Integer partNumber, Integer trait);
+    <S extends Document> S save(S s);
 }
