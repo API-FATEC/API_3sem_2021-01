@@ -3,7 +3,7 @@
     <v-col>
       <v-row justify="center" class="pa-2">
         <div id="titulo">
-          <titulo class="display-1">Criação de Review</titulo>
+          <h1 class="display-1">Criação de Review</h1>
         </div>
       </v-row>
       <v-row class="pa-4">
@@ -48,11 +48,29 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <v-treeview
-                      selectable
-                      :items="items"
-                      selected-color="blue"
-                    ></v-treeview>
+                    <v-data-table
+                      dense
+                      :headers="[...headers, ...teste]"
+                      :items="desserts"
+                      sort-by="calories"
+                      class="elevation-1"
+                      :items-per-page="50"
+                    >
+                      <template v-slot:top>
+                        <v-toolbar flat>
+                          <v-toolbar-title>CodeList</v-toolbar-title>
+                          <v-divider class="mx-4" inset vertical></v-divider>
+                          <v-spacer></v-spacer>
+                        </v-toolbar>
+                      </template>
+
+                      <template v-slot:item.actions="{ item }">
+                        <v-simple-checkbox
+                          v-model="item.actions"
+                          color="blue"
+                        ></v-simple-checkbox>
+                      </template>
+                    </v-data-table>
                   </v-col>
                 </v-row>
               </v-card-text>
