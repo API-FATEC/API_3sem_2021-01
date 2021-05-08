@@ -1,7 +1,6 @@
 package com.fatec.mom.domain.revision;
 
 import com.fatec.mom.domain.block.Block;
-import com.fatec.mom.domain.document.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +33,9 @@ public class Revision {
 
     @Column(name = "REV_CREATED_DATE", nullable = false)
     private Date createdDate;
+
+    @Column(name = "REV_ULTIMA_ATUALIZACAO")
+    private Date lastUpdateDate;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
     @JoinTable(name = "MOM_REVISAO_BLOCO",

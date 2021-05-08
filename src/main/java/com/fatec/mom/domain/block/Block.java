@@ -52,6 +52,7 @@ public class Block {
     private String basePath;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "LNK_COD")
     private Set<BlockLink> links;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

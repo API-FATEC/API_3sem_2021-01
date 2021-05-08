@@ -34,13 +34,13 @@ CREATE SEQUENCE MOM_DOCUMENTO_SQ;
 --comment: Create table MOM_BLOCO
 CREATE TABLE MOM_BLOCO (
                            BLC_COD NUMBER(10) PRIMARY KEY,
-                           BLC_SECAO VARCHAR(10),
+                           BLC_SECAO VARCHAR(10) NOT NULL,
                            BLC_SUB_SECAO VARCHAR(10),
-                           BLC_NUMERO INTEGER,
+                           BLC_NUMERO INTEGER NOT NULL,
                            BLC_NOME VARCHAR(30),
-                           BLC_CODIGO INTEGER,
-                           BLC_ORDER integer,
-                           BLC_STATUS varchar(10),
+                           BLC_CODIGO INTEGER NOT NULL,
+                           BLC_ORDER INTEGER,
+                           BLC_STATUS VARCHAR(11),
                            BLC_BASEPATH VARCHAR(256)
 );
 CREATE SEQUENCE MOM_BLOCO_SQ;
