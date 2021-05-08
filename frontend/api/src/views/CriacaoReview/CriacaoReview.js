@@ -1,60 +1,13 @@
-import {http} from "../../services/config";
+import { http } from "../../services/config";
 // import { Block } from "../../scripts/domain/Block"
-import {CodelistEndpoints, DocumentsEndpoints} from "../../model/endpoints/EndpointsMapping";
+import { CodelistEndpoints, DocumentsEndpoints } from "../../model/endpoints/EndpointsMapping";
 // import { Document } from "../../scripts/domain/Document";
-import {CodelistFactory} from "../../scripts/domain/Codelist";
-import {BlockFactory} from "../../scripts/domain/Block";
-import {DocumentFactory, DocumentRequestBody} from "../../scripts/domain/Document";
+import { CodelistFactory } from "../../scripts/domain/Codelist";
+import { BlockFactory } from "../../scripts/domain/Block";
+import { DocumentFactory, DocumentRequestBody } from "../../scripts/domain/Document";
 
 export default {
     data: () => ({
-        
-        items: [
-            {
-                id: 1,
-                name: 'Applications :',
-                children: [
-                    { id: 2, name: 'Calendar : app' },
-                    { id: 3, name: 'Chrome : app' },
-                    { id: 4, name: 'Webstorm : app' },
-                ],
-            },
-            {
-                id: 5,
-                name: 'Documents :',
-                children: [
-                    {
-                        id: 6,
-                        name: 'vuetify :',
-                        children: [
-                            {
-                                id: 7,
-                                name: 'src :',
-                                children: [
-                                    { id: 8, name: 'index : ts' },
-                                    { id: 9, name: 'bootstrap : ts' },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        id: 10,
-                        name: 'material2 :',
-                        children: [
-                            {
-                                id: 11,
-                                name: 'src :',
-                                children: [
-                                    { id: 12, name: 'v-btn : ts' },
-                                    { id: 13, name: 'v-card : ts' },
-                                    { id: 14, name: 'v-window : ts' },
-                                ],
-                            },
-                        ],
-                    },
-                ],
-            }
-        ],
         // Formulario
         valid: true,
         name: '',
@@ -200,24 +153,24 @@ export default {
         },
 
         // Tabela
-        novaColuna: function(){
+        novaColuna: function () {
             this.originalHeaders = [...this.headers];
-            if(this.editedTraco.nomeTraco.length === 0){
+            if (this.editedTraco.nomeTraco.length === 0) {
                 return
             }
             var nomeValue = this.editedTraco.nomeTraco.valueOf()
             nomeValue = nomeValue.toLowerCase()
             nomeValue = nomeValue.replaceAll(' ', '_')
-            this.headers.push({text: 'Traço: ' + this.editedTraco.nomeTraco, value: "trait_" + nomeValue})
+            this.headers.push({ text: 'Traço: ' + this.editedTraco.nomeTraco, value: "trait_" + nomeValue })
 
             this.editedDesserts = this.editedDesserts.map(item => {
                 var objeto = {}
                 objeto[nomeValue] = 0
-                return {...item,...objeto}
+                return { ...item, ...objeto }
             })
-            let obj = {...this.editedItem};
+            let obj = { ...this.editedItem };
             obj["trait_" + nomeValue] = 0;
-            this.defaultItem = {...obj};
+            this.defaultItem = { ...obj };
             this.closeTraco()
         },
 
@@ -288,7 +241,7 @@ export default {
             this.close()
         },
 
-        getCodelist(){
+        getCodelist() {
             this.validate();
 
             http.get(CodelistEndpoints.FIND_BY, {
@@ -305,14 +258,14 @@ export default {
                 let headersToAdd = [];
                 for (let i = 0; i < codelist.documents.length; ++i) {
                     let value = codelist.documents[i].trait
-                    headersToAdd.push({text: 'Traço: ' + value, value: 'trait_' + value});
+                    headersToAdd.push({ text: 'Traço: ' + value, value: 'trait_' + value });
                     columnsToAdd.push(value);
                     this.traits.push('trait_' + value);
                 }
 
                 let codelistBlocks = [];
                 codelist.codelistBlocks.forEach(function (codelistBlock) {
-                    let objeto = {...codelistBlock.block};
+                    let objeto = { ...codelistBlock.block };
                     for (let i = 0; i < columnsToAdd.length; ++i) {
                         objeto['trait_' + columnsToAdd[i]] = codelistBlock.checklist[i].valueOf();
                     }
@@ -325,15 +278,15 @@ export default {
                     this.headers.push(headersToAdd[i]);
                 }
 
-                let blockEditedItem = {...this.editedItem};
+                let blockEditedItem = { ...this.editedItem };
                 for (let i = 0; i < columnsToAdd.length; ++i) {
                     let obj = {};
                     obj['trait_' + columnsToAdd[i]] = 0;
-                    blockEditedItem = {...blockEditedItem, ...obj};
+                    blockEditedItem = { ...blockEditedItem, ...obj };
                 }
 
                 this.editedItem = blockEditedItem;
-                this.defaultItem = {...blockEditedItem};
+                this.defaultItem = { ...blockEditedItem };
             }).catch(error => {
                 this.dialogSalvar = false;
                 this.dialogError = true;
@@ -368,8 +321,8 @@ export default {
                 .then(response => {
                     this.findedDocs = response.data;
                 }).catch(error => {
-                console.log(error)
-            });
+                    console.log(error)
+                });
         },
 
         saveCodelist: function () {
@@ -425,7 +378,7 @@ export default {
             this.getCodelist();
         },
 
-        enterEditMode: function() {
+        enterEditMode: function () {
             this.originalDesserts.push(this.desserts);
             this.desserts = this.editedDesserts;
             this.editMode = true;
