@@ -58,4 +58,6 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 ## Organização de Sprints
 ### O planejamento e o progresso durante as Sprints do projeto poderá ser visto em [Entregas](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Entregas).
 
-## [Conteúdo adicional](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Conte%C3%BAdo-Adicional)
+### [Configurando um banco de dados diferente](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Configurando-outro-banco-de-dados)
+
+### [Conteúdo adicional](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Conte%C3%BAdo-Adicional)
