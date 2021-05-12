@@ -28,6 +28,9 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 - Tairik Johnny    -> Frontend Developer
 - Gabriel Timoteo  -> Frontend Developer
 
+# Organização de Sprints
+### O planejamento e o progresso durante as Sprints do projeto poderá ser visto em [Entregas](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Entregas).
+
 ## Configuração do Ambiente
 ### **Pre-requisitos:**
 - Java 11
@@ -54,9 +57,6 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 - Executar o comando `npm install` para instalar as dependências.
 - Executar o comando `npm run serve` para rodar o sistema
 - Poderá ser acessado no endereço `localhost:5500`
-
-## Organização de Sprints
-### O planejamento e o progresso durante as Sprints do projeto poderá ser visto em [Entregas](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Entregas).
 
 ### [Configurando um banco de dados diferente](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Configurando-outro-banco-de-dados)
 
