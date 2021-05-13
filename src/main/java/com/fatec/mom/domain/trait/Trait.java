@@ -23,4 +23,12 @@ public class Trait {
 
     @Column(name = "TRA_NUM")
     private Integer number;
+
+    @ManyToOne
+    @JoinColumn(name = "DOC_COD")
+    private Document document;
+
+    @ManyToOne
+    @JoinColumn(name = "BLC_COD")
+    private Block block;
 }

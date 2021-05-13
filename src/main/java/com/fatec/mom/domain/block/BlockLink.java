@@ -34,6 +34,10 @@ public class BlockLink {
     @Column(name = "LNK_UPLOAD_DATE", nullable = false)
     private Date upload;
 
+    @ManyToOne
+    @JoinColumn(name = "BLC_COD")
+    private Block block;
+
     public static class FilePathBuilder {
 
         @Value("${default-documents-path}")

@@ -32,7 +32,7 @@ public class Document {
     @Column(name = "DOC_PN", nullable = false)
     private Integer partNumber;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "document")
     private Set<Revision> revisions;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -41,16 +41,10 @@ public class Document {
             inverseJoinColumns = @JoinColumn(name = "TAG_COD"))
     private Set<Tag> tags;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "MOM_TRACO_DOC",
-            joinColumns = @JoinColumn(name = "DOC_COD"),
-            inverseJoinColumns = @JoinColumn(name = "TRA_COD"))
+    @OneToMany(mappedBy = "document")
     private Set<Trait> traits;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "MOM_BLOCO_DOC",
-                joinColumns = @JoinColumn(name = "DOC_COD"),
-                inverseJoinColumns = @JoinColumn(name = "BLC_COD"))
+    @OneToMany(mappedBy = "document")
     private Set<Block> blocks;
 
     public String getDocument() {
@@ -58,7 +52,7 @@ public class Document {
     }
 
     public boolean containsTrait(Integer trait) {
-        return traits.stream().map(trait1 -> trait1.getNumber() == trait).collect(Collectors.toSet()).size() > 0;
+        return traits.stream().map(trait1 -> trait1.getNumber().equals(trait)).collect(Collectors.toSet()).size() > 0;
     }
 
     public void addBlock(final Block block) {

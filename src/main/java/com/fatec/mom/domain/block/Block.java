@@ -48,12 +48,18 @@ public class Block {
     @Enumerated(EnumType.STRING)
     private BlockStatus status;
 
+    @ManyToOne
+    @JoinColumn(name = "DOC_COD")
+    private Document document;
+
     @Column(name = "BLC_BASEPATH", nullable = false)
     private String basePath;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "LNK_COD")
+    @OneToMany(mappedBy = "block")
     private Set<BlockLink> links;
+
+    @OneToMany(mappedBy = "block")
+    private Set<BlockPage> pages;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "MOM_TAG_BLC",
@@ -61,10 +67,7 @@ public class Block {
             inverseJoinColumns = @JoinColumn(name = "TAG_COD"))
     private Set<Tag> tags;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "MOM_TRACO_BLC",
-            joinColumns = @JoinColumn(name = "BLC_COD"),
-            inverseJoinColumns = @JoinColumn(name = "TRA_COD"))
+    @OneToMany(mappedBy = "block")
     private Set<Trait> traits;
 
     public String getBlockName(Document document) {
