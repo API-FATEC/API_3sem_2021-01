@@ -15,21 +15,6 @@
                 <v-row class="mb-6" no-gutters>
                   <v-col>
                     <v-form ref="form" v-model="valid" lazy-validation>
-                      <v-text-field
-                        v-model="name"
-                        :counter="nameCounter"
-                        :rules="nameRules"
-                        label="Nome do documento"
-                        required
-                      ></v-text-field>
-
-                      <v-text-field
-                        v-model="partNumber"
-                        :counter="partNumberCounter"
-                        :rules="partNumberRuler"
-                        label="Part Number"
-                        required
-                      ></v-text-field>
 
                       <v-btn
                         :disabled="!valid"

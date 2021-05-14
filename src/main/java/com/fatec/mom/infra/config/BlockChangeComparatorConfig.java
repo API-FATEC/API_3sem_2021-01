@@ -1,0 +1,34 @@
+package com.fatec.mom.infra.config;
+
+import com.fatec.mom.domain.block.pagescomparator.changes.ChangeHandler;
+import com.fatec.mom.domain.block.pagescomparator.changes.WhenPageChange;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.LinkedList;
+import java.util.List;
+
+@Configuration
+public class BlockChangeComparatorConfig {
+
+    @Bean
+    public List<WhenPageChange> whenPageChangesHandler(@Qualifier("whenPagesWereDeleted") WhenPageChange whenPagesWhereDeleted,
+                                                    @Qualifier("whenThereAreNewPages") WhenPageChange whenThereAreNewPages,
+                                                    @Qualifier("whenThereWasNoChangeInSize") WhenPageChange whenThereWasNoChangeInSize) {
+        List<WhenPageChange> changeHandlers = new LinkedList<>();
+        changeHandlers.add(whenPagesWhereDeleted);
+        changeHandlers.add(whenThereAreNewPages);
+        changeHandlers.add(whenThereWasNoChangeInSize);
+        return changeHandlers;
+    }
+
+    @Bean
+    public List<ChangeHandler> changeHandlers(@Qualifier("deletedPageHandler") ChangeHandler deletedPageHandler,
+                                              @Qualifier("newPageHandler") ChangeHandler newPageHandler) {
+        List<ChangeHandler> changeHandlers = new LinkedList<>();
+        changeHandlers.add(deletedPageHandler);
+        changeHandlers.add(newPageHandler);
+        return changeHandlers;
+    }
+}

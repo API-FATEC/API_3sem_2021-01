@@ -15,4 +15,9 @@ public class RevisionService {
     public Revision saveRev (Revision rev) {
         return revisionRepository.save(rev);
     }
+
+    @Transactional
+    public Revision findByName(final String name) {
+        return revisionRepository.findByName(name).orElseThrow();
+    }
 }

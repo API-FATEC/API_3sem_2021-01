@@ -1,13 +1,7 @@
 package com.fatec.mom.test.controller;
 
-import com.fatec.mom.domain.codelist.CodelistConverterService;
-//import com.fatec.mom.domain.codelist.CodelistService;
-import com.fatec.mom.domain.file.FileInfoService;
-import com.fatec.mom.domain.file.FileUploadService;
 import com.fatec.mom.test.integration.IntegrationTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 

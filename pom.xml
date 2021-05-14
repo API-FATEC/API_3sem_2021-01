@@ -156,11 +156,13 @@
 		</dependency>
 
 		<!-- Database -->
-		<!-- Postres Driver -->
+		<!-- Oracle Driver -->
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
+			<groupId>com.oracle.ojdbc</groupId>
+			<artifactId>ojdbc10</artifactId>
+			<version>19.3.0.0</version>
 		</dependency>
+
 		<!-- H2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
