@@ -20,7 +20,9 @@ export default {
             this.validate();
 
             const formData = new FormData();
-            formData.append("files", this.files);
+            for (let file of this.files) {
+                formData.append("files", file, file.name);
+            }
 
             http.post(this.IMPORT_URI, formData).then(
                 response => {
