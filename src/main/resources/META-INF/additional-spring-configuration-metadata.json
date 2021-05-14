@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "git.default-executable-path",
-      "type": "java.lang.String",
-      "description": "Description for git.default-executable-path."
-  }
-] }

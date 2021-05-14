@@ -32,7 +32,7 @@ public class Document {
     @Column(name = "DOC_PN", nullable = false)
     private Integer partNumber;
 
-    @OneToMany(mappedBy = "document")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "document")
     private Set<Revision> revisions;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -41,10 +41,10 @@ public class Document {
             inverseJoinColumns = @JoinColumn(name = "TAG_COD"))
     private Set<Tag> tags;
 
-    @OneToMany(mappedBy = "document")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "document")
     private Set<Trait> traits;
 
-    @OneToMany(mappedBy = "document")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "document")
     private Set<Block> blocks;
 
     public String getDocument() {

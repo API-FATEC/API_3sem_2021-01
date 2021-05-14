@@ -55,10 +55,10 @@ public class Block {
     @Column(name = "BLC_BASEPATH", nullable = false)
     private String basePath;
 
-    @OneToMany(mappedBy = "block")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "block")
     private Set<BlockLink> links;
 
-    @OneToMany(mappedBy = "block")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "block")
     private Set<BlockPage> pages;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -67,7 +67,7 @@ public class Block {
             inverseJoinColumns = @JoinColumn(name = "TAG_COD"))
     private Set<Tag> tags;
 
-    @OneToMany(mappedBy = "block")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "block")
     private Set<Trait> traits;
 
     public String getBlockName(Document document) {

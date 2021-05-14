@@ -2,6 +2,7 @@ package com.fatec.mom.application;
 
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.document.DocumentService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,10 +21,15 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/document")
+@Api(value = "Document Controller")
 public class DocumentController {
 
+    private final DocumentService documentService;
+
     @Autowired
-    private DocumentService documentService;
+    public DocumentController(DocumentService documentService) {
+        this.documentService = documentService;
+    }
 
     @GetMapping("/find/all")
     public ResponseEntity<List<Document>> findAllDocuments() {

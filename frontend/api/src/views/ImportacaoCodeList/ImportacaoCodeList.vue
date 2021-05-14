@@ -37,13 +37,6 @@
                     </v-form>
                   </v-col>
                   <v-col>
-<!--                    <v-file-input-->
-<!--                    label="Inserir o CodeList"-->
-<!--                    outlined-->
-<!--                    dense-->
-<!--                    multiple-->
-<!--                    v-model="files"-->
-<!--                    ></v-file-input>-->
                     <v-file-input
                         v-model="files"
                         color="blue accent-4"
@@ -74,33 +67,6 @@
                       </span>
                       </template>
                     </v-file-input>
-<!--                    <div id="app" @dragover.prevent @drop.prevent>-->
-<!--                      <div class="container" @drop="handleFileDrop">-->
-<!--                        <div class="file-wrapper">-->
-<!--                          <input-->
-<!--                            type="file"-->
-<!--                            name="file-input"-->
-<!--                            multiple="True"-->
-<!--                            @change="handleFileInput"-->
-<!--                            accept=".xlsx"-->
-<!--                          />-->
-<!--                          Clique ou arraste os arquivos-->
-<!--                        </div>-->
-<!--                        <ul>-->
-<!--                          <li-->
-<!--                            v-for="(file, index) in files"-->
-<!--                            :key="(file, index)"-->
-<!--                          >-->
-<!--                            {{ file.name }} ({{ converteMB(file.size) }})-->
-<!--                            <button @click="removeFile(index)" title="Remove">-->
-<!--                              <v-icon>-->
-<!--                                mdi-close-circle-->
-<!--                              </v-icon>-->
-<!--                            </button>-->
-<!--                          </li>-->
-<!--                        </ul>-->
-<!--                      </div>-->
-<!--                    </div>-->
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -144,22 +110,6 @@
   margin-top: 20px;
 }
 
-.container{
-  margin-left: 20px;
-}
-
-.file-wrapper {
-  text-align: center;
-  width: 600px;
-  height: 200px;
-  vertical-align: middle;
-  display: table-cell;
-  position: relative;
-  overflow: hidden;
-  background: #0266b1;
-  color: white;
-  font-size: 24px;
-}
 .file-wrapper input {
   position: absolute;
   top: 0;
