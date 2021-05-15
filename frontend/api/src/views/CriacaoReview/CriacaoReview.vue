@@ -48,29 +48,47 @@
                 </v-row>
                 <v-row>
                   <v-col>
-                    <v-data-table
-                      dense
-                      :headers="[...headers, ...teste]"
-                      :items="desserts"
-                      sort-by="calories"
-                      class="elevation-1"
-                      :items-per-page="50"
-                    >
-                      <template v-slot:top>
-                        <v-toolbar flat>
-                          <v-toolbar-title>CodeList</v-toolbar-title>
-                          <v-divider class="mx-4" inset vertical></v-divider>
-                          <v-spacer></v-spacer>
-                        </v-toolbar>
-                      </template>
+                    <v-card class="mx-auto" max-width="500">
+                      <v-list shaped>
+                        <v-list-item-group v-model="model" multiple>
+                          <template v-for="(item, i) in items">
+                            <v-divider
+                              v-if="!item"
+                              :key="`divider-${i}`"
+                            ></v-divider>
 
-                      <template v-slot:item.actions="{ item }">
-                        <v-simple-checkbox
-                          v-model="item.actions"
-                          color="blue"
-                        ></v-simple-checkbox>
-                      </template>
-                    </v-data-table>
+                            <v-list-item
+                              v-else
+                              :key="`item-${i}`"
+                              :value="item"
+                              active-class="blue--text text--accent-4"
+                            >
+                              <template v-slot:default="{ active }">
+                                <v-list-item-content>
+                                  <v-list-item-title
+                                    v-text="item"
+                                  ></v-list-item-title>
+                                </v-list-item-content>
+
+                                <v-list-item-action>
+                                  <v-checkbox
+                                    :input-value="active"
+                                    color="blue accent-4"
+                                  ></v-checkbox>
+                                </v-list-item-action>
+                              </template>
+                            </v-list-item>
+                          </template>
+                        </v-list-item-group>
+                      </v-list>
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <div id="btn">
+                      <v-btn depressed color="primary"> Create Review </v-btn>
+                    </div>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -87,5 +105,11 @@
 <style>
 #titulo {
   margin-top: 10px;
+}
+#btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 </style>

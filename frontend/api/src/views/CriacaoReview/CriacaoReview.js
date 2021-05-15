@@ -83,6 +83,19 @@ export default {
         allBlocksResponse: [],
         originalDesserts: [],
         originalHeaders: [],
+        items: [
+                'BLOCO 1',
+                'BLOCO 2',
+                'BLOCO 3',
+                'BLOCO 4',
+                'BLOCO 5',
+                'BLOCO 6',
+                'BLOCO 7',
+                'BLOCO 8',
+                'BLOCO 9',
+                'BLOCO 10',
+        ],
+        model: ['Carrots'],
     }),
 
     created() {
