@@ -28,29 +28,20 @@ import java.util.List;
 @Api(value = "Codelist Controller")
 public class CodelistController {
 
-    private final FileUploadService fileUploadService;
 
     private final CodelistService codelistService;
 
     @Autowired
-    public CodelistController(FileUploadService fileUploadService,
-                              CodelistService codelistService) {
-        this.fileUploadService = fileUploadService;
+    public CodelistController(CodelistService codelistService) {
         this.codelistService = codelistService;
     }
 
     @PostMapping("/import")
     @ApiOperation(value = "Realiza a importação dos arquivos de codelist (que devem estar em formato Excel) " +
             "e salva os blocos/documentos de acordo com a especificação do codelist.")
-    public ResponseEntity<List<Document>> importCodelistAsExcel(@RequestParam("files") List<MultipartFile> files) throws IOException {
-
-        final List<Document> documents = new LinkedList<>();
-
-        for (MultipartFile file : files) {
-            fileUploadService.uploadFile(file);
-            List<Document> importedDocuments = codelistService.importCodelist(file);
-            documents.addAll(importedDocuments);
-        }
+    public ResponseEntity<List<Document>> importCodelistAsExcel(
+            @RequestParam("files") List<MultipartFile> files) throws IOException {
+        final List<Document> documents = codelistService.handleImport(files);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)

@@ -35,14 +35,14 @@ public class CodelistImporterService {
         this.documentService = documentService;
     }
 
-    public List<Document> read(CodelistReaderType readerType, MultipartFile file) {
+    public List<Document> read(CodelistReaderType readerType, File file) {
         if (readerType.equals(CodelistReaderType.SINGLE_TAB)) {
             return saveSingleTabDocument(file);
         }
         return saveMultiTabDocuments(file);
     }
 
-    private List<Document> saveSingleTabDocument(MultipartFile file) {
+    private List<Document> saveSingleTabDocument(File file) {
         final List<Document> documents = new LinkedList<>();
         try {
             final Document document = readSingleTabFile(file).orElseThrow();
@@ -53,7 +53,7 @@ public class CodelistImporterService {
         return documents;
     }
 
-    private List<Document> saveMultiTabDocuments(MultipartFile file) {
+    private List<Document> saveMultiTabDocuments(File file) {
         try {
             return readMultiTabFile(file);
         } catch (IOException e) {
@@ -62,8 +62,8 @@ public class CodelistImporterService {
         return Collections.emptyList();
     }
 
-    private Optional<Document> readSingleTabFile(MultipartFile multipartFile) throws IOException {
-        final InputStream stream = multipartFile.getInputStream();
+    private Optional<Document> readSingleTabFile(File file) throws IOException {
+        final InputStream stream = new FileInputStream(file);
         final CodelistReader reader = readerLocator.getReader(CodelistReaderType.SINGLE_TAB);
 
         final List<Document> documents = reader.readCodelist(stream);
@@ -73,8 +73,7 @@ public class CodelistImporterService {
         return Optional.empty();
     }
 
-    private List<Document> readMultiTabFile(MultipartFile multipartFile) throws IOException {
-        final File file = new File(String.format("%s/%s", UPLOAD_PATH, multipartFile.getOriginalFilename()));
+    private List<Document> readMultiTabFile(File file) throws IOException {
         final InputStream stream = new FileInputStream(file);
         final CodelistReader reader = readerLocator.getReader(CodelistReaderType.MULTIPLE_TAB);
 
