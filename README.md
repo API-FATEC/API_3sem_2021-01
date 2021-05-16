@@ -28,6 +28,9 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 - Tairik Johnny    -> Frontend Developer
 - Gabriel Timoteo  -> Frontend Developer
 
+# Organização de Sprints
+### O planejamento e o progresso durante as Sprints do projeto poderá ser visto em [Entregas](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Entregas).
+
 ## Configuração do Ambiente
 ### **Pre-requisitos:**
 - Java 11
@@ -47,12 +50,7 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 
 > **Obs: é necessário especificar o caminho completo para a pasta**
 - Executar o comando `mvn clean package spring-boot:run`
-- A aplicação estará em execução no `locahost:9090`
-### **Testando a aplicação**
-- Executar o comando `mvn clean test jacoco:report` para gerar os arquivos de cobertura de testes.
-- Rodar o servidor local do SonarQube (Estamos utilizando a versão community).
-- Assim que o servidor do sonar estiver com status `up`, executar o comando `mvn sonar:sonar`
-> Obs: será necessário adicionar o token de acesso do sonar no comando acima com `-Dsonar.login=<seu_token>.
+- A aplicação estará em execução no `localhost:9090`token>.
 - A url com o resultado será mostrada no console do Maven (possívelmente `localhost:9000`)
 ## **Subindo o frontend**
 - Entrar na pasta /frontend
@@ -60,48 +58,6 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 - Executar o comando `npm run serve` para rodar o sistema
 - Poderá ser acessado no endereço `localhost:5500`
 
-## Conteúdo importante
-- O vídeo abaixo é uma rápida explicação para os membros do grupo de como iniciar o desenvolvimento com o VueJS.
+### [Configurando um banco de dados diferente](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Configurando-outro-banco-de-dados)
 
-https://www.loom.com/share/a4e8d3ec7faf48acb58b1ecd6a5e42bd
-
-## Organização de Sprints
-
-## Sprint 1
-***
-### **User stories**
-**Eu como parte do time de publicação, quero uma lista de blocos por documento, porque não posso misturar documentos 
-diferentes e nem posso ter duplicação de blocos nos manuais.**
-
-**Eu como parte do time de publicação, preciso que os documentos estejam organizados de acordo com a codelist, 
-pois a codelist é o guia sobre a estruturação dos meus documentos.**
-### O entregável
-O sistema permite a importação de uma codelist existente (em formato Excel), garantindo que o usuário consiga continuar 
-o seu trabalho da forma que é feita atualmente, sem grandes necessidades de mudanças ou ter o trabalho de inserir novos 
-documentos manualmente no novo sistema.
-
-A importação é feita fornecendo o nome do documento e o part number correspondente e inserindo o arquivo da codelist.
-O sistema então irá tratar o arquivo, gerar os documentos e seus blocos correspondentes e salvá-los no banco de dados.
-
-O usuário poderá visualizar os seus documentos em uma estrutura de listas mais confortável e confiável.
-
-### As telas podem ser visualizadas em: [frontend](https://github.com/API-FATEC/API_3sem_2021-01/tree/main/frontend/api)
-
-## Sprint 2
-***
-### **User stories**
-**Eu como parte do time de publicação, desejo visualizar um codelist de um documento específico como um todo, para que seja fácil gerenciar quais blocos compõem determinado traço.**
-
-**Eu como parte do time de publicação, desejo editar um codelist de um determinado documento, para que seja possível modificar a estrutura de um documento salvo na aplicação.**
-***
-### O entregável
-#### **O sistema permite a visualização e edição de um codelist.**
-
-É possível visualizar um codelist no mesmo formato que é feito atualmente, pois isso melhora a adaptação do usuário com o sistema, por causa da maior familiaridade.
-
-É possível editar um codelist, alterando quais traços um determinado bloco pertence, adicionar um novo bloco, adicionar um novo traço, editar um bloco já registrado e deletar um bloco existente.
-
-## Sprint 3
-***
-## Sprint 4
-***
+### [Conteúdo adicional](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Conte%C3%BAdo-Adicional)
