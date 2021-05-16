@@ -36,9 +36,6 @@
                         </v-form>
                       </v-col>
                     </v-row>
-                    <v-row>
-                      <v-alert :value="hasOpenedReview" border="left" color="indigo" dark>Já existe uma review aberta</v-alert>
-                    </v-row>
                   </v-col>
                   <v-col>
                     <v-row>

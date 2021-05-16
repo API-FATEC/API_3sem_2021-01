@@ -1,5 +1,6 @@
 package com.fatec.mom.domain.revision;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.block.Block;
 import com.fatec.mom.domain.document.Document;
@@ -35,12 +36,12 @@ public class Revision {
     @Column(name = "REV_ULTIMA_ATUALIZACAO")
     private Date lastUpdateDate;
 
-    @JsonIgnore
+    @JsonBackReference("revisions")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DOC_COD")
     private Document document;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinTable(name = "MOM_REVISAO_BLOCO",
             joinColumns = @JoinColumn(name = "REV_COD"),
             inverseJoinColumns = @JoinColumn(name = "BLC_COD"))

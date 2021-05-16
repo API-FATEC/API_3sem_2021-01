@@ -1,5 +1,6 @@
 package com.fatec.mom.domain.block;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.tag.Tag;
@@ -51,7 +52,7 @@ public class Block {
     @Enumerated(EnumType.STRING)
     private BlockStatus status;
 
-    @JsonIgnore
+    @JsonBackReference("blocks")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DOC_COD")
     private Document document;

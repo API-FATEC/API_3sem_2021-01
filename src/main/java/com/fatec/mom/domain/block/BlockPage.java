@@ -1,5 +1,6 @@
 package com.fatec.mom.domain.block;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.revision.Revision;
 import lombok.*;
@@ -22,12 +23,12 @@ public class BlockPage {
     @Column(name = "PAG_NUMBER", nullable = false)
     private Integer number;
 
-    @JsonIgnore
+    @JsonBackReference("pages")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BLC_COD")
     private Block block;
 
-    @JsonIgnore
+    @JsonBackReference("blocksInRevision")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REV_COD")
     private Revision revision;

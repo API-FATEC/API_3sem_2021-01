@@ -7,6 +7,7 @@ import com.fatec.mom.domain.trait.Trait;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor
 @ToString(of = {"id", "createdDate", "name", "partNumber"})
 @EqualsAndHashCode(of = {"id", "createdDate", "name", "partNumber"})
-public class Document {
+public class Document implements Serializable {
 
     @Id
     @GeneratedValue(generator = "MOM_DOCUMENTO_SQ", strategy = GenerationType.SEQUENCE)

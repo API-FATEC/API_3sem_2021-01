@@ -16,7 +16,7 @@ export default {
 
         document: [],
         openedReview: [],
-        hasOpenedReview: false,
+        hasOpenedReview: true,
     }),
 
     created() {
@@ -36,7 +36,7 @@ export default {
     watch: {
         name: function (documentName) {
             this.searchPartNumbers(documentName);
-        }
+        },
     },
 
     methods: {
@@ -46,6 +46,8 @@ export default {
             this.$refs.form.reset()
             this.dialogError = false;
             this.items = [];
+            this.selectedBlocks = [];
+            this.hasOpenedReview = false;
         },
 
         searchPartNumbers(documentName) {
@@ -95,15 +97,21 @@ export default {
             })
                 .then(response => {
                     this.document = response.data;
+                    let documentId = response.data.id;
+
                     this.getBlocks();
+                    this.hasOpenedReviews(documentId);
                 }).catch(error => {
                 console.log(error)
             });
 
-            this.hasOpenedReviews();
         },
 
         createReview() {
+            if (this.hasOpenedReview) {
+                alert('Já existe uma revisão aberta, feche-a antes!');
+                return;
+            }
            console.log(this.selectedBlocks);
 
            let blocks = [];
@@ -117,26 +125,43 @@ export default {
                }
            });
 
-           console.log(blocks);
+           let review = {
+               createdDate: new Date(),
+               document: this.document,
+               status: 'OPENED',
+               blocksInRevision: blocks
+           };
+           console.log(review);
+           http.post('/revision/save', review)
+               .then(response => {
+                   console.log(response);
+                   const revisionName = response.data.name;
+                   alert(`${revisionName} criada com Sucesso!`);
+               })
+               .catch(error => {
+                   console.error(error);
+               });
         },
 
         searchBlocksInDocument(name, code) {
             return this.document.blocks.filter(block => block.name === name && block.code === parseInt(code));
         },
 
-        hasOpenedReviews() {
-            http.get('/revision/opened', {
-                params: {
-                    id: this.document.id
-                }
-            })
+        hasOpenedReviews(documentId) {
+            http.get(`/revision/opened?document_id=${documentId}`)
                 .then(response => {
-                    this.openedReview = response.data;
+                    let openedReview = response.data;
+                    if (openedReview.name !== undefined) {
+                        this.openedReview = response.data;
+                        this.hasOpenedReview = true;
+                        alert(`A revisão ${this.openedReview.name} já está aberta! É preciso finaliza-la antes de prosseguir`);
+                    } else {
+                        this.hasOpenedReview = false;
+                    }
                 }).catch(error => {
                 console.log(error)
             });
 
-            this.hasOpenedReview = this.this.openedReview.length > 0;
         },
     },
 }

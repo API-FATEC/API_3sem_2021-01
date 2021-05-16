@@ -1,5 +1,6 @@
 package com.fatec.mom.domain.block;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.document.Document;
 import lombok.*;
@@ -31,7 +32,7 @@ public class BlockLink {
     @Column(name = "LNK_UPLOAD_DATE", nullable = false)
     private Date upload;
 
-    @JsonIgnore
+    @JsonBackReference("links")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BLC_COD")
     private Block block;
