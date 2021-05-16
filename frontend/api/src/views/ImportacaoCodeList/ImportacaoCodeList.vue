@@ -25,15 +25,6 @@
                       >
                         Enviar
                       </v-btn>
-
-                      <v-btn
-                        color="error"
-                        class="mr-4"
-                        @click="reset"
-                        id="botao-limpar"
-                      >
-                        Limpar Formulário
-                      </v-btn>
                     </v-form>
                   </v-col>
                   <v-col>

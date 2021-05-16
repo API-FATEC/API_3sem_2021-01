@@ -29,6 +29,11 @@ const routes = [
     path: '/CriacaoReview',
     name: 'CriacaoReview',
     component: () => import('../views/CriacaoReview/CriacaoReview.vue')
+  },
+  {
+    path: '/closeReview',
+    name: 'closeReview',
+    component: () => import('../views/closeReview/close_review.vue')
   }
   // {
   //   path: '/about',

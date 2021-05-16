@@ -24,10 +24,12 @@ public interface RevisionRepository extends JpaRepository<Revision, Long> {
 
     Optional<Revision> findByDocumentAndStatus(final Document document, final RevisionStatus status);
 
-    @Query(value = "SELECT NUMERO FROM ( select replace(rev_cod,'REVISION','') as numero from mom_revisao r join mom_documento d on r.doc_cod = d.doc_cod where d.doc_cod = :documentId ORDER BY NUMERO DESC) WHERE ROWNUM = 1", nativeQuery = true)
+    @Query(value = "SELECT NUMERO FROM ( select replace(r.rev_name,'REVISION','') as numero from mom_revisao r join mom_documento d on r.doc_cod = d.doc_cod where d.doc_cod = :documentId ORDER BY NUMERO DESC) WHERE ROWNUM = 1", nativeQuery = true)
     String getLastRevisionCode(@Param("documentId") final Long documentId);
 
-    @Query(value = "update mom_revisao set rev_status = 'FINISHED' where rev_cod = (select * from (select rev_cod from mom_revisao where doc_cod = :documentId order by rev_created_date desc) where rownum = 1)", nativeQuery = true)
-    void closeLastRevision(@Param("documentId") final Long documentId);
+    @Query(value = "select * from mom_revisao where doc_cod = :documentId and rev_status='OPENED'", nativeQuery = true)
+    Revision getOpenedRevision(@Param("documentId") final Long documentId);
 
+    @Query(value = "SELECT * FROM (SELECT * FROM MOM_REVISAO R WHERE DOC_COD = :documentId order by rev_created_date desc) WHERE ROWNUM = 1", nativeQuery = true)
+    Revision getLastRevision(@Param("documentId") Long documentId);
 }

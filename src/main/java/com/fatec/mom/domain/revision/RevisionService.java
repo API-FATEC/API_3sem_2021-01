@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -30,7 +31,6 @@ public class RevisionService {
     @Transactional
     public Revision saveNewRevision(Revision revision) {
         final Long documentId = revision.getDocument().getId();
-        closeLastRevision(documentId);
 
         revision.setName(RevisionName.getRevName(getLastRevisionCode(documentId) + 1));
         revision.getBlocksInRevision().forEach(this::updateBlockStatus);
@@ -45,7 +45,7 @@ public class RevisionService {
     }
 
     @Transactional
-    Integer getLastRevisionCode(Long documentId) {
+    public Integer getLastRevisionCode(Long documentId) {
         final var lastNumber = revisionRepository.getLastRevisionCode(documentId);
         int revisionNumber = FIRST_REVISION;
         try {
@@ -57,13 +57,19 @@ public class RevisionService {
     }
 
     @Transactional
-    void closeLastRevision(Long documentId) {
-        revisionRepository.closeLastRevision(documentId);
+    public Revision closeLastRevision(Long documentId) {
+        var openedRevision = revisionRepository.getOpenedRevision(documentId);
+        if (openedRevision != null) {
+            openedRevision.setStatus(RevisionStatus.FINISHED);
+            openedRevision.setLastUpdateDate(new Date());
+            return revisionRepository.save(openedRevision);
+        }
+        return null;
     }
 
     @Transactional
-    public Revision findByName(final String name) {
-        return revisionRepository.findByName(name).orElseThrow();
+    public Revision findLastRevision(final Long documentId) {
+        return revisionRepository.getLastRevision(documentId);
     }
 
     @Transactional
