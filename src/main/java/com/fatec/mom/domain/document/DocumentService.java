@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -60,5 +61,10 @@ public class DocumentService {
     @Transactional
     public Document save(Document document) {
         return documentRepository.save(document);
+    }
+
+    @Transactional
+    public Optional<Document> findById(final Long id) {
+        return documentRepository.findById(id);
     }
 }

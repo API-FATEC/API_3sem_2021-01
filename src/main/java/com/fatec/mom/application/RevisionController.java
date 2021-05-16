@@ -1,5 +1,6 @@
 package com.fatec.mom.application;
 
+import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
 import io.swagger.annotations.ApiOperation;
@@ -31,5 +32,13 @@ public class RevisionController {
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
                 .body(newRev);
+    }
+
+    @GetMapping("/opened")
+    @ApiOperation(value = "Encontra uma revisão aberta")
+    public ResponseEntity<Revision> hasOpenedRevision(@RequestParam("id") Long id) {
+        var revision = revisionService.findOpened(id);
+
+        return ResponseEntity.of(revision);
     }
 }
