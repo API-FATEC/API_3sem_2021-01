@@ -1,10 +1,8 @@
 package com.fatec.mom.domain.block;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.document.Document;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
@@ -14,10 +12,9 @@ import java.util.Date;
 @Entity
 @Table(name = "MOM_BLOCO_LINK")
 @SequenceGenerator(sequenceName = "MOM_BLOCO_LINK_SQ", name = "MOM_BLOCO_LINK_SQ", allocationSize = 1)
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor
+@ToString(of = {"id", "fileName", "extension", "upload"})
+@EqualsAndHashCode(of = {"id", "fileName", "extension", "upload"})
 public class BlockLink {
 
     @Id
@@ -34,7 +31,8 @@ public class BlockLink {
     @Column(name = "LNK_UPLOAD_DATE", nullable = false)
     private Date upload;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BLC_COD")
     private Block block;
 

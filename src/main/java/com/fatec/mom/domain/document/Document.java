@@ -8,14 +8,16 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "MOM_DOCUMENTO")
 @SequenceGenerator(sequenceName = "MOM_DOCUMENTO_SQ", name = "MOM_DOCUMENTO_SQ", allocationSize = 1)
-@Data @Builder @AllArgsConstructor @NoArgsConstructor
-@EqualsAndHashCode(of = {"name", "partNumber"})
+@Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor
+@ToString(of = {"id", "createdDate", "name", "partNumber"})
+@EqualsAndHashCode(of = {"id", "createdDate", "name", "partNumber"})
 public class Document {
 
     @Id
@@ -32,20 +34,72 @@ public class Document {
     @Column(name = "DOC_PN", nullable = false)
     private Integer partNumber;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "document")
+    @OneToMany(
+            mappedBy = "document",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private Set<Revision> revisions;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public void addRevision(Revision revision) {
+        if (revisions == null) {
+            revisions = new HashSet<>();
+        }
+        revisions.add(revision);
+        revision.setDocument(this);
+    }
+
+    public void removeRevision(Revision revision) {
+        if (revisions != null) {
+            revisions.remove(revision);
+            revision.setDocument(null);
+        }
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "MOM_TAG_DOC",
             joinColumns = @JoinColumn(name = "DOC_COD"),
             inverseJoinColumns = @JoinColumn(name = "TAG_COD"))
     private Set<Tag> tags;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "document")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "MOM_TRACO_DOC",
+            joinColumns = @JoinColumn(name = "DOC_COD"),
+            inverseJoinColumns = @JoinColumn(name = "TRA_COD"))
     private Set<Trait> traits;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "document")
+    public void addTrait(Trait trait) {
+        if (traits == null) {
+            traits = new HashSet<>();
+        }
+        traits.add(trait);
+    }
+
+    public void removeTrait(Trait trait) {
+        if (traits != null) {
+            traits.remove(trait);
+        }
+    }
+
+    @OneToMany(
+            mappedBy = "document",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private Set<Block> blocks;
+
+    public void addBlock(Block block) {
+        if (blocks == null) {
+            blocks = new HashSet<>();
+        }
+        blocks.add(block);
+        block.setDocument(this);
+    }
+
+    public void removeBlock(Block block) {
+        if (blocks != null) {
+            blocks.remove(block);
+            block.setDocument(null);
+        }
+    }
 
     public String getDocument() {
         return String.format("%s-%s", name, partNumber);
@@ -53,9 +107,5 @@ public class Document {
 
     public boolean containsTrait(Integer trait) {
         return traits.stream().map(trait1 -> trait1.getNumber().equals(trait)).collect(Collectors.toSet()).size() > 0;
-    }
-
-    public void addBlock(final Block block) {
-        this.blocks.add(block);
     }
 }

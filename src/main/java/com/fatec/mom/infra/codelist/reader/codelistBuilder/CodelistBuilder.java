@@ -11,11 +11,8 @@ import java.util.*;
 
 public class CodelistBuilder extends AbstractCodelistBuilder {
 
-    @Value("${default-documents-path}")
-    private String PATH;
-
-    public CodelistBuilder(Map<CodelistMetadata, Object> metadataIndexes) {
-        super(metadataIndexes);
+    public CodelistBuilder(String documentsPath, Map<CodelistMetadata, Object> metadataIndexes) {
+        super(documentsPath, metadataIndexes);
     }
 
     public Document transposeValues(final SheetContent content) {
@@ -89,7 +86,7 @@ public class CodelistBuilder extends AbstractCodelistBuilder {
                 .tags(new HashSet<>())
                 .links(new HashSet<>())
                 .build();
-        block.setBasePath(String.format("%s/Master/%s", PATH, block.getBlockName(document)));
+        block.setBasePath(String.format("%s/Master/%s", getDocumentsPath(), block.getBlockName(document)));
 
         return block;
     }

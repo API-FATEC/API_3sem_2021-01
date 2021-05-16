@@ -6,6 +6,7 @@ import com.fatec.mom.test.integration.AbstractIntegrationTest;
 import com.fatec.mom.test.integration.IntegrationTest;
 import com.google.gson.Gson;
 import org.json.JSONException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,16 @@ class DocumentServiceTest extends AbstractIntegrationTest {
 //        docs.add(Document.builder().id(3L).createdDate(dateFormat.parse("23/06/2021")).name("test").partNumber(123).trait(60).blocks(new HashSet<>()).build());
 
         return docs;
+    }
+
+    @Test
+    @DisplayName("Should save a doc and all the data inside him")
+    @Sql(value = "/com/fatec/mom/test/sql/all-tables.sql",
+            config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
+    void shouldSaveADocAndAllTheDataInsideHim() {
+        final var doc = DocumentBuilderAssistant.simpleDocument();
+        final var result = documentService.save(doc);
+
+        System.out.println(new Gson().toJson(result));
     }
 }

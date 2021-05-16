@@ -7,8 +7,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @IntegrationTest
 public class CodelistControllerTest extends AbstractControllerTest {

@@ -20,6 +20,7 @@ import com.fatec.mom.infra.codelist.reader.metadataretrievers.*;
 import com.fatec.mom.infra.codelist.reader.sheetreader.DefaultSheetReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,6 +28,9 @@ import java.util.*;
 
 @Configuration
 public class CodelistImportConfig {
+
+    @Value("${default-documents-path}")
+    private String DOCUMENTS_PATH;
 
     @Autowired
     private CodelistConfigLocator configLocator;
@@ -86,7 +90,7 @@ public class CodelistImportConfig {
                         new DocumentTraitOnCellRetriever(new SingleCellData(6, 0))
                 ));
 
-        final CodelistBuiderInvoker invoker = new CodelistBuiderInvoker(new CodelistBuilder(metadataIndexes));
+        final CodelistBuiderInvoker invoker = new CodelistBuiderInvoker(new CodelistBuilder(DOCUMENTS_PATH, metadataIndexes));
 
         return new SingleConfig(invoker, new CodelistSheetConfigPerTab(0, sheetConfig));
     }

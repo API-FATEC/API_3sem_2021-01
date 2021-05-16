@@ -12,7 +12,7 @@ public class RevisionService {
     private RevisionRepository revisionRepository;
 
     @Transactional
-    public Revision saveRev (Revision rev) {
+    public Revision saveRev(Revision rev) {
         return revisionRepository.save(rev);
     }
 

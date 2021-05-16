@@ -28,7 +28,7 @@ public class Tag {
     @Column(name = "TAG_CREATED")
     private Date created;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TIP_COD")
     private TypeTag typeTag;
 }

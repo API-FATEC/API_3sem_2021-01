@@ -9,11 +9,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "MOM_TRACO")
 @SequenceGenerator(name = "MOM_TRACO_SQ", sequenceName = "MOM_TRACO_SQ", allocationSize = 1)
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(of = "number")
+@Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor
+@ToString(of = {"id", "number"})
+@EqualsAndHashCode(of = {"id", "number"})
 public class Trait {
 
     @Id
@@ -23,12 +21,4 @@ public class Trait {
 
     @Column(name = "TRA_NUM")
     private Integer number;
-
-    @ManyToOne
-    @JoinColumn(name = "DOC_COD")
-    private Document document;
-
-    @ManyToOne
-    @JoinColumn(name = "BLC_COD")
-    private Block block;
 }

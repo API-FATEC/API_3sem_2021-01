@@ -1,5 +1,6 @@
 package com.fatec.mom.domain.document;
 
+import com.fatec.mom.domain.revision.RevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ public class DocumentService {
 
     @Autowired
     private DocumentRepository documentRepository;
+
+    @Autowired
+    private RevisionService revisionService;
 
     @Transactional
     public List<Document> findAll() {

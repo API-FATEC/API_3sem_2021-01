@@ -1,5 +1,6 @@
 package com.fatec.mom.domain.block;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.revision.Revision;
 import lombok.*;
 
@@ -9,6 +10,8 @@ import javax.persistence.*;
 @Table(name = "MOM_BLOCK_PAGES")
 @SequenceGenerator(name = "MOM_BLOCK_PAGES_SQ", sequenceName = "MOM_BLOCK_PAGES_SQ", allocationSize = 1)
 @Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor
+@ToString(of = {"id", "number"})
+@EqualsAndHashCode(of = {"id", "number"})
 public class BlockPage {
 
     @Id
@@ -19,11 +22,13 @@ public class BlockPage {
     @Column(name = "PAG_NUMBER", nullable = false)
     private Integer number;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BLC_COD")
     private Block block;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REV_COD")
     private Revision revision;
 }
