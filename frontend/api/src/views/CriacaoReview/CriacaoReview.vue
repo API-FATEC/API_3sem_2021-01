@@ -3,7 +3,7 @@
     <v-col>
       <v-row justify="center" class="pa-2">
         <div id="titulo">
-          <h1 class="display-1">Criação de Review</h1>
+          <h1 class="display-1">Criar Revisão</h1>
         </div>
       </v-row>
       <v-row class="pa-4">
@@ -130,7 +130,7 @@
 <script src="./CriacaoReview.js" ></script>
 
 <style>
-.search-card {
+/* .search-card {
   alignment: left;
   max-height: max-content;
 }
@@ -138,7 +138,7 @@
 .block-list {
   max-height: 400px;
   alignment: left;
-}
+} */
 
 #titulo {
   margin-top: 10px;
