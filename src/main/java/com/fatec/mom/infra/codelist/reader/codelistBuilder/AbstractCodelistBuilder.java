@@ -4,16 +4,22 @@ import com.fatec.mom.infra.codelist.reader.sheetcontent.ColumnDescriptor;
 import com.fatec.mom.infra.codelist.reader.sheetcontent.RowDescriptor;
 import com.fatec.mom.infra.codelist.reader.sheetcontent.SheetContent;
 import com.fatec.mom.infra.codelist.reader.sheetcontent.ValueDescriptor;
+import lombok.AccessLevel;
+import lombok.Getter;
 
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class AbstractCodelistBuilder {
+public abstract class AbstractCodelistBuilder {
 
-    public AbstractCodelistBuilder(Map<CodelistMetadata, Object> metadataIndexes) {
+    public AbstractCodelistBuilder(final String documentsPath, Map<CodelistMetadata, Object> metadataIndexes) {
+        this.documentsPath = documentsPath;
         this.metadataIndexes.putAll(metadataIndexes);
     }
+
+    @Getter(AccessLevel.PROTECTED)
+    private final String documentsPath;
 
     private final Map<CodelistMetadata, Object> metadataIndexes = new EnumMap<>(CodelistMetadata.class);
 

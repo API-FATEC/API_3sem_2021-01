@@ -40,9 +40,7 @@
         <v-footer id="core-footer" absolute height="42">
           <v-row justify="center">
             <span class="font-weight-light copyright">
-              &copy;
               {{ new Date().getFullYear() }}
-              feito com Vuejs.
             </span>
           </v-row>
         </v-footer>
@@ -63,9 +61,11 @@ export default {
     drawer: false,
     menus: [
       {conteudo: "Home", url: "/", icon: "mdi-home-variant"},
-      {conteudo: "Importação CodeList", url: "/ImportacaoCodeList", icon: "mdi-file"},
-      {conteudo: "Edição CodeList", url: "/EdiçãoCodeList", icon: "mdi-file-edit"},
-      {conteudo: "Busca", url: "/docsearch", icon: "mdi-search-web"},
+      {conteudo: "Importar CodeList", url: "/ImportacaoCodeList", icon: "mdi-file-upload"},
+      {conteudo: "Editar CodeList", url: "/EdiçãoCodeList", icon: "mdi-file-edit"},
+      {conteudo: "Buscar documento", url: "/docsearch", icon: "mdi-search-web"},
+      {conteudo: "Criar Revisão", url: "/CriacaoReview", icon: "mdi-folder-plus"},
+      {conteudo: "Fechar Revisão", url: "/closeReview", icon: "mdi-folder-plus"}
     ]
   }),
 };

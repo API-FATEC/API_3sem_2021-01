@@ -15,21 +15,6 @@
                 <v-row class="mb-6" no-gutters>
                   <v-col>
                     <v-form ref="form" v-model="valid" lazy-validation>
-                      <v-text-field
-                        v-model="name"
-                        :counter="nameCounter"
-                        :rules="nameRules"
-                        label="Nome do documento"
-                        required
-                      ></v-text-field>
-
-                      <v-text-field
-                        v-model="partNumber"
-                        :counter="partNumberCounter"
-                        :rules="partNumberRuler"
-                        label="Part Number"
-                        required
-                      ></v-text-field>
 
                       <v-btn
                         :disabled="!valid"
@@ -40,45 +25,39 @@
                       >
                         Enviar
                       </v-btn>
-
-                      <v-btn
-                        color="error"
-                        class="mr-4"
-                        @click="reset"
-                        id="botao-limpar"
-                      >
-                        Limpar Formulário
-                      </v-btn>
                     </v-form>
                   </v-col>
                   <v-col>
-                    <div id="app" @dragover.prevent @drop.prevent>
-                      <div class="container" @drop="handleFileDrop">
-                        <div class="file-wrapper">
-                          <input
-                            type="file"
-                            name="file-input"
-                            multiple="True"
-                            @change="handleFileInput"
-                            accept=".xlsx"
-                          />
-                          Clique ou arraste os arquivos
-                        </div>
-                        <ul>
-                          <li
-                            v-for="(file, index) in files"
-                            :key="(file, index)"
-                          >
-                            {{ file.name }} ({{ converteMB(file.size) }})
-                            <button @click="removeFile(index)" title="Remove">
-                              <v-icon>
-                                mdi-close-circle
-                              </v-icon>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
+                    <v-file-input
+                        v-model="files"
+                        color="blue accent-4"
+                        counter
+                        label="Inserir o CodeList"
+                        multiple
+                        placeholder="Select your files"
+                        prepend-icon="mdi-paperclip"
+                        outlined
+                        :show-size="1000"
+                    >
+                      <template v-slot:selection="{ index, text }">
+                        <v-chip
+                            v-if="index < 2"
+                            color="blue accent-4"
+                            dark
+                            label
+                            small
+                        >
+                          {{ text }}
+                        </v-chip>
+
+                        <span
+                            v-else-if="index === 2"
+                            class="overline grey--text text--darken-3 mx-2"
+                        >
+                        +{{ files.length - 2 }} File(s)
+                      </span>
+                      </template>
+                    </v-file-input>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -122,22 +101,6 @@
   margin-top: 20px;
 }
 
-.container{
-  margin-left: 20px;
-}
-
-.file-wrapper {
-  text-align: center;
-  width: 600px;
-  height: 200px;
-  vertical-align: middle;
-  display: table-cell;
-  position: relative;
-  overflow: hidden;
-  background: #0266b1;
-  color: white;
-  font-size: 24px;
-}
 .file-wrapper input {
   position: absolute;
   top: 0;

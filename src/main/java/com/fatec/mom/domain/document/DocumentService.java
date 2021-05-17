@@ -1,10 +1,12 @@
 package com.fatec.mom.domain.document;
 
+import com.fatec.mom.domain.revision.RevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,6 +15,9 @@ public class DocumentService {
 
     @Autowired
     private DocumentRepository documentRepository;
+
+    @Autowired
+    private RevisionService revisionService;
 
     @Transactional
     public List<Document> findAll() {
@@ -56,5 +61,10 @@ public class DocumentService {
     @Transactional
     public Document save(Document document) {
         return documentRepository.save(document);
+    }
+
+    @Transactional
+    public Optional<Document> findById(final Long id) {
+        return documentRepository.findById(id);
     }
 }

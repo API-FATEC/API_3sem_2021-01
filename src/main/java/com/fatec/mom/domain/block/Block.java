@@ -1,11 +1,14 @@
 package com.fatec.mom.domain.block;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.tag.Tag;
 import com.fatec.mom.domain.trait.Trait;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,8 +20,9 @@ import java.util.Set;
 @Entity
 @Table(name = "MOM_BLOCO")
 @SequenceGenerator(sequenceName = "MOM_BLOCO_SQ", name = "MOM_BLOCO_SQ", allocationSize = 1)
-@Data @Builder @AllArgsConstructor @NoArgsConstructor
-@EqualsAndHashCode(of = {"section", "subSection", "number", "name", "code"})
+@Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor
+@ToString(of = {"id", "section", "subSection", "number", "name", "code", "order", "status", "basePath"})
+@EqualsAndHashCode(of = {"id", "section", "subSection", "number", "name", "code", "order", "status", "basePath"})
 public class Block {
 
     @Id
@@ -48,23 +52,84 @@ public class Block {
     @Enumerated(EnumType.STRING)
     private BlockStatus status;
 
+    @JsonBackReference("blocks")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DOC_COD")
+    private Document document;
+
     @Column(name = "BLC_BASEPATH", nullable = false)
     private String basePath;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(
+            mappedBy = "block",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private Set<BlockLink> links;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    public void addLink(BlockLink blockLink) {
+        if (links == null) {
+            links = new HashSet<>();
+        }
+        links.add(blockLink);
+        blockLink.setBlock(this);
+    }
+
+    public void removeLink(BlockLink blockLink) {
+        if (links != null) {
+            links.remove(blockLink);
+            blockLink.setBlock(null);
+        }
+    }
+
+    @OneToMany(
+            mappedBy = "block",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<BlockPage> pages;
+
+    public void addPage(BlockPage page) {
+        if (pages == null) {
+            pages = new HashSet<>();
+        }
+        pages.add(page);
+        page.setBlock(this);
+    }
+
+    public void removePage(BlockPage page) {
+        if (pages != null) {
+            pages.remove(page);
+            page.setBlock(null);
+        }
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "MOM_TAG_BLC",
             joinColumns = @JoinColumn(name = "BLC_COD"),
             inverseJoinColumns = @JoinColumn(name = "TAG_COD"))
     private Set<Tag> tags;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "MOM_TRACO_BLC",
             joinColumns = @JoinColumn(name = "BLC_COD"),
             inverseJoinColumns = @JoinColumn(name = "TRA_COD"))
     private Set<Trait> traits;
+
+    public void addTrait(Trait trait) {
+        if (traits == null) {
+            traits = new HashSet<>();
+        }
+        traits.add(trait);
+    }
+
+    public void removeTrait(Trait trait) {
+        if (traits != null) {
+            traits.remove(trait);
+        }
+    }
+
+    public boolean hasTrait(Trait trait) {
+        return traits.contains(trait);
+    }
 
     public String getBlockName(Document document) {
         if (getSubSection() == null) {
@@ -80,13 +145,5 @@ public class Block {
                                 getSubSection(),
                                 getNumber(),
                                 getCode());
-    }
-
-    public void addTrait(Trait trait) {
-        traits.add(trait);
-    }
-
-    public boolean hasTrait(Trait trait) {
-        return traits.contains(trait);
     }
 }

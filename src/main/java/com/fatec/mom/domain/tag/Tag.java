@@ -22,11 +22,13 @@ public class Tag {
     @Column(name = "TAG_COD")
     private Long id;
 
+    @Column(name = "TAG_NOM")
     private String name;
 
+    @Column(name = "TAG_CREATED")
     private Date created;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TIP_COD")
     private TypeTag typeTag;
 }
