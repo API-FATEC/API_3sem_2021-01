@@ -42,7 +42,7 @@
             <span class="font-weight-light copyright">
               &copy;
               {{ new Date().getFullYear() }}
-              MOM
+              - MOM
             </span>
           </v-row>
         </v-footer>
