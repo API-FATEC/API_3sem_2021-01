@@ -84,7 +84,7 @@ export default {
       {
         conteudo: "Fechar Revisão",
         url: "/closeReview",
-        icon: "mdi-folder-plus",
+        icon: "mdi-folder-remove",
       },
     ],
   }),
