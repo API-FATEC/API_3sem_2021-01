@@ -11,4 +11,5 @@ public interface Git {
     Optional<GitCommandResult> getActualBranch(final DocumentDescriptor descriptor) throws IOException;
     Optional<GitCommandResult> checkoutNewBranch(final DocumentDescriptor descriptor, final String newBranch) throws IOException;
     Optional<GitCommandResult> checkout(final DocumentDescriptor descriptor, final String newBranch) throws IOException;
+    Optional<GitCommandResult> init(final DocumentDescriptor descriptor);
 }

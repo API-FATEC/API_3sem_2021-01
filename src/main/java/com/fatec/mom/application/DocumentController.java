@@ -2,9 +2,12 @@ package com.fatec.mom.application;
 
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.document.DocumentService;
+import com.fatec.mom.domain.revision.Revision;
+import com.fatec.mom.domain.revision.RevisionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +29,12 @@ public class DocumentController {
 
     private final DocumentService documentService;
 
+    private final RevisionService revisionService;
+
     @Autowired
-    public DocumentController(DocumentService documentService) {
+    public DocumentController(DocumentService documentService, RevisionService revisionService) {
         this.documentService = documentService;
+        this.revisionService = revisionService;
     }
 
     @GetMapping("/find/all")
@@ -91,5 +97,19 @@ public class DocumentController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(names);
+    }
+
+    @GetMapping("/download/full")
+    @ApiOperation(value = "Retorna o full do documento, especificando a revisão")
+    public ResponseEntity<InputStreamResource> downloadFull(@RequestParam("revision_id") Long revisionId) {
+        final var revision = revisionService.findById(revisionId);
+        final var resource = documentService.generateFULL(revision);
+
+        if (resource.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource.get());
     }
 }

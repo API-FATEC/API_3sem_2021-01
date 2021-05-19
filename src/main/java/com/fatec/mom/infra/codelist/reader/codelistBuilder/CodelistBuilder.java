@@ -86,7 +86,7 @@ public class CodelistBuilder extends AbstractCodelistBuilder {
                 .tags(new HashSet<>())
                 .links(new HashSet<>())
                 .build();
-        block.setBasePath(String.format("%s/Master/%s", getDocumentsPath(), block.getBlockName(document)));
+        block.setBasePath(String.format("%s/Master/%s/%s", getDocumentsPath(), document.getDocument(), block.getBlockName(document)));
 
         return block;
     }

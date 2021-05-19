@@ -1,5 +1,6 @@
 package com.fatec.mom.domain.file;
 
+import com.fatec.mom.domain.revision.Revision;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,9 +24,13 @@ import java.nio.file.Paths;
 public class FileUploadService {
 
     private static final String DEFAULT_FILE_NAME_FORMAT = "uploaded_file_%s";
+    private static final String DEFAULT_REV_PATH = "REV";
 
     @Value("${default-upload-path}")
     private String defaultPath;
+
+    @Value("${default-documents-path}")
+    private String defaultDocumentsPath;
 
     private final UploadedFileService uploadedFileService;
 
@@ -34,20 +39,33 @@ public class FileUploadService {
         this.uploadedFileService = uploadedFileService;
     }
 
-    public File uploadFile(MultipartFile multipartFile) throws IllegalStateException ,IOException, RuntimeException {
+    public File uploadFile(MultipartFile multipartFile,
+                           final Revision revision) throws IllegalStateException ,IOException, RuntimeException {
         final UploadedFile savedFile = saveFile(multipartFile);
-        return write(multipartFile, savedFile);
+        return write(
+                String.format("%s/%s/%s/%s",
+                        defaultDocumentsPath,
+                        revision.getDocument().getDocument(),
+                        DEFAULT_REV_PATH,
+                        revision.getName()),
+                multipartFile,
+                savedFile);
     }
 
-    private File write(final MultipartFile file, UploadedFile uploadedFile) {
-        final String filePath = String.format("%s/%s", defaultPath, uploadedFile.getFileName());
+    public File uploadFile(MultipartFile multipartFile) {
+        final UploadedFile savedFile = saveFile(multipartFile);
+        return write(defaultPath, multipartFile, savedFile);
+    }
+
+    private File write(final String path, final MultipartFile file, UploadedFile uploadedFile) {
+        final String filePath = String.format("%s/%s", path, uploadedFile.getFileName());
         mkdir(new File(filePath));
         final String fileName = String.format("%s/%s", filePath, file.getOriginalFilename());
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(fileName);
+            Path pathFile = Paths.get(fileName);
 
-            Files.write(path, bytes);
+            Files.write(pathFile, bytes);
         } catch (Exception e) {
             e.printStackTrace();
         }

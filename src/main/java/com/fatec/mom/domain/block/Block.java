@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.tag.Tag;
 import com.fatec.mom.domain.trait.Trait;
+import com.google.common.base.Strings;
 import lombok.*;
 
 import javax.persistence.*;
@@ -138,7 +139,7 @@ public class Block {
     }
 
     public String getBlockName(Document document) {
-        if (getSubSection() == null) {
+        if (Strings.isNullOrEmpty(getSubSection())) {
             return String.format("%s-%s-%sc%s",
                                 document.getDocument(),
                                 getSection(),

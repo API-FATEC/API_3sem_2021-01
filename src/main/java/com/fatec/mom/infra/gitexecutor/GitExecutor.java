@@ -72,4 +72,10 @@ public class GitExecutor {
         }
         return false;
     }
+
+    public boolean init(final DocumentDescriptor descriptor) {
+        final var result = git.init(descriptor);
+
+        return checkResult(result);
+    }
 }

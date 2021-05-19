@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Optional;
 
 @Service
@@ -85,5 +86,24 @@ public class RevisionService {
     @Transactional
     public Revision findByName(final String name) {
         return revisionRepository.findByName(name).orElseThrow();
+    }
+
+    @Transactional
+    public Revision findById(final Long id) {
+        return revisionRepository.findById(id).orElseThrow();
+    }
+
+    @Transactional
+    public Revision saveOriginal(final Document document) {
+        final var blocks = new LinkedList<>(document.getBlocks());
+        var revision = Revision.builder()
+                .document(document)
+                .name(RevisionName.ORIGINAL.name())
+                .blocksInRevision(blocks)
+                .createdDate(new Date())
+                .status(RevisionStatus.FINISHED)
+                .build();
+
+        return revisionRepository.save(revision);
     }
 }

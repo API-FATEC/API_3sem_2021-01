@@ -60,4 +60,13 @@ public class GitCommandAdapter {
     private String getExecutableCommand() {
         return String.format("%s/%s", gitProperties.getGitExecutablePath(), gitProperties.getGitExecutable());
     }
+
+    public String[] adaptInitCommand(final DocumentDescriptor descriptor) {
+        return new String[] {
+                getExecutableCommand(),
+                GitAuxiliaryCommand.PATH.getCommand(),
+                descriptor.getDocumentPath(),
+                GitCommand.INIT.getName()
+        };
+    }
 }

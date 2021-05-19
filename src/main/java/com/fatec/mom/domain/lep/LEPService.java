@@ -2,11 +2,10 @@ package com.fatec.mom.domain.lep;
 
 import com.fatec.mom.domain.block.Block;
 import com.fatec.mom.domain.block.BlockPageChangesService;
-import com.fatec.mom.domain.block.pagescomparator.BlockPageComparator;
+import com.fatec.mom.domain.block.BlockPageService;
 import com.fatec.mom.domain.block.pagescomparator.changes.BlockPageChange;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.document.DocumentService;
-import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,17 +21,19 @@ public class LEPService {
 
     private final DocumentService documentService;
 
-    @Autowired
-    private BlockPageComparator blockPageComparator;
+    private final RevisionService revisionService;
 
-    @Autowired
-    private RevisionService revisionService;
+    private final BlockPageService blockPageService;
 
     @Autowired
     public LEPService(BlockPageChangesService blockPageChangesService,
-                      DocumentService documentService) {
+                      DocumentService documentService,
+                      RevisionService revisionService,
+                      BlockPageService blockPageService) {
         this.blockPageChangesService = blockPageChangesService;
         this.documentService = documentService;
+        this.revisionService = revisionService;
+        this.blockPageService = blockPageService;
     }
 
     @Transactional
@@ -77,20 +78,9 @@ public class LEPService {
 
         final var doc = document.get();
         final var lastRevision = revisionService.findLastRevision(documentId);
-        var pages = compareChanges(lastRevision, doc.getBlocks());
+        var pages = blockPageService.getPages(lastRevision, doc.getBlocks());
         pages = blockPageChangesService.saveAll(pages);
 
         return new LEP(doc.getRevisions(), pages);
-    }
-
-    private List<BlockPageChange> compareChanges(final Revision revision, final Set<Block> blocks) {
-        if (blocks.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        final var changes = new LinkedList<BlockPageChange>();
-        blocks.forEach(block -> changes.addAll(blockPageComparator.getChanges(revision, block)));
-
-        return changes;
     }
 }

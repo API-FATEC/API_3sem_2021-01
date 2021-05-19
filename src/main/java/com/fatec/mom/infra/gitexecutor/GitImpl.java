@@ -40,4 +40,12 @@ public class GitImpl extends GitImplBase {
 
         return Optional.of(run(handler, getOutputCollector()));
     }
+
+    @Override
+    public Optional<GitCommandResult> init(DocumentDescriptor descriptor) {
+        final String[] command = commandAdapter.adaptInitCommand(descriptor);
+        final GitHandler handler = new GitHandler(GitCommand.INIT, command);
+
+        return Optional.of(run(handler, getOutputCollector()));
+    }
 }

@@ -13,6 +13,7 @@ public enum GitCommand {
     VERSION("--version"),
     MERGE("merge"),
     STATUS("status"),
+    INIT("init"),
     REV_PARSE("rev-parse");
 
     @Getter

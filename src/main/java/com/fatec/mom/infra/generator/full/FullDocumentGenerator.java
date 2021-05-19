@@ -3,6 +3,7 @@ package com.fatec.mom.infra.generator.full;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionStatus;
+import com.fatec.mom.infra.generator.RevisionManipulator;
 import com.fatec.mom.infra.generator.full.dataextractor.DocumentFilesExtractor;
 import com.fatec.mom.infra.generator.pdf.PdfMerger;
 import com.fatec.mom.infra.generator.pdf.PdfExtractor;
@@ -25,19 +26,26 @@ public class FullDocumentGenerator {
 
     private final PdfExtractor pdfExtractor;
 
+    private final RevisionManipulator revisionManipulator;
+
     @Value("${default-documents-path}")
     private String documentsPath;
 
     @Autowired
     public FullDocumentGenerator(PdfMerger pdfMerger,
                                  DocumentFilesExtractor documentFilesExtractor,
+                                 RevisionManipulator revisionManipulator,
                                  PdfExtractor pdfExtractor) {
         this.pdfMerger = pdfMerger;
         this.documentFilesExtractor = documentFilesExtractor;
+        this.revisionManipulator = revisionManipulator;
         this.pdfExtractor = pdfExtractor;
     }
 
-    public File getFULL(final Document document) throws IOException {
+    public File getFULL(final Revision revision) throws IOException {
+        revisionManipulator.checkoutToRevision(revision);
+
+        final var document = revision.getDocument();
         final var documentFiles = documentFilesExtractor.extractFileNames(document);
         final var pdfFiles = pdfExtractor.getInputStreamsFor(documentFiles);
         return pdfMerger.mergeFiles(pdfFiles, getFullDestinationFileName(document));

@@ -1,10 +1,18 @@
 package com.fatec.mom.domain.document;
 
+import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
+import com.fatec.mom.infra.generator.full.FullDocumentGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -13,11 +21,22 @@ import java.util.stream.Collectors;
 @Service
 public class DocumentService {
 
-    @Autowired
-    private DocumentRepository documentRepository;
+    private static final String PDF_TYPE = "application/pdf";
+
+    private final DocumentRepository documentRepository;
+
+    private final RevisionService revisionService;
+
+    private final FullDocumentGenerator fullDocumentGenerator;
 
     @Autowired
-    private RevisionService revisionService;
+    public DocumentService(DocumentRepository documentRepository,
+                           RevisionService revisionService,
+                           FullDocumentGenerator fullDocumentGenerator) {
+        this.documentRepository = documentRepository;
+        this.revisionService = revisionService;
+        this.fullDocumentGenerator = fullDocumentGenerator;
+    }
 
     @Transactional
     public List<Document> findAll() {
@@ -43,7 +62,7 @@ public class DocumentService {
 
     @Transactional
     public List<Document> saveAll(final List<Document> documents) {
-        return documents.stream().map(document -> documentRepository.save(document)).collect(Collectors.toList());
+        return documents.stream().map(documentRepository::save).collect(Collectors.toList());
     }
 
     @Transactional
@@ -66,5 +85,22 @@ public class DocumentService {
     @Transactional
     public Optional<Document> findById(final Long id) {
         return documentRepository.findById(id);
+    }
+
+    @Transactional
+    public Optional<InputStreamResource> generateFULL(final Revision revision) {
+        try {
+            final var full = fullDocumentGenerator.getFULL(revision);
+            return Optional.of(getFileResponse(full));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+    public InputStreamResource getFileResponse(final File file) throws FileNotFoundException {
+        final var inputStream = new FileInputStream(file);
+        return new InputStreamResource(inputStream);
     }
 }
