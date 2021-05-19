@@ -1,7 +1,6 @@
 package com.fatec.mom.domain.block;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.document.Document;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;

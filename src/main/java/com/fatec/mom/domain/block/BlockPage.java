@@ -1,11 +1,13 @@
 package com.fatec.mom.domain.block;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fatec.mom.domain.block.pagescomparator.changes.BlockPageChange;
 import com.fatec.mom.domain.revision.Revision;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "MOM_BLOCK_PAGES")
@@ -32,4 +34,19 @@ public class BlockPage {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REV_COD")
     private Revision revision;
+
+    @OneToMany(
+            mappedBy = "actualPage",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<BlockPageChange> changes;
+
+    public void addChange(final BlockPageChange change) {
+        if (changes == null) {
+            changes = new HashSet<>();
+        }
+
+        changes.add(change);
+        change.setActualPage(this);
+    }
 }

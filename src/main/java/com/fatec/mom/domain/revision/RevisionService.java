@@ -81,4 +81,9 @@ public class RevisionService {
 
         return Optional.empty();
     }
+
+    @Transactional
+    public Revision findByName(final String name) {
+        return revisionRepository.findByName(name).orElseThrow();
+    }
 }

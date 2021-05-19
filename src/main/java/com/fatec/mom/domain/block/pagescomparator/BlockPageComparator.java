@@ -1,44 +1,28 @@
 package com.fatec.mom.domain.block.pagescomparator;
 
 import com.fatec.mom.domain.block.Block;
-import com.fatec.mom.domain.block.BlockPage;
 import com.fatec.mom.domain.block.pagescomparator.changes.BlockPageChange;
-import com.fatec.mom.domain.block.pagescomparator.changes.ChangeHandler;
-import com.fatec.mom.domain.block.pagescomparator.changes.RevisedPageHandler;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.fatec.mom.domain.block.pagescomparator.changes.PageChangeHandler;
+import com.fatec.mom.domain.revision.Revision;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class BlockPageComparator {
 
-    private final RevisedPageHandler revisedPageHandler;
+    private final PageChangeHandler pageChangeHandler;
 
-    private final List<ChangeHandler> changeHandlers;
-
-
-    public BlockPageComparator(RevisedPageHandler revisedPageHandler,
-                               @Qualifier("changeHandlers") List<ChangeHandler> changeHandlers) {
-        this.revisedPageHandler = revisedPageHandler;
-        this.changeHandlers = changeHandlers;
+    public BlockPageComparator(PageChangeHandler pageChangeHandler) {
+        this.pageChangeHandler = pageChangeHandler;
     }
 
-    public List<BlockPageChange> getChanges(Block old, Block actual) {
-        final Set<BlockPage> oldPages = old.getPages();
-        final Set<BlockPage> actualPages = actual.getPages();
-
-        return compareChanges(oldPages, actualPages);
-    }
-
-    private List<BlockPageChange> compareChanges(Set<BlockPage> oldPages, Set<BlockPage> actualPages) {
-        List<BlockPageChange> changes = revisedPageHandler.handleChanges(oldPages, actualPages);
-
-        for (ChangeHandler handler : changeHandlers) {
-            handler.handleChanges(changes);
+    public List<BlockPageChange> getChanges(final Revision lastRevision, Block actual) {
+        if (lastRevision.getBlocksInRevision().contains(actual)) {
+            return pageChangeHandler.handleChanges(lastRevision, actual);
         }
 
-        return changes;
+        return Collections.emptyList();
     }
 }

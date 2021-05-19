@@ -11,9 +11,9 @@ public class NewPageHandler implements ChangeHandler {
     @Override
     public List<BlockPageChange> handleChanges(List<BlockPageChange> changes) {
         for (BlockPageChange change : changes) {
-            if (change.isRevised() && change.getOldPage() == null) {
-                change.setStatus(BlockPageStatus.NEW);
-            }
+//            if (change.isRevised() && change.getOldPage() == null) {
+//                change.setStatus(BlockPageStatus.NEW);
+//            }
         }
 
         return changes;

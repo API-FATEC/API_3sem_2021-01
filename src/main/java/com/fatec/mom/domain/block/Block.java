@@ -1,7 +1,6 @@
 package com.fatec.mom.domain.block;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.tag.Tag;
 import com.fatec.mom.domain.trait.Trait;
@@ -9,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -93,6 +93,12 @@ public class Block {
         }
         pages.add(page);
         page.setBlock(this);
+    }
+
+    public void addAllPages(final List<BlockPage> pages) {
+        for (final BlockPage page : pages) {
+            addPage(page);
+        }
     }
 
     public void removePage(BlockPage page) {

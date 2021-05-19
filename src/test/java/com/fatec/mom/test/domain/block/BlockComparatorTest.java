@@ -5,6 +5,8 @@ import com.fatec.mom.domain.block.BlockPage;
 import com.fatec.mom.domain.block.BlockStatus;
 import com.fatec.mom.domain.block.pagescomparator.BlockPageComparator;
 import com.fatec.mom.domain.block.pagescomparator.changes.BlockPageChange;
+import com.fatec.mom.domain.document.Document;
+import com.fatec.mom.domain.document.DocumentService;
 import com.fatec.mom.test.domain.revision.RevisionBuilderAssistant;
 import com.fatec.mom.test.integration.IntegrationTest;
 import com.google.gson.Gson;
@@ -21,6 +23,9 @@ import java.util.stream.Collectors;
 public class BlockComparatorTest {
 
     @Autowired
+    DocumentService documentService;
+
+    @Autowired
     BlockPageComparator comparator;
 
     @Test
@@ -33,10 +38,10 @@ public class BlockComparatorTest {
         final Block revised = simpleBlock();
         revised.setPages(newPages(revised));
 
-        final var changes = comparator.getChanges(old, revised);
+//        final var changes = comparator.getChanges(old, revised);
 
-        var teste = changes.stream().filter(BlockPageChange::isRevised).collect(Collectors.toList());
-        System.out.println(changes);
+//        var teste = changes.stream().filter(BlockPageChange::isRevised).collect(Collectors.toList());
+//        System.out.println(changes);
     }
 
     private Block simpleBlock() {
