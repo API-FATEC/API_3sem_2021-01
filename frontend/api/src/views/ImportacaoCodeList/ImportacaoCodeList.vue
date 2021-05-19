@@ -14,50 +14,53 @@
               <v-card-text>
                 <v-row class="mb-6" no-gutters>
                   <v-col>
-                    <v-form ref="form" v-model="valid" lazy-validation>
-
-                      <v-btn
-                        :disabled="!valid"
-                        color="primary"
-                        class="mr-4"
-                        @click="sendFile"
-                        id="botao-enviar"
-                      >
-                        Enviar
-                      </v-btn>
-                    </v-form>
-                  </v-col>
-                  <v-col>
                     <v-file-input
-                        v-model="files"
-                        color="blue accent-4"
-                        counter
-                        label="Inserir o CodeList"
-                        multiple
-                        placeholder="Select your files"
-                        prepend-icon="mdi-paperclip"
-                        outlined
-                        :show-size="1000"
+                      v-model="files"
+                      color="blue accent-4"
+                      counter
+                      label="Inserir o CodeList"
+                      multiple
+                      placeholder="Select your files"
+                      prepend-icon="mdi-paperclip"
+                      outlined
+                      :show-size="1000"
                     >
                       <template v-slot:selection="{ index, text }">
                         <v-chip
-                            v-if="index < 2"
-                            color="blue accent-4"
-                            dark
-                            label
-                            small
+                          v-if="index < 2"
+                          color="blue accent-4"
+                          dark
+                          label
+                          small
                         >
                           {{ text }}
                         </v-chip>
 
                         <span
-                            v-else-if="index === 2"
-                            class="overline grey--text text--darken-3 mx-2"
+                          v-else-if="index === 2"
+                          class="overline grey--text text--darken-3 mx-2"
                         >
-                        +{{ files.length - 2 }} File(s)
-                      </span>
+                          +{{ files.length - 2 }} File(s)
+                        </span>
                       </template>
                     </v-file-input>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <div id="btn">
+                      <v-form ref="form" v-model="valid" lazy-validation>
+                        <v-btn
+                          :disabled="!valid"
+                          color="primary"
+                          class="mr-4"
+                          @click="sendFile"
+                          id="botao-enviar"
+                        >
+                          Enviar
+                        </v-btn>
+                      </v-form>
+                    </div>
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -110,5 +113,12 @@
   filter: alpha(opacity=0);
   font-size: 300px;
   height: 200px;
+}
+
+#btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 </style>
