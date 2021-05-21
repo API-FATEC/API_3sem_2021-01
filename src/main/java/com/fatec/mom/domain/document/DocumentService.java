@@ -103,4 +103,9 @@ public class DocumentService {
         final var inputStream = new FileInputStream(file);
         return new InputStreamResource(inputStream);
     }
+
+    public Document importDocument(final Long id) {
+        final var document = documentRepository.findById(id);
+        return document.orElseThrow();
+    }
 }

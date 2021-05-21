@@ -3,12 +3,15 @@ package com.fatec.mom.domain.revision;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fatec.mom.domain.block.Block;
+import com.fatec.mom.domain.block.BlockLink;
 import com.fatec.mom.domain.document.Document;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "MOM_REVISAO")
@@ -46,4 +49,18 @@ public class Revision {
             joinColumns = @JoinColumn(name = "REV_COD"),
             inverseJoinColumns = @JoinColumn(name = "BLC_COD"))
     private List<Block> blocksInRevision;
+
+    @OneToMany(
+            mappedBy = "revision",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set<RevisionTag> revisionTags;
+
+    public void addRevisionTag(RevisionTag tag) {
+        if (revisionTags == null) {
+            revisionTags = new HashSet<>();
+        }
+        revisionTags.add(tag);
+        tag.setRevision(this);
+    }
 }

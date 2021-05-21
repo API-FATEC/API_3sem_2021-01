@@ -24,10 +24,10 @@ public class BlockController {
         this.blockService = blockService;
     }
 
-    @PostMapping("/import")
+    @PostMapping("/import/{revision_id}/{block_id}")
     @ApiOperation(value = "Salva um novo bloco, seus arquivos (pdf ou docx) e extrai as páginas do pdf, se existir.")
-    public ResponseEntity<Block> importBlock(@RequestParam("revision_id") Long revisionId,
-                                             @RequestParam("block_id") Long blockId,
+    public ResponseEntity<Block> importBlock(@PathVariable("revision_id") Long revisionId,
+                                             @PathVariable("block_id") Long blockId,
                                              @RequestParam("files") List<MultipartFile> files) throws IOException {
         final var savedBlock = blockService.handleImport(revisionId, blockId, files);
 

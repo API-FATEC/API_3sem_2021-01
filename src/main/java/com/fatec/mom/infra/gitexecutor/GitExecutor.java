@@ -78,4 +78,21 @@ public class GitExecutor {
 
         return checkResult(result);
     }
+
+    public boolean addAll(final DocumentDescriptor descriptor) {
+        final var result = git.addAll(descriptor);
+        return checkResult(result);
+    }
+
+    public boolean commit(final DocumentDescriptor descriptor, final String message) {
+        final var result = git.commit(descriptor, message);
+        return checkResult(result);
+    }
+
+    public boolean tag(final DocumentDescriptor descriptor,
+                    final String tag,
+                    final String message) {
+        final var result = git.tag(descriptor, tag, message);
+        return checkResult(result);
+    }
 }

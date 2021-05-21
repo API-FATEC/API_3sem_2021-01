@@ -20,7 +20,7 @@ import java.util.Optional;
 @Repository
 public interface RevisionRepository extends JpaRepository<Revision, Long> {
 
-    Optional<Revision> findByName(final String name);
+    Optional<Revision> findByNameAndDocument_Id(final String name, final Long docId);
 
     Optional<Revision> findByDocumentAndStatus(final Document document, final RevisionStatus status);
 

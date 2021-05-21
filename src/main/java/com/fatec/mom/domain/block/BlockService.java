@@ -3,6 +3,7 @@ package com.fatec.mom.domain.block;
 import com.fatec.mom.domain.file.FileUploadService;
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
+import com.fatec.mom.infra.generator.RevisionManipulator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,15 +30,19 @@ public class BlockService {
 
     private final RevisionService revisionService;
 
+    private final RevisionManipulator revisionManipulator;
+
     @Autowired
     public BlockService(FileUploadService fileUploadService,
                         BlockRepository blockRepository,
                         BlockImporterService blockImporterService,
-                        RevisionService revisionService) {
+                        RevisionService revisionService,
+                        RevisionManipulator revisionManipulator) {
         this.fileUploadService = fileUploadService;
         this.blockRepository = blockRepository;
         this.blockImporterService = blockImporterService;
         this.revisionService = revisionService;
+        this.revisionManipulator = revisionManipulator;
     }
 
     public Block handleImport(final Long revisionId,
@@ -45,11 +50,8 @@ public class BlockService {
                               final List<MultipartFile> multipartFiles) throws IOException {
         final var block = blockRepository.findById(blockId);
         final var revision = revisionService.findById(revisionId);
-        if (block.isEmpty()) {
-            return new Block();
-        }
 
-        return handleImport(revision, block.get(), multipartFiles);
+        return handleImport(revision, block.orElseThrow(), multipartFiles);
     }
 
     public Block handleImport(final Revision revision,
@@ -57,18 +59,27 @@ public class BlockService {
                               final List<MultipartFile> multipartFiles) throws IOException {
         if (!multipartFiles.isEmpty()) {
             for (final MultipartFile file : multipartFiles) {
+                final var savedFile = fileUploadService.uploadFile(file, revision);
                 if (isPdf(file)) {
-                    final var savedFile = fileUploadService.uploadFile(file, revision);
                     final var pages = getPages(block, savedFile);
                     block.addAllPages(pages);
                     block.setBasePath(savedFile.getAbsolutePath());
                 }
             }
+            commitChanges(revision, block);
         } else {
             log.info("Não foi passado nenhum arquivo");
         }
 
+        revisionService.saveUpdateDate(revision);
         return save(block);
+    }
+
+    private void commitChanges(final Revision revision, final Block block) {
+        revisionManipulator.checkoutToRevision(revision);
+        if (revisionManipulator.isIn(revision)) {
+            revisionManipulator.commitAllChanges(revision, block.getBlockName(block.getDocument()));
+        }
     }
 
     @Transactional

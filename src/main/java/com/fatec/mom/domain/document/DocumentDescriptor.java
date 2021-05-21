@@ -1,9 +1,12 @@
 package com.fatec.mom.domain.document;
 
+import com.fatec.mom.domain.revision.Revision;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 public class DocumentDescriptor {
 

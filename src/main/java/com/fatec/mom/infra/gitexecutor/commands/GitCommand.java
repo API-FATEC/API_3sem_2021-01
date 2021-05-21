@@ -14,7 +14,8 @@ public enum GitCommand {
     MERGE("merge"),
     STATUS("status"),
     INIT("init"),
-    REV_PARSE("rev-parse");
+    REV_PARSE("rev-parse"),
+    TAG("tag");
 
     @Getter
     private final String name;

@@ -1,5 +1,8 @@
 package com.fatec.mom.application;
 
+import com.fatec.mom.domain.block.Block;
+import com.fatec.mom.domain.block.BlockService;
+import com.fatec.mom.domain.block.BlockStatus;
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
 import io.swagger.annotations.Api;
@@ -8,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * A classe <code>RevisionController</code> é responsável por fornecer uma api para as revisões.
@@ -23,6 +28,9 @@ public class RevisionController {
 
     @Autowired
     private RevisionService revisionService;
+
+    @Autowired
+    private BlockService blockService;
 
     @PostMapping("/save")
     @ApiOperation(value = "Cria uma nova ou atualiza uma Revision no banco")
@@ -47,6 +55,19 @@ public class RevisionController {
     @ApiOperation(value = "Fecha a revisão que está aberta")
     public ResponseEntity<Revision> closeRevision(@RequestParam("document_id") Long documentId) {
         var revision = revisionService.closeLastRevision(documentId);
-        return ResponseEntity.ok(revision);
+        if (revision.isPresent()) {
+            closeAllBlocks(revision.get().getBlocksInRevision());
+            return ResponseEntity.ok(revision.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    private void closeAllBlocks(List<Block> blocks) {
+        if (blocks.isEmpty()) return;
+        blocks.forEach(block -> {
+            block.setStatus(BlockStatus.REVISED);
+            blockService.save(block);
+        });
     }
 }

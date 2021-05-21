@@ -12,4 +12,7 @@ public interface Git {
     Optional<GitCommandResult> checkoutNewBranch(final DocumentDescriptor descriptor, final String newBranch) throws IOException;
     Optional<GitCommandResult> checkout(final DocumentDescriptor descriptor, final String newBranch) throws IOException;
     Optional<GitCommandResult> init(final DocumentDescriptor descriptor);
+    Optional<GitCommandResult> addAll(final DocumentDescriptor descriptor);
+    Optional<GitCommandResult> commit(final DocumentDescriptor descriptor, final String message);
+    Optional<GitCommandResult> tag(final DocumentDescriptor descriptor, final String tag, final String message);
 }

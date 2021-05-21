@@ -7,10 +7,11 @@ import lombok.Getter;
 public enum GitAuxiliaryCommand {
 
     ADD_ALL("."),
-    COMMIT_MESSAGE("-m"),
+    MESSAGE("-m"),
     NEW_BRANCH("-b"),
     PATH("-C"),
-    ABBREV_REF("--abbrev-ref");
+    ABBREV_REF("--abbrev-ref"),
+    TAG_NAME("-a");
 
     @Getter
     private final String command;

@@ -48,4 +48,28 @@ public class GitImpl extends GitImplBase {
 
         return Optional.of(run(handler, getOutputCollector()));
     }
+
+    @Override
+    public Optional<GitCommandResult> addAll(DocumentDescriptor descriptor) {
+        final String[] command = commandAdapter.adaptAddAllCommand(descriptor);
+        final GitHandler handler = new GitHandler(GitCommand.ADD, command);
+
+        return Optional.of(run(handler, getOutputCollector()));
+    }
+
+    @Override
+    public Optional<GitCommandResult> commit(DocumentDescriptor descriptor, String message) {
+        final String[] command = commandAdapter.adaptCommitCommand(descriptor, message);
+        final GitHandler handler = new GitHandler(GitCommand.COMMIT, command);
+
+        return Optional.of((run(handler, getOutputCollector())));
+    }
+
+    @Override
+    public Optional<GitCommandResult> tag(DocumentDescriptor descriptor, String tag, String message) {
+        final String[] command = commandAdapter.adaptTagCommand(descriptor, tag, message);
+        final GitHandler handler = new GitHandler(GitCommand.TAG, command);
+
+        return Optional.of((run(handler, getOutputCollector())));
+    }
 }

@@ -99,9 +99,9 @@ public class DocumentController {
                 .body(names);
     }
 
-    @GetMapping("/download/full")
+    @GetMapping("/download/full/{revision_id}")
     @ApiOperation(value = "Retorna o full do documento, especificando a revisão")
-    public ResponseEntity<InputStreamResource> downloadFull(@RequestParam("revision_id") Long revisionId) {
+    public ResponseEntity<InputStreamResource> downloadFull(@PathVariable("revision_id") Long revisionId) {
         final var revision = revisionService.findById(revisionId);
         final var resource = documentService.generateFULL(revision);
 
@@ -111,5 +111,13 @@ public class DocumentController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(resource.get());
+    }
+
+    @PostMapping("/import/{id}")
+    @ApiOperation(value = "Cria um documento importando os arquivos")
+    public ResponseEntity<Document> importDocument(@PathVariable("id") final Long id) {
+        final var document = documentService.importDocument(id);
+
+        return ResponseEntity.ok(document);
     }
 }

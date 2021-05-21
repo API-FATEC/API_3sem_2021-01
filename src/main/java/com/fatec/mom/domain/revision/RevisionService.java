@@ -2,9 +2,11 @@ package com.fatec.mom.domain.revision;
 
 import com.fatec.mom.domain.block.Block;
 import com.fatec.mom.domain.block.BlockRepository;
+import com.fatec.mom.domain.block.BlockService;
 import com.fatec.mom.domain.block.BlockStatus;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.document.DocumentService;
+import com.fatec.mom.infra.generator.RevisionManipulator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,10 +27,16 @@ public class RevisionService {
     private RevisionRepository revisionRepository;
 
     @Autowired
+    private RevisionTagRepository revisionTagRepository;
+
+    @Autowired
     private DocumentService documentService;
 
     @Autowired
     private BlockRepository blockRepository;
+
+    @Autowired
+    private RevisionManipulator revisionManipulator;
 
     @Transactional
     public Revision saveNewRevision(Revision revision) {
@@ -58,14 +67,36 @@ public class RevisionService {
     }
 
     @Transactional
-    public Revision closeLastRevision(Long documentId) {
-        var openedRevision = revisionRepository.getOpenedRevision(documentId);
-        if (openedRevision != null) {
-            openedRevision.setStatus(RevisionStatus.FINISHED);
-            openedRevision.setLastUpdateDate(new Date());
-            return revisionRepository.save(openedRevision);
+    public Optional<Revision> closeLastRevision(Long documentId) {
+        var openedRevision = Optional.ofNullable(revisionRepository.getOpenedRevision(documentId));
+
+        if (openedRevision.isPresent()) {
+            var revision = openedRevision.get();
+            revision.setStatus(RevisionStatus.FINISHED);
+            revision.setLastUpdateDate(new Date());
+            tagRevision(revision);
+            return Optional.of(revisionRepository.save(revision));
         }
-        return null;
+
+        return Optional.empty();
+    }
+
+    private void tagRevision(final Revision revision) {
+        final var tag = Optional.ofNullable(revisionTagRepository.getLastTagFrom(revision.getId()));
+        if (tag.isPresent()) {
+            tryTagRevision(revision, tag.get());
+        } else {
+            final var tagged = tryTagRevision(revision, RevisionTag.builder().value("1.0").revision(revision).build());
+            revision.addRevisionTag(tagged);
+        }
+    }
+
+    private RevisionTag tryTagRevision(final Revision revision, final RevisionTag tag) {
+        revisionManipulator.checkoutToRevision(revision);
+        if (revisionManipulator.isIn(revision)) {
+            return revisionManipulator.tagRevision(revision, tag);
+        }
+        return tag;
     }
 
     @Transactional
@@ -84,8 +115,8 @@ public class RevisionService {
     }
 
     @Transactional
-    public Revision findByName(final String name) {
-        return revisionRepository.findByName(name).orElseThrow();
+    public Revision findByNameAndDocument(final String name, final Long documentId) {
+        return revisionRepository.findByNameAndDocument_Id(name, documentId).orElseThrow();
     }
 
     @Transactional
@@ -105,5 +136,11 @@ public class RevisionService {
                 .build();
 
         return revisionRepository.save(revision);
+    }
+
+    @Transactional
+    public void saveUpdateDate(final Revision revision) {
+        revision.setLastUpdateDate(new Date());
+        revisionRepository.save(revision);
     }
 }

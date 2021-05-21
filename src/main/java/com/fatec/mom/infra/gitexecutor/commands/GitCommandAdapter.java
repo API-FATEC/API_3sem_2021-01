@@ -69,4 +69,30 @@ public class GitCommandAdapter {
                 GitCommand.INIT.getName()
         };
     }
+
+    public String[] adaptCommitCommand(final DocumentDescriptor descriptor, final String message) {
+        return new String[] {
+                getExecutableCommand(),
+                GitAuxiliaryCommand.PATH.getCommand(),
+                descriptor.getDocumentPath(),
+                GitCommand.COMMIT.getName(),
+                GitAuxiliaryCommand.MESSAGE.getCommand(),
+                String.format("\"%s\"", message)
+        };
+    }
+
+    public String[] adaptTagCommand(final DocumentDescriptor descriptor,
+                                    final String tag,
+                                    final String message) {
+        return new String[] {
+                getExecutableCommand(),
+                GitAuxiliaryCommand.PATH.getCommand(),
+                descriptor.getDocumentPath(),
+                GitCommand.TAG.getName(),
+                GitAuxiliaryCommand.TAG_NAME.getCommand(),
+                tag,
+                GitAuxiliaryCommand.MESSAGE.getCommand(),
+                String.format("\"%s\"", message)
+        };
+    }
 }
