@@ -83,12 +83,13 @@ public class RevisionService {
 
     private void tagRevision(final Revision revision) {
         final var tag = Optional.ofNullable(revisionTagRepository.getLastTagFrom(revision.getId()));
+        final RevisionTag tagged;
         if (tag.isPresent()) {
-            tryTagRevision(revision, tag.get());
+            tagged = tryTagRevision(revision, tag.get());
         } else {
-            final var tagged = tryTagRevision(revision, RevisionTag.builder().value("1.0").revision(revision).build());
-            revision.addRevisionTag(tagged);
+            tagged = tryTagRevision(revision, RevisionTag.builder().value("1.0").revision(revision).build());
         }
+        revision.addRevisionTag(tagged);
     }
 
     private RevisionTag tryTagRevision(final Revision revision, final RevisionTag tag) {
