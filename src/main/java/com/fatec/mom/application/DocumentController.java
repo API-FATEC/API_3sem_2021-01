@@ -38,6 +38,7 @@ public class DocumentController {
     }
 
     @GetMapping("/find/all")
+    @ApiOperation(value = "Obtém todos os documentos salvos")
     public ResponseEntity<List<Document>> findAllDocuments() {
         var docs = documentService.findAll();
 
@@ -47,6 +48,7 @@ public class DocumentController {
     }
 
     @GetMapping("/find")
+    @ApiOperation(value = "Obtém um documento específico de acordo com nome, partNumber e traço")
     public ResponseEntity<Set<Document>> findDocuments(
             @RequestParam("document_name") String documentName,
             @RequestParam("part_number") Integer partNumber,
@@ -81,6 +83,7 @@ public class DocumentController {
     }
 
     @GetMapping("/find/part_number/by/name")
+    @ApiOperation(value = "Obtém todos os partNumber passando o nome do documento.")
     public ResponseEntity<Set<Integer>> findAllPartNumberByDocumentName(
             @RequestParam("document_name") String documentName) {
         var docs = documentService.findAllPartNumbersByName(documentName);
@@ -91,6 +94,7 @@ public class DocumentController {
     }
 
     @GetMapping("find/name/all")
+    @ApiOperation(value = "Obtém todos os nomes dos documentos ativos")
     public ResponseEntity<Set<String>> findAllNames() {
         var names = documentService.findAllNames();
 
