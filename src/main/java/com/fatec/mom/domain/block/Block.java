@@ -22,8 +22,8 @@ import java.util.Set;
 @Table(name = "MOM_BLOCO")
 @SequenceGenerator(sequenceName = "MOM_BLOCO_SQ", name = "MOM_BLOCO_SQ", allocationSize = 1)
 @Getter @Setter @Builder @AllArgsConstructor @NoArgsConstructor
-@ToString(of = {"id", "section", "subSection", "number", "name", "code", "order", "status", "basePath"})
-@EqualsAndHashCode(of = {"id", "section", "subSection", "number", "name", "code", "order", "status", "basePath"})
+@ToString(of = {"id", "section", "subSection", "number", "name", "code", "order", "status"})
+@EqualsAndHashCode(of = {"id", "section", "subSection", "number", "name", "code", "order", "status"})
 public class Block {
 
     @Id

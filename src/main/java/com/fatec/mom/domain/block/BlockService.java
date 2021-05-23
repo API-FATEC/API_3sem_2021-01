@@ -1,8 +1,10 @@
 package com.fatec.mom.domain.block;
 
+import com.fatec.mom.domain.block.validator.BlockOrderValidatorLocator;
 import com.fatec.mom.domain.file.FileUploadService;
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
+import com.fatec.mom.domain.trait.Trait;
 import com.fatec.mom.infra.generator.RevisionManipulator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -32,17 +35,21 @@ public class BlockService {
 
     private final RevisionManipulator revisionManipulator;
 
+    private final BlockOrderValidatorLocator blockOrderValidatorLocator;
+
     @Autowired
     public BlockService(FileUploadService fileUploadService,
                         BlockRepository blockRepository,
                         BlockImporterService blockImporterService,
                         RevisionService revisionService,
+                        BlockOrderValidatorLocator blockOrderValidatorLocator,
                         RevisionManipulator revisionManipulator) {
         this.fileUploadService = fileUploadService;
         this.blockRepository = blockRepository;
         this.blockImporterService = blockImporterService;
         this.revisionService = revisionService;
         this.revisionManipulator = revisionManipulator;
+        this.blockOrderValidatorLocator = blockOrderValidatorLocator;
     }
 
     public Block handleImport(final Long revisionId,
@@ -101,5 +108,19 @@ public class BlockService {
     @Transactional
     public Block save(final Block block) {
         return blockRepository.save(block);
+    }
+
+    @Transactional
+    public List<Block> getAllBlocksFrom(Integer trait, Long documentId) {
+        return blockRepository.findAllByTraitNumberAndDocumentId(trait, documentId);
+    }
+
+    public void validateBlocksOrder(List<Block> blocks) {
+        blockOrderValidatorLocator.getValidators().forEach(validator -> validator.validate(blocks));
+    }
+
+    @Transactional
+    public Optional<Block> getLEP(final Integer trait, final Long documentId) {
+        return Optional.ofNullable(blockRepository.findLEPOf(trait, documentId));
     }
 }
