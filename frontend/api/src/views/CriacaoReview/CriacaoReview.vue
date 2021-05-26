@@ -113,7 +113,7 @@
                         :disabled="canCreate"
                         @click="createReview"
                       >
-                        Create Review
+                        Criar Revisão
                       </v-btn>
                     </div>
                   </v-col>
