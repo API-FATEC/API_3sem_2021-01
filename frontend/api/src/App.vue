@@ -80,6 +80,11 @@ export default {
         icon: "mdi-folder-plus",
       },
       {
+        conteudo: "Editar Blocos da Revisão",
+        url: "/EditarBlocosRevisao",
+        icon: "mdi-folder-remove",
+      },
+      {
         conteudo: "Fechar Revisão",
         url: "/closeReview",
         icon: "mdi-folder-remove",
