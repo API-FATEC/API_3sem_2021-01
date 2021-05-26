@@ -34,6 +34,11 @@ const routes = [
     path: '/closeReview',
     name: 'closeReview',
     component: () => import('../views/closeReview/close_review.vue')
+  },
+  {
+    path: '/EditarBlocosRevisao',
+    name: 'EditarBlocosRevisao',
+    component: () => import('../views/EditarBlocosRevisao/EditarBlocosRevisao.vue')
   }
   // {
   //   path: '/about',
