@@ -40,7 +40,9 @@
         <v-footer id="core-footer" absolute height="42">
           <v-row justify="center">
             <span class="font-weight-light copyright">
+              &copy;
               {{ new Date().getFullYear() }}
+              - MOM
             </span>
           </v-row>
         </v-footer>
@@ -50,23 +52,39 @@
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-
-  components: {
-  },
-
+  name: "App",
+  components: {},
   data: () => ({
     drawer: false,
     menus: [
-      {conteudo: "Home", url: "/", icon: "mdi-home-variant"},
-      {conteudo: "Importar CodeList", url: "/ImportacaoCodeList", icon: "mdi-file-upload"},
-      {conteudo: "Editar CodeList", url: "/EdiçãoCodeList", icon: "mdi-file-edit"},
-      {conteudo: "Buscar documento", url: "/docsearch", icon: "mdi-search-web"},
-      {conteudo: "Criar Revisão", url: "/CriacaoReview", icon: "mdi-folder-plus"},
-      {conteudo: "Fechar Revisão", url: "/closeReview", icon: "mdi-folder-plus"}
-    ]
+      { conteudo: "Home", url: "/", icon: "mdi-home-variant" },
+      {
+        conteudo: "Importar CodeList",
+        url: "/ImportacaoCodeList",
+        icon: "mdi-file-upload",
+      },
+      {
+        conteudo: "Editar CodeList",
+        url: "/EdiçãoCodeList",
+        icon: "mdi-file-edit",
+      },
+      {
+        conteudo: "Buscar documento",
+        url: "/docsearch",
+        icon: "mdi-search-web",
+      },
+      {
+        conteudo: "Criar Revisão",
+        url: "/CriacaoReview",
+        icon: "mdi-folder-plus",
+      },
+      {
+        conteudo: "Fechar Revisão",
+        url: "/closeReview",
+        icon: "mdi-folder-remove",
+      },
+    ],
   }),
 };
 </script>
