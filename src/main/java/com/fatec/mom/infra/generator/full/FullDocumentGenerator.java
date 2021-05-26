@@ -27,7 +27,7 @@ public class FullDocumentGenerator {
 
     private final PdfMerger pdfMerger;
 
-    private final DocumentFilesExtractor documentFilesExtractor;
+    //private final DocumentFilesExtractor documentFilesExtractor;
 
     private final PdfExtractor pdfExtractor;
 
@@ -38,11 +38,11 @@ public class FullDocumentGenerator {
 
     @Autowired
     public FullDocumentGenerator(PdfMerger pdfMerger,
-                                 DocumentFilesExtractor documentFilesExtractor,
+                                 //DocumentFilesExtractor documentFilesExtractor,
                                  RevisionManipulator revisionManipulator,
                                  PdfExtractor pdfExtractor) {
         this.pdfMerger = pdfMerger;
-        this.documentFilesExtractor = documentFilesExtractor;
+        //this.documentFilesExtractor = documentFilesExtractor;
         this.revisionManipulator = revisionManipulator;
         this.pdfExtractor = pdfExtractor;
     }
@@ -57,9 +57,9 @@ public class FullDocumentGenerator {
     }
 
     private List<File> validateFiles(final Document document) {
-        final var documentFiles = documentFilesExtractor.extractFileNames(document);
+        //final var documentFiles = documentFilesExtractor.extractFileNames(document);
         final var files = new LinkedList<File>();
-
+        /*
         documentFiles.forEach((trait, fileNames) -> {
             final var pdfFiles = pdfExtractor.getInputStreamsFor(fileNames);
 
@@ -70,6 +70,7 @@ public class FullDocumentGenerator {
                 log.error("Não foi possível juntar os arquivos");
             }
         });
+         */
 
         return files;
     }

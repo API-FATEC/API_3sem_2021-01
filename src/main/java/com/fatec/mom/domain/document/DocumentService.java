@@ -91,7 +91,7 @@ public class DocumentService {
     public Optional<InputStreamResource> generateFULL(final Revision revision) {
         try {
             final var full = fullDocumentGenerator.getFULL(revision);
-            return Optional.of(getFileResponse(full));
+            //return Optional.of(getFileResponse(full));
         } catch (IOException e) {
             e.printStackTrace();
         }

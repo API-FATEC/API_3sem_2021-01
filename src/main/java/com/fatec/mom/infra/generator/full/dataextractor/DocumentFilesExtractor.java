@@ -10,7 +10,7 @@ import java.util.*;
 
 @Component
 public class DocumentFilesExtractor {
-
+    /*
     private final BlockService blockService;
 
     public DocumentFilesExtractor(BlockService blockService) {
@@ -46,4 +46,5 @@ public class DocumentFilesExtractor {
         blockService.validateBlocksOrder(blocks);
         return blocks;
     }
+    */
 }

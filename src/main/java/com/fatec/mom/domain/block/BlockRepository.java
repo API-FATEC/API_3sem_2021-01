@@ -37,6 +37,6 @@ public interface BlockRepository extends JpaRepository<Block, Long> {
             "where b.doc_cod = :document_id " +
                 "and t.tra_num = :trait " +
                 "and b.blc_nome = 'LEP'", nativeQuery = true)
-    Block findLEPOf(@Param("trait_cod") Integer trait,
+    Block findLEPOf(@Param("trait") Integer trait,
                     @Param("document_id") Long documentId);
 }
