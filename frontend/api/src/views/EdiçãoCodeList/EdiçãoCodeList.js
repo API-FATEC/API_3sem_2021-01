@@ -1,11 +1,3 @@
-import {http} from "../../services/config";
-// import { Block } from "../../scripts/domain/Block"
-import {CodelistEndpoints, DocumentsEndpoints} from "../../model/endpoints/EndpointsMapping";
-// import { Document } from "../../scripts/domain/Document";
-import {CodelistFactory} from "../../scripts/domain/Codelist";
-import {BlockFactory} from "../../scripts/domain/Block";
-import {DocumentFactory, DocumentRequestBody} from "../../scripts/domain/Document";
-
 export default {
     data: () => ({
         // Formulario
@@ -23,51 +15,42 @@ export default {
             v => (v && v.length <= 10) || 'O Part Number deve possuir no máximo 10 caracteres!',
             //v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
         ],
-        emailRuler: [
-            v => !!v || 'O e-mail é obrigatório!',
-            v => /.+@.+\..+/.test(v) || 'E-mail inválido',
-        ],
         // Tabela
-        editMode: false,
         dialog: false,
         dialogDelete: false,
         dialogNovoTraco: false,
-        dialogSalvar: false,
-        dialogCancelar: false,
-        dialogSaved: false,
-        dialogError: false,
         headers: [
             {
                 text: 'Nº SEÇÃO',
                 align: 'start',
                 sortable: false,
-                value: 'section',
+                value: 'numero_secao',
             },
-            { text: 'Nº SUB SEÇÃO', value: 'subSection' },
-            { text: 'Nº BLOCK', value: 'number' },
-            { text: 'BLOCK NAME', value: 'name' },
-            { text: 'CODE', value: 'code' }
+            { text: 'Nº SUB SEÇÃO', value: 'numero_sub_secao' },
+            { text: 'Nº BLOCK', value: 'numero_block' },
+            { text: 'BLOCK NAME', value: 'block_name' },
+            { text: 'CODE', value: 'code' },
+            { text: 'Remarks', value: 'remarks' }
         ],
         teste: [{ text: 'Actions', value: 'actions', sortable: false }],
-        documents: [],
-        traits: [],
         desserts: [],
-        editedDesserts: [],
         traco: [],
         editedIndex: -1,
         editedItem: {
-            section: '',
-            sub_section: '',
-            number: '',
-            name: '',
+            numero_secao: '',
+            numero_sub_secao: '',
+            numero_block: '',
+            block_name: '',
             code: '',
+            remarks: '',
         },
         defaultItem: {
-            section: '',
-            sub_section: '',
-            number: '',
-            name: '',
+            numero_secao: '',
+            numero_sub_secao: '',
+            numero_block: '',
+            block_name: '',
             code: '',
+            remarks: '',
         },
         editedTraco: {
             nomeTraco: '',
@@ -77,17 +60,7 @@ export default {
             v => !!v || 'O Nome do traço é obrigatório!',
             v => (v && v.length <= 30) || 'O Nome deve possuir no máximo 30 caracteres!',
         ],
-        findedPartNumbers: [],
-        findedDocs: [],
-        allDocumentsResponse: [],
-        allBlocksResponse: [],
-        originalDesserts: [],
-        originalHeaders: [],
     }),
-
-    created() {
-        this.initialize();
-    },
 
     computed: {
         formTitle() {
@@ -96,9 +69,6 @@ export default {
         formTitle1() {
             return this.editedIndex === -1 ? 'Novo Traço' : 'Editar Traço'
         },
-        findDocs: function () {
-            this.searchDocs();
-        }
     },
 
     watch: {
@@ -111,26 +81,13 @@ export default {
         dialogDelete(val) {
             val || this.closeDelete()
         },
-        name: function (docName) {
-            this.searchPartNumbers(docName);
-        }
+    },
+
+    created() {
+        this.initialize()
     },
 
     methods: {
-        defaultHeaders: function () {
-            this.headers = [
-                {
-                    text: 'Nº SEÇÃO',
-                    align: 'start',
-                    sortable: false,
-                    value: 'section',
-                },
-                { text: 'Nº SUB SEÇÃO', value: 'subSection' },
-                { text: 'Nº BLOCK', value: 'number' },
-                { text: 'BLOCK NAME', value: 'name' },
-                { text: 'CODE', value: 'code' }
-            ];
-        },
         // Formulario
         validate() {
             this.$refs.form.validate()
@@ -138,44 +95,240 @@ export default {
 
         reset() {
             this.$refs.form.reset()
-            this.desserts = [];
-            this.defaultHeaders();
-            this.dialogError = false;
-        },
-
-        resetTableToDefault: function () {
-            this.defaultHeaders();
-            this.desserts = [];
-        },
-
-        initialize() {
-            this.desserts = [];
         },
 
         // Tabela
-        novaColuna: function(){
-            this.originalHeaders = [...this.headers];
-            if(this.editedTraco.nomeTraco.length === 0){
+        novaColuna() {
+            if (this.editedTraco.nomeTraco.length === 0) {
+                //this.closeTraco()
                 return
             }
             var nomeValue = this.editedTraco.nomeTraco.valueOf()
             nomeValue = nomeValue.toLowerCase()
             nomeValue = nomeValue.replaceAll(' ', '_')
-            this.headers.push({text: 'Traço: ' + this.editedTraco.nomeTraco, value: "trait_" + nomeValue})
-
-            this.editedDesserts = this.editedDesserts.map(item => {
+            this.headers.push({ text: this.editedTraco.nomeTraco, value: nomeValue })
+            this.desserts = this.desserts.map(item => {
                 var objeto = {}
                 objeto[nomeValue] = 0
-                return {...item,...objeto}
+                return { ...item, ...objeto }
             })
-            let obj = {...this.editedItem};
-            obj["trait_" + nomeValue] = 0;
-            this.defaultItem = {...obj};
             this.closeTraco()
+        },
+        initialize() {
+            this.desserts = [
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '00',
+                    block_name: 'Letter',
+                    code: '50',
+                    remarks: '-50',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '00',
+                    block_name: 'Letter',
+                    code: '55',
+                    remarks: '-55',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '00',
+                    block_name: 'Letter',
+                    code: '60',
+                    remarks: '-60',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '01',
+                    block_name: 'Cover',
+                    code: '01',
+                    remarks: '-50',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '01',
+                    block_name: 'Cover',
+                    code: '02',
+                    remarks: '-55',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '01',
+                    block_name: 'Cover',
+                    code: '03',
+                    remarks: '-60',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '02',
+                    block_name: 'LEP',
+                    code: '01',
+                    remarks: '-50',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '02',
+                    block_name: 'LEP',
+                    code: '02',
+                    remarks: '-55',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '02',
+                    block_name: 'LEP',
+                    code: '03',
+                    remarks: '-60',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '03',
+                    block_name: 'TOC',
+                    code: '01',
+                    remarks: '-50,-60',
+                },
+                {
+                    numero_secao: '00',
+                    numero_sub_secao: '',
+                    numero_block: '03',
+                    block_name: 'TOC',
+                    code: '02',
+                    remarks: '-55',
+                },
+                {
+                    numero_secao: '02',
+                    numero_sub_secao: '',
+                    numero_block: '04',
+                    block_name: 'Introduction',
+                    code: '01',
+                    remarks: '-50',
+                },
+                {
+                    numero_secao: '02',
+                    numero_sub_secao: '',
+                    numero_block: '04',
+                    block_name: 'Introduction',
+                    code: '02',
+                    remarks: '-55',
+                },
+                {
+                    numero_secao: '02',
+                    numero_sub_secao: '',
+                    numero_block: '04',
+                    block_name: 'Introduction',
+                    code: '03',
+                    remarks: '-60',
+                },
+                {
+                    numero_secao: '03',
+                    numero_sub_secao: '01',
+                    numero_block: '03',
+                    block_name: 'Episódio 2',
+                    code: '14',
+                    remarks: '-50,-60',
+                },
+                {
+                    numero_secao: '03',
+                    numero_sub_secao: '01',
+                    numero_block: '03',
+                    block_name: 'Episódio 2',
+                    code: '15',
+                    remarks: '-55',
+                },
+                {
+                    numero_secao: '04',
+                    numero_sub_secao: '',
+                    numero_block: '02',
+                    block_name: 'Episódio 3',
+                    code: '01',
+                    remarks: '-60',
+                },
+                {
+                    numero_secao: '04',
+                    numero_sub_secao: '',
+                    numero_block: '02',
+                    block_name: 'Episódio 3',
+                    code: '02',
+                    remarks: '-50',
+                },
+                {
+                    numero_secao: '04',
+                    numero_sub_secao: '',
+                    numero_block: '02',
+                    block_name: 'Episódio 3',
+                    code: '03',
+                    remarks: '-55',
+                },
+                {
+                    numero_secao: '05',
+                    numero_sub_secao: '04',
+                    numero_block: '08',
+                    block_name: 'Episódio 1',
+                    code: '12',
+                    remarks: 'ALL',
+                },
+                {
+                    numero_secao: '05',
+                    numero_sub_secao: '06',
+                    numero_block: '03',
+                    block_name: 'Episódio 4',
+                    code: '01',
+                    remarks: '-60',
+                },
+                {
+                    numero_secao: '05',
+                    numero_sub_secao: '06',
+                    numero_block: '03',
+                    block_name: 'Episódio 4',
+                    code: '02',
+                    remarks: '-50',
+                },
+                {
+                    numero_secao: 'AP01',
+                    numero_sub_secao: '',
+                    numero_block: '02',
+                    block_name: 'Appendix',
+                    code: '01',
+                    remarks: 'ALL',
+                },
+                {
+                    numero_secao: 'S03',
+                    numero_sub_secao: '',
+                    numero_block: '05',
+                    block_name: 'Mars',
+                    code: '01',
+                    remarks: 'ALL',
+                },
+                {
+                    numero_secao: 'S03',
+                    numero_sub_secao: '',
+                    numero_block: '10',
+                    block_name: 'Copyright',
+                    code: '01',
+                    remarks: '-50,-55',
+                },
+                {
+                    numero_secao: 'S03',
+                    numero_sub_secao: '',
+                    numero_block: '10',
+                    block_name: 'Copyright',
+                    code: '02',
+                    remarks: '-60',
+                },
+            ]
         },
 
         editItem(item) {
-            this.editedIndex = this.editedDesserts.indexOf(item)
+            this.editedIndex = this.desserts.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialog = true
         },
@@ -207,22 +360,6 @@ export default {
             })
         },
 
-        closeDialogCancel() {
-            this.dialogCancelar = false;
-        },
-
-        closeSalvarDialog() {
-            this.dialogSalvar = false;
-        },
-
-        closeSavedDialog() {
-            this.dialogSaved = false;
-        },
-
-        closeDialogError() {
-            this.dialogError = false;
-        },
-
         closeDelete() {
             this.dialogDelete = false
             this.$nextTick(() => {
@@ -233,159 +370,15 @@ export default {
 
         save() {
             if (this.editedIndex > -1) {
-                Object.assign(this.editedDesserts[this.editedIndex], this.editedItem)
+                Object.assign(this.desserts[this.editedIndex], this.editedItem)
             } else {
-                this.editedDesserts.push(this.editedItem)
+                this.desserts.push(this.editedItem)
             }
-            this.editMode = true;
             this.close()
         },
 
-        getCodelist(){
-            this.validate();
+        sendFile() {
 
-            http.get(CodelistEndpoints.FIND_BY, {
-                params: {
-                    document_name: this.name,
-                    part_number: this.partNumber
-                }
-            }).then(response => {
-                this.resetTableToDefault();
-                const codelist = CodelistFactory.createFromResponse(response.data);
-                this.documents = codelist.documents;
-
-                let columnsToAdd = [];
-                let headersToAdd = [];
-                for (let i = 0; i < codelist.documents.length; ++i) {
-                    let value = codelist.documents[i].trait
-                    headersToAdd.push({text: 'Traço: ' + value, value: 'trait_' + value});
-                    columnsToAdd.push(value);
-                    this.traits.push('trait_' + value);
-                }
-
-                let codelistBlocks = [];
-                codelist.codelistBlocks.forEach(function (codelistBlock) {
-                    let objeto = {...codelistBlock.block};
-                    for (let i = 0; i < columnsToAdd.length; ++i) {
-                        objeto['trait_' + columnsToAdd[i]] = codelistBlock.checklist[i].valueOf();
-                    }
-                    codelistBlocks.push(objeto);
-                });
-
-                this.desserts = this.sortedCodelistBlocks(codelistBlocks);
-                this.editedDesserts = [...this.desserts];
-                for (let i = 0; i < headersToAdd.length; ++i) {
-                    this.headers.push(headersToAdd[i]);
-                }
-
-                let blockEditedItem = {...this.editedItem};
-                for (let i = 0; i < columnsToAdd.length; ++i) {
-                    let obj = {};
-                    obj['trait_' + columnsToAdd[i]] = 0;
-                    blockEditedItem = {...blockEditedItem, ...obj};
-                }
-
-                this.editedItem = blockEditedItem;
-                this.defaultItem = {...blockEditedItem};
-            }).catch(error => {
-                this.dialogSalvar = false;
-                this.dialogError = true;
-                console.log(error);
-            });
-        },
-
-        sortedCodelistBlocks: function (array) {
-            function compare(a, b) {
-                if (a.order < b.order) return -1;
-                if (a.order > b.order) return 1;
-                return 0;
-            }
-
-            return array.sort(compare);
-        },
-
-        searchPartNumbers(documentName) {
-            http.get(DocumentsEndpoints.FIND_PART_NUMBER_BY_NAME, {
-                params: {
-                    document_name: documentName
-                }
-            }).then(response => {
-                this.findedPartNumbers = response.data;
-            }).catch(error => {
-                console.log(error)
-            });
-        },
-
-        searchDocs() {
-            http.get(DocumentsEndpoints.FIND_ALL_DOCS)
-                .then(response => {
-                    this.findedDocs = response.data;
-                }).catch(error => {
-                console.log(error)
-            });
-        },
-
-        saveCodelist: function () {
-            let codelistToSave = this.editedDesserts;
-            let documents = [];
-            for (let i = 0; i < this.documents.length; ++i) {
-                let doc = this.documents[i];
-                documents.push(DocumentFactory.createWithEmptyBlocks(doc));
-            }
-
-            for (let i = 0; i < codelistToSave.length; ++i) {
-                let codelistBlock = codelistToSave[i];
-                let block = BlockFactory.createFromCodelist(codelistToSave[i]);
-
-                let checklist = [];
-                for (let j = 0; j < this.traits.length; ++j) {
-                    let trait = this.traits[j].valueOf();
-                    checklist.push(Number.parseInt(codelistBlock[trait]));
-                }
-
-                for (let x = 0; x < checklist.length; ++x) {
-                    if (checklist[x] === 1) {
-                        documents[x].addBlock(block);
-                    }
-                }
-            }
-            console.log(documents);
-
-            http.put(DocumentsEndpoints.SAVE_ALL, DocumentRequestBody.createList(documents))
-                .then(response => {
-                    console.log(response);
-                    if (response.status === 200) {
-                        this.dialogSalvar = false;
-                        this.dialogSaved = true;
-                    }
-                })
-                .catch(error => {
-                    this.dialogSalvar = false;
-                    this.dialogError = true;
-                    console.log(error)
-                });
-
-            this.editMode = false;
-        },
-
-        cancelEdit: function () {
-            this.desserts = [...this.originalDesserts];
-            this.headers = [...this.originalHeaders];
-            this.editedDesserts = [];
-            this.editMode = false;
-            this.dialogCancelar = false;
-
-            this.getCodelist();
-        },
-
-        enterEditMode: function() {
-            this.originalDesserts.push(this.desserts);
-            this.desserts = this.editedDesserts;
-            this.editMode = true;
-        },
-
-        redirectToImportPage: function () {
-            this.$router.push('ImportacaoCodeList').then().catch(error => console.log(error));
         }
     },
 }
