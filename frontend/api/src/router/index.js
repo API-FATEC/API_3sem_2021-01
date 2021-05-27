@@ -39,6 +39,11 @@ const routes = [
     path: '/EditarBlocosRevisao',
     name: 'EditarBlocosRevisao',
     component: () => import('../views/EditarBlocosRevisao/EditarBlocosRevisao.vue')
+  },
+  {
+    path: '/BaixarDocumentacao',
+    name: 'BaixarDocumentacao',
+    component: () => import('../views/BaixarDocumentacao/BaixarDocumentacao.vue')
   }
   // {
   //   path: '/about',
