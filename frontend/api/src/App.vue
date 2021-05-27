@@ -89,6 +89,11 @@ export default {
         url: "/closeReview",
         icon: "mdi-folder-remove",
       },
+      {
+        conteudo: "Baixar Documentação",
+        url: "/BaixarDocumentacao",
+        icon: "mdi-folder-remove",
+      },
     ],
   }),
 };
