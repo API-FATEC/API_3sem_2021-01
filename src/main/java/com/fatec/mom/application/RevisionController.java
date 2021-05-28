@@ -70,4 +70,14 @@ public class RevisionController {
             blockService.save(block);
         });
     }
+
+    @GetMapping("/find/blocks")
+    @ApiOperation(value = "Obtém os blocos em revisão")
+    public ResponseEntity<List<Block>> findBlocks() {
+        var blocks = revisionService.findBlocks();
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(blocks);
+    }
 }

@@ -24,6 +24,9 @@ public interface BlockRepository extends JpaRepository<Block, Long> {
 
     List<Block> findAllBySectionAndSubSection(String section, String subSection);
 
+    //É pra pesquisar todos os blocks de acordo com o Status (closed, in revision, opened)
+    List<Block> findAllByStatus(BlockStatus Status);
+
     @Query(value = "select b.* from mom_bloco b " +
             "join mom_traco_blc tb on b.blc_cod = tb.blc_cod " +
             "join mom_traco t on t.tra_cod = tb.tra_cod " +

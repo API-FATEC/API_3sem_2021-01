@@ -144,4 +144,11 @@ public class RevisionService {
         revision.setLastUpdateDate(new Date());
         revisionRepository.save(revision);
     }
+
+    //É pra retornar uma lista de blocks
+    //findAllByStatus é um método que é pra pesquisar todos os blocos de acordo com o status
+    @Transactional
+    public List<Block> findBlocks() {
+        return blockRepository.findAllByStatus(BlockStatus.IN_REVISION);
+    }
 }
