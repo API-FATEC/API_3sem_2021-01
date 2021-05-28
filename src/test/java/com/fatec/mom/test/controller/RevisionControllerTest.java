@@ -78,9 +78,9 @@ class RevisionControllerTest extends AbstractControllerTest{
                 getResultAsJson(result),
                 true);
     }
-
+    /*
     @Test
     @Sql(value = "/com/fatec/mom/test/sql/all-tables.sql",
     config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
-
+    */
 }
