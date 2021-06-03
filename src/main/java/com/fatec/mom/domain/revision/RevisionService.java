@@ -148,14 +148,11 @@ public class RevisionService {
     @Transactional
     public List<Block> findBlocks(String documentName, Integer partNumber) {
         Document document = documentService.findByNameAndPartNumber(documentName, partNumber);
-        ArrayList<Block> blocks = new ArrayList<>();
-        System.out.println(document.getBlocks());
-        System.out.println(document.getBlocks().size());
-        for (Block i : document.getBlocks()){
-            if (i.getStatus().equals(BlockStatus.IN_REVISION)){
-                blocks.add(i);
+        for (Revision revisions : document.getRevisions()){
+            if (revisions.getStatus().equals(RevisionStatus.OPENED)){
+                return revisions.getBlocksInRevision();
             }
         }
-        return blocks;
+        return null;
     }
 }
