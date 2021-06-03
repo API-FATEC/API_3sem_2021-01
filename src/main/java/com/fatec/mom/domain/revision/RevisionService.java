@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -148,7 +146,16 @@ public class RevisionService {
     //É pra retornar uma lista de blocks
     //findAllByStatus é um método que é pra pesquisar todos os blocos de acordo com o status
     @Transactional
-    public List<Block> findBlocks() {
-        return blockRepository.findAllByStatus(BlockStatus.IN_REVISION);
+    public List<Block> findBlocks(String documentName, Integer partNumber) {
+        Document document = documentService.findByNameAndPartNumber(documentName, partNumber);
+        ArrayList<Block> blocks = new ArrayList<>();
+        System.out.println(document.getBlocks());
+        System.out.println(document.getBlocks().size());
+        for (Block i : document.getBlocks()){
+            if (i.getStatus().equals(BlockStatus.IN_REVISION)){
+                blocks.add(i);
+            }
+        }
+        return blocks;
     }
 }

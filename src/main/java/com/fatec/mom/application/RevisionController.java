@@ -73,8 +73,10 @@ public class RevisionController {
 
     @GetMapping("/find/blocks")
     @ApiOperation(value = "Obtém os blocos em revisão")
-    public ResponseEntity<List<Block>> findBlocks() {
-        var blocks = revisionService.findBlocks();
+    public ResponseEntity<List<Block>> findBlocks(
+            @RequestParam("doc_name") String documentName,
+            @RequestParam("part_number") Integer partNumber) {
+        var blocks = revisionService.findBlocks(documentName, partNumber);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
