@@ -3,7 +3,7 @@
     <v-col>
       <v-row justify="center" class="pa-2">
         <div id="titulo">
-          <h1 class="display-1">Fechar Revisão</h1>
+          <h1 class="display-1">Baixar Documentação</h1>
         </div>
       </v-row>
       <v-row class="pa-4">
@@ -79,17 +79,17 @@
                                 >{{ item.status }}</v-chip
                               >
                             </template>
+                            <template v-slot:item.actions="{ item }">
+                              <v-icon
+                                class="mr-2"
+                                @click="editItem(item)"
+                                medium
+                              >
+                                mdi-download
+                              </v-icon>
+                            </template>
                           </v-data-table>
                         </v-row>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col>
-                        <div id="btn">
-                          <v-btn depressed color="primary" @click="closeReview">
-                            Fechar Revisão em aberto
-                          </v-btn>
-                        </div>
                       </v-col>
                     </v-row>
                   </v-col>
