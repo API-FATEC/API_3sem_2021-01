@@ -1,5 +1,6 @@
 import { http } from "../../services/config";
 import { DocumentsEndpoints } from "../../model/endpoints/EndpointsMapping";
+import swal from 'sweetalert';
 
 export default {
     data: () => ({
@@ -109,7 +110,8 @@ export default {
 
         createReview() {
             if (this.hasOpenedReview) {
-                alert('Já existe uma revisão aberta, feche-a antes!');
+                //alert('Já existe uma revisão aberta, feche-a antes!');
+                swal("Aviso!", "Já existe uma revisão aberta, feche-a antes!", "warning");
                 return;
             }
            console.log(this.selectedBlocks);
@@ -136,7 +138,8 @@ export default {
                .then(response => {
                    console.log(response);
                    const revisionName = response.data.name;
-                   alert(`${revisionName} criada com Sucesso!`);
+                   //alert(`${revisionName} criada com Sucesso!`);
+                   swal("Sucesso!", `${revisionName} criada com Sucesso!`, "success");
                })
                .catch(error => {
                    console.error(error);
@@ -154,7 +157,8 @@ export default {
                     if (openedReview.name !== undefined) {
                         this.openedReview = response.data;
                         this.hasOpenedReview = true;
-                        alert(`A revisão ${this.openedReview.name} já está aberta! É preciso finaliza-la antes de prosseguir`);
+                        //alert(`A revisão ${this.openedReview.name} já está aberta! É preciso finaliza-la antes de prosseguir`);
+                        swal("Aviso!", `Já existe uma revisão aberta para esse documento, feche a revisão ${this.openedReview.name} para continuar!`, "warning");
                     } else {
                         this.hasOpenedReview = false;
                     }
