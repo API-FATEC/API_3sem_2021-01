@@ -1,4 +1,5 @@
 import { http } from "../../services/config";
+import swal from 'sweetalert';
 
 export default {
     data: () => ({
@@ -29,7 +30,8 @@ export default {
                     console.log(response);
                     this.response = response.data;
                     this.reset();
-                }
+                },
+                swal("Sucesso!", "Arquivo salvo com sucesso!", "success")
             );
         },
 
