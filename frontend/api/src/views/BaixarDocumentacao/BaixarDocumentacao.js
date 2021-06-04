@@ -122,5 +122,9 @@ export default {
         getOpenedColor(status) {
             return status === 'OPENED' ? 'orange' : 'green';
         },
+
+        baixarDocumentacao(){
+            swal("Sucesso!", "Baixando documentação", "success");
+        }
     },
 }

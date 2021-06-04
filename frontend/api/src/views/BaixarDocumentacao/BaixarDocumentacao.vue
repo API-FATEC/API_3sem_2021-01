@@ -82,7 +82,7 @@
                             <template v-slot:item.actions="{ item }">
                               <v-icon
                                 class="mr-2"
-                                @click="editItem(item)"
+                                @click="baixarDocumentacao(item)"
                                 medium
                               >
                                 mdi-download
