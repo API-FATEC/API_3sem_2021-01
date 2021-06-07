@@ -113,10 +113,18 @@
   font-size: 300px;
   height: 200px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
 #btn {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
