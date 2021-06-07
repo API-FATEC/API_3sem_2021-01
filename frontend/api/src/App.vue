@@ -54,13 +54,7 @@
 <script>
 export default {
   name: "App",
-<<<<<<< HEAD
   components: {},
-=======
-
-  components: {},
-
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
   data: () => ({
     drawer: false,
     menus: [
@@ -86,26 +80,20 @@ export default {
         icon: "mdi-folder-plus",
       },
       {
-<<<<<<< HEAD
         conteudo: "Editar Blocos da Revisão",
         url: "/EditarBlocosRevisao",
         icon: "mdi-folder-remove",
       },
       {
-=======
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
         conteudo: "Fechar Revisão",
         url: "/closeReview",
         icon: "mdi-folder-remove",
       },
-<<<<<<< HEAD
       {
         conteudo: "Baixar Documentação",
         url: "/BaixarDocumentacao",
         icon: "mdi-folder-remove",
       },
-=======
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
     ],
   }),
 };
