@@ -53,7 +53,6 @@
                 <v-row></v-row>
                 <v-row></v-row>
                 <v-row>
-<<<<<<< HEAD
                   <v-col>
                     <v-row justify="center">
                       <v-row justify="center" class="pa-2">
@@ -67,21 +66,6 @@
                 <v-row id="list">
                   <v-col>
                     <v-row justify="center">
-=======
-                  <v-col>
-                    <v-row justify="center">
-                      <v-row justify="center" class="pa-2">
-                        <div id="titulo">
-                          <h2>Selecione os blocos a serem revisados</h2>
-                        </div>
-                      </v-row>
-                    </v-row>
-                  </v-col>
-                </v-row>
-                <v-row id="list">
-                  <v-col>
-                    <v-row justify="center">
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
                       <v-list
                         class="overflow-auto"
                         style="max-height: 400px; width: 300px; alignment: left"
@@ -129,11 +113,7 @@
                         :disabled="canCreate"
                         @click="createReview"
                       >
-<<<<<<< HEAD
                         Criar Revisão
-=======
-                        Create Review
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
                       </v-btn>
                     </div>
                   </v-col>
@@ -158,10 +138,6 @@
   max-height: 400px;
   alignment: left;
 } */
-<<<<<<< HEAD
-=======
-
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
 #titulo {
   margin-top: 10px;
 }
@@ -172,12 +148,7 @@
   align-items: center;
   margin-top: 20px;
 }
-<<<<<<< HEAD
 #list {
-=======
-
-#list{
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
   margin-top: 50px;
 }
 </style>
