@@ -21,17 +21,10 @@ export default {
         dialogNovoTraco: false,
         headers: [
             {
-<<<<<<< HEAD
                 text: 'Nº SEÇÃO',
                 align: 'start',
                 sortable: false,
                 value: 'numero_secao',
-=======
-              text: 'Nº SEÇÃO',
-              align: 'start',
-              sortable: false,
-              value: 'numero_secao',
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
             },
             { text: 'Nº SUB SEÇÃO', value: 'numero_sub_secao' },
             { text: 'Nº BLOCK', value: 'numero_block' },
@@ -105,32 +98,19 @@ export default {
         },
 
         // Tabela
-<<<<<<< HEAD
         novaColuna() {
             if (this.editedTraco.nomeTraco.length === 0) {
-=======
-        novaColuna(){
-            if(this.editedTraco.nomeTraco.length === 0){
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
                 //this.closeTraco()
                 return
             }
             var nomeValue = this.editedTraco.nomeTraco.valueOf()
             nomeValue = nomeValue.toLowerCase()
             nomeValue = nomeValue.replaceAll(' ', '_')
-<<<<<<< HEAD
             this.headers.push({ text: this.editedTraco.nomeTraco, value: nomeValue })
             this.desserts = this.desserts.map(item => {
                 var objeto = {}
                 objeto[nomeValue] = 0
                 return { ...item, ...objeto }
-=======
-            this.headers.push({text: this.editedTraco.nomeTraco, value: nomeValue})
-            this.desserts=this.desserts.map(item => {
-              var objeto = {}
-              objeto[nomeValue] = 0
-              return {...item,...objeto}
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
             })
             this.closeTraco()
         },
@@ -397,11 +377,7 @@ export default {
             this.close()
         },
 
-<<<<<<< HEAD
         sendFile() {
-=======
-        sendFile(){
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
 
         }
     },
