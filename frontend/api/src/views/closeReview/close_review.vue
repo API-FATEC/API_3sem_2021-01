@@ -106,11 +106,7 @@
 <script src="./close_review.js"></script>
 
 <style>
-<<<<<<< HEAD
 #list {
-=======
-#list{
->>>>>>> 0f01caaa2a040568b635ff5b221ca971739f10b5
   margin-top: 50px;
 }
 </style>
