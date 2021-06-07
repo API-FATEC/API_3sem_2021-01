@@ -1,5 +1,6 @@
 import { http } from "../../services/config";
 import { DocumentsEndpoints } from "../../model/endpoints/EndpointsMapping";
+import swal from 'sweetalert';
 
 export default {
     data: () => ({
@@ -108,21 +109,9 @@ export default {
                     console.log(this.allReviews);
                 }).catch(error => {
                     console.log(error);
-                    alert('Não foi possível obter o documento')
+                    //alert('Não foi possível obter o documento')
+                    swal("Erro!", "Não foi possível obter o documento!", "error")
                 });
-        },
-
-        closeReview() {
-            http.put(`/revision/close?document_id=${this.document.id}`)
-                .then(response => {
-                    this.closedReview = response.data;
-                    alert('Revisão fechada com sucesso!!')
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert('Não foi possível fechar a revisão')
-                })
-
         },
 
         getOpenedReview(documentId) {
@@ -131,11 +120,13 @@ export default {
                     this.openedReview = response.data;
                     console.log(response.data);
                     if (this.openedReview.name === undefined) {
-                        alert('Não existe nenhuma revisão aberta')
+                        //alert('Não existe nenhuma revisão aberta')
+                        swal("Aviso!", "Não existe nenhuma revisão aberta!", "warning");
                     }
                 }).catch(error => {
                     console.log(error)
-                    alert('Não foi possível obter a revisão')
+                    //alert('Não foi possível obter a revisão')
+                    swal("Erro!", "Não foi possível obter a revisão!", "error")
                 });
         },
 
