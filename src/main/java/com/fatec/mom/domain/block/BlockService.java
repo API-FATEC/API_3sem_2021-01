@@ -1,11 +1,13 @@
 package com.fatec.mom.domain.block;
 
 import com.fatec.mom.domain.block.validator.BlockOrderValidatorLocator;
+import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.file.FileUploadService;
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
 import com.fatec.mom.domain.trait.Trait;
 import com.fatec.mom.infra.generator.RevisionManipulator;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class BlockService {
 
     private static final String PDF_TYPE = "application/pdf";
@@ -37,19 +38,35 @@ public class BlockService {
 
     private final BlockOrderValidatorLocator blockOrderValidatorLocator;
 
-    @Autowired
-    public BlockService(FileUploadService fileUploadService,
-                        BlockRepository blockRepository,
-                        BlockImporterService blockImporterService,
-                        RevisionService revisionService,
-                        BlockOrderValidatorLocator blockOrderValidatorLocator,
-                        RevisionManipulator revisionManipulator) {
-        this.fileUploadService = fileUploadService;
-        this.blockRepository = blockRepository;
-        this.blockImporterService = blockImporterService;
-        this.revisionService = revisionService;
-        this.revisionManipulator = revisionManipulator;
-        this.blockOrderValidatorLocator = blockOrderValidatorLocator;
+    public Set<Block> getBlocksByTrait(final Document document, final Trait trait) {
+        if (document.getTraits() == null || document.getBlocks() == null) {
+            return Collections.emptySet();
+        }
+
+        return document.getBlocks().stream()
+                .filter(block -> block.hasTrait(trait))
+                .collect(Collectors.toSet());
+    }
+
+    public List<String> getFileNamesFrom(final Set<Block> blocks) {
+        final Map<String, Set<BlockLink>> fileLocations = new HashMap<>();
+        blocks.forEach(block -> {
+            final var links = block.getLinks();
+            fileLocations.put(block.getBasePath(), links == null ? new HashSet<>() : links);
+        });
+        return getFileNamesFromMap(fileLocations);
+    }
+
+    private List<String> getFileNamesFromMap(final Map<String, Set<BlockLink>> fileLocations) {
+        if (fileLocations.isEmpty()) return Collections.emptyList();
+
+        final var fileNames = new LinkedList<String>();
+        fileLocations.forEach((path, links) -> {
+            for (BlockLink link : links) {
+                fileNames.add(String.format("%s/%s", path, link.getFileName()));
+            }
+        });
+        return fileNames;
     }
 
     public Block handleImport(final Long revisionId,

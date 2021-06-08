@@ -9,6 +9,7 @@ import com.fatec.mom.domain.revision.RevisionName;
 import com.fatec.mom.domain.revision.RevisionService;
 import com.fatec.mom.domain.trait.Trait;
 import com.fatec.mom.infra.codelist.reader.CodelistReaderType;
+import com.fatec.mom.infra.exceptions.InvalidFileTypeException;
 import com.fatec.mom.infra.generator.RevisionManipulator;
 import com.fatec.mom.infra.gitexecutor.GitExecutor;
 import lombok.extern.slf4j.Slf4j;
@@ -111,10 +112,8 @@ public class CodelistService {
     private List<Document> handleImport(@NotNull final MultipartFile multipartFile) throws IOException {
         if (isExcel(multipartFile)) {
             File savedFile = fileUploadService.uploadFile(multipartFile);
-            final var documents = importCodelist(savedFile);
-            return documents;
+            return importCodelist(savedFile);
         }
-        log.info(String.format("The file %s is not a sheet file.", multipartFile.getOriginalFilename()));
         return Collections.emptyList();
     }
 
@@ -137,7 +136,10 @@ public class CodelistService {
     }
 
     private boolean isExcel(@NotNull final MultipartFile file) {
-        return Objects.requireNonNull(file.getContentType()).equalsIgnoreCase(SHEET_TYPE);
+        if (Objects.requireNonNull(file.getContentType()).equalsIgnoreCase(SHEET_TYPE)) {
+            return true;
+        }
+        throw new InvalidFileTypeException(String.format("The file %s is not a sheet file.", file.getOriginalFilename()));
     }
 
     private List<Integer> calculateChecklist(final Set<Trait> traits, final Block block) {

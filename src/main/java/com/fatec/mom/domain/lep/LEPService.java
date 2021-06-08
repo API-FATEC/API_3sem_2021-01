@@ -1,86 +1,52 @@
 package com.fatec.mom.domain.lep;
 
-import com.fatec.mom.domain.block.Block;
-import com.fatec.mom.domain.block.BlockPageChangesService;
-import com.fatec.mom.domain.block.BlockPageService;
+import com.fatec.mom.domain.block.*;
 import com.fatec.mom.domain.block.pagescomparator.changes.BlockPageChange;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.document.DocumentService;
+import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fatec.mom.domain.trait.Trait;
+import com.fatec.mom.infra.exceptions.CannotFindBlockFileException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class LEPService {
 
-    private final BlockPageChangesService blockPageChangesService;
+    private final BlockService blockService;
 
-    private final DocumentService documentService;
-
-    private final RevisionService revisionService;
-
-    private final BlockPageService blockPageService;
-
-    @Autowired
-    public LEPService(BlockPageChangesService blockPageChangesService,
-                      DocumentService documentService,
-                      RevisionService revisionService,
-                      BlockPageService blockPageService) {
-        this.blockPageChangesService = blockPageChangesService;
-        this.documentService = documentService;
-        this.revisionService = revisionService;
-        this.blockPageService = blockPageService;
-    }
-
-    @Transactional
-    public LEP getLEP(final Document document) {
-        final var sortedBlocks = document.getBlocks().stream()
-                .sorted(Comparator.comparing(Block::getOrder))
-                .collect(Collectors.toList());
-
-        final var pagesChanges = getAllChanges(sortedBlocks);
-
-        return new LEP(document.getRevisions(), pagesChanges);
-    }
-
-    @Transactional
-    public List<BlockPageChange> getAllChanges(final List<Block> blocks) {
-        final var changes = new LinkedList<BlockPageChange>();
-
-        blocks.forEach(block -> {
-            final var pageChanges = blockPageChangesService.getAllChangesFrom(block);
-            changes.addAll(pageChanges);
-        });
-
-        return changes;
-    }
-
-    @Transactional
-    public LEP getLEP(final Long documentId) {
-        final var document = documentService.findById(documentId);
-        if (document.isEmpty()) {
-            return new LEP();
+    public List<InputStream> getFilesByTrait(final Document document, final Trait trait) {
+        final var blocksByTrait = blockService.getBlocksByTrait(document, trait);
+        if (blocksByTrait.isEmpty()) {
+            return Collections.emptyList();
         }
-
-        return getLEP(document.get());
+        return getInputStreamsFromBlocks(blocksByTrait);
     }
 
-    @Transactional
-    public LEP compareChanges(final Long documentId) {
-        final var document = documentService.findById(documentId);
-        if (document.isEmpty()) {
-            return new LEP();
-        }
+    private List<InputStream> getInputStreamsFromBlocks(final Set<Block> blocks) {
+        final var files = blockService.getFileNamesFrom(blocks);
+        return getInputStreamsFrom(files);
+    }
 
-        final var doc = document.get();
-        final var lastRevision = revisionService.findLastRevision(documentId);
-        var pages = blockPageService.getPages(lastRevision, doc.getBlocks());
-        pages = blockPageChangesService.saveAll(pages);
+    private List<InputStream> getInputStreamsFrom(final List<String> files) {
+        if (files.isEmpty()) return Collections.emptyList();
 
-        return new LEP(doc.getRevisions(), pages);
+        return files.stream().map(fileName -> {
+            try {
+                return new FileInputStream(fileName);
+            } catch (FileNotFoundException fileNotFoundException) {
+                throw new CannotFindBlockFileException("Não foi possível encontrar os arquivos", fileNotFoundException);
+            }
+        }).collect(Collectors.toUnmodifiableList());
     }
 }

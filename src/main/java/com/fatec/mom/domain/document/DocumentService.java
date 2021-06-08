@@ -2,7 +2,10 @@ package com.fatec.mom.domain.document;
 
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
+import com.fatec.mom.infra.exceptions.ItemNotFoundException;
+import com.fatec.mom.infra.generator.DocumentGeneratorRetriever;
 import com.fatec.mom.infra.generator.full.FullDocumentGenerator;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class DocumentService {
 
     private static final String PDF_TYPE = "application/pdf";
@@ -27,26 +31,24 @@ public class DocumentService {
 
     private final RevisionService revisionService;
 
-    private final FullDocumentGenerator fullDocumentGenerator;
-
-    @Autowired
-    public DocumentService(DocumentRepository documentRepository,
-                           RevisionService revisionService,
-                           FullDocumentGenerator fullDocumentGenerator) {
-        this.documentRepository = documentRepository;
-        this.revisionService = revisionService;
-        this.fullDocumentGenerator = fullDocumentGenerator;
-    }
+    private final DocumentGeneratorRetriever generatorRetriever;
 
     @Transactional
     public List<Document> findAll() {
-        return documentRepository.findAll();
+        final var documents = documentRepository.findAll();
+        if (documents == null || documents.isEmpty()) {
+            throw new ItemNotFoundException("Nenhum documento cadastrado no sistema");
+        }
+        return documents;
     }
 
     @Transactional
     public Document findByNameAndPartNumber(final String name, final Integer partNumber) {
-        final var docs = documentRepository.findAll(DocumentSpecification.searchByName(name));
-        return docs.stream()
+        final var documents = documentRepository.findAll(DocumentSpecification.searchByName(name));
+        if (documents.isEmpty()) {
+            throw new ItemNotFoundException(String.format("Não foi encontrado nenhum documento com nome %s e partNumber %d", name, partNumber));
+        }
+        return documents.stream()
                 .filter(document -> document.getPartNumber().equals(partNumber))
                 .findFirst().orElseThrow();
     }
@@ -54,6 +56,9 @@ public class DocumentService {
     @Transactional
     public Set<Document> findAllByNameAndPartNumberAndTrait(final String name, final Integer partNumber, Integer trait) {
         final var docs = documentRepository.findAll(DocumentSpecification.searchByName(name));
+        if (docs.isEmpty()) {
+            throw new ItemNotFoundException(String.format("Não foi encontrado nenhum documento com nome %s, partNumber %d e traço %d", name, partNumber, trait));
+        }
         return docs.stream()
                 .filter(document -> document.getPartNumber().equals(partNumber))
                 .filter(document -> document.containsTrait(trait))
@@ -90,7 +95,8 @@ public class DocumentService {
     @Transactional
     public Optional<InputStreamResource> generateFULL(final Revision revision) {
         try {
-            final var full = fullDocumentGenerator.getFULL(revision);
+            final var generator = generatorRetriever.getGenerator(DocumentType.FULL);
+            final var full = generator.generate(revision);
             //return Optional.of(getFileResponse(full));
         } catch (IOException e) {
             e.printStackTrace();

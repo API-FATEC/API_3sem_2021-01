@@ -4,6 +4,7 @@ import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionStatus;
 import com.fatec.mom.infra.exceptions.CheckoutRevisionException;
+import com.fatec.mom.infra.generator.FileGenerator;
 import com.fatec.mom.infra.generator.RevisionManipulator;
 import com.fatec.mom.infra.generator.full.dataextractor.DocumentFilesExtractor;
 import com.fatec.mom.infra.generator.pdf.PdfMerger;
@@ -15,13 +16,14 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
 @Component
 @Slf4j
-public class FullDocumentGenerator {
+public class FullDocumentGenerator implements FileGenerator {
 
     private static final String FULL_FORMAT = "%s-%d-%s-FULL.pdf";
 
@@ -95,5 +97,10 @@ public class FullDocumentGenerator {
             return String.format(FULL_FORMAT, document.getDocument(), trait, lastRevision.get().getName());
         }
         return String.format(FULL_FORMAT, document.getName(), trait, document.getPartNumber());
+    }
+
+    @Override
+    public InputStream generate() {
+        return null;
     }
 }

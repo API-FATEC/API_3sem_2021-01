@@ -1,15 +1,21 @@
 package com.fatec.mom.infra.generator.lep;
 
-import com.fatec.mom.domain.lep.LEP;
+import com.fatec.mom.infra.generator.FileGenerator;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
+import java.io.InputStream;
+import java.util.List;
 import java.util.Optional;
 
 @Component
-public class LEPGenerator {
+public class LEPGenerator implements FileGenerator {
 
-    public Optional<File> generateFrom(final LEP lep) {
+    public Optional<InputStream> generateFrom(final List<InputStream> files) {
         return Optional.empty();
+    }
+
+    @Override
+    public InputStream generate() {
+        return null;
     }
 }

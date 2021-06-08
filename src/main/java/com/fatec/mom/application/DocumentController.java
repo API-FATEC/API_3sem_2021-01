@@ -4,10 +4,13 @@ import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.document.DocumentService;
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
+import com.fatec.mom.domain.utils.ErrorResponse;
+import com.fatec.mom.infra.exceptions.ItemNotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,25 +42,17 @@ public class DocumentController {
 
     @GetMapping("/find/all")
     @ApiOperation(value = "Obtém todos os documentos salvos")
-    public ResponseEntity<List<Document>> findAllDocuments() {
-        var docs = documentService.findAll();
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(docs);
+    public List<Document> findAllDocuments() {
+        return documentService.findAll();
     }
 
     @GetMapping("/find")
     @ApiOperation(value = "Obtém um documento específico de acordo com nome, partNumber e traço")
-    public ResponseEntity<Set<Document>> findDocuments(
+    public Set<Document> findDocuments(
             @RequestParam("document_name") String documentName,
             @RequestParam("part_number") Integer partNumber,
             @RequestParam("trait") Integer trait) {
-        var docs = documentService.findAllByNameAndPartNumberAndTrait(documentName, partNumber, trait);
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(docs);
+        return documentService.findAllByNameAndPartNumberAndTrait(documentName, partNumber, trait);
     }
 
     @GetMapping("/find/all/by")
@@ -110,7 +105,7 @@ public class DocumentController {
         final var resource = documentService.generateFULL(revision);
 
         if (resource.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new ItemNotFoundException("Não foi possível gerar o FULL");
         }
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
@@ -123,5 +118,11 @@ public class DocumentController {
         final var document = documentService.importDocument(id);
 
         return ResponseEntity.ok(document);
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponse> handleItemNotFoundException(final ItemNotFoundException exception) {
+        return ErrorResponse.build(exception, HttpStatus.NOT_FOUND);
     }
 }
