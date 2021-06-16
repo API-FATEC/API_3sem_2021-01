@@ -22,9 +22,9 @@ Os documentos também passam por revisões, esta é uma característica deste ti
 Desenvolver um sistema que permita customizar, controlar e revisar documentos formados por fragmentos armazenados em arquivos PDF, usando regras específicas para gerar o documento final.
 
 #### Membros e papéis:
-- Tairik Johnny    -> Scrum Master, Frontend Developer -> linkedin.com/in/tairik-nishimura/
-- Wallace Caetano  -> Product Owner, Java Developer -> linkedin.com/in/wallace-caetano/
-- Devanir Ramos    -> Java Developer -> linkedin.com/in/devanir-ramos-junior/
+- Tairik Johnny    -> Scrum Master, Frontend Developer -> [linkedin.com/in/tairik-nishimura/](https://linkedin.com/in/tairik-nishimura/)
+- Wallace Caetano  -> Product Owner, Java Developer -> [linkedin.com/in/wallace-caetano/](https://linkedin.com/in/wallace-caetano/)
+- Devanir Ramos    -> Java Developer -> [linkedin.com/in/devanir-ramos-junior/](https://linkedin.com/in/devanir-ramos-junior/)
 
 
 # Organização de Sprints
