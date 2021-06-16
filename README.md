@@ -9,24 +9,23 @@
 Projeto realizado em parceria com a FATEC de São José dos Campos, alunos do curso de Banco de Dados e com a EMBRAER.
 
 #### Cliente
-**Time de Publicação Operacional**, da EMBRAER, responsáveis por emitir, aprovar e revisar os manuais operacionais de aviação, destinados a pilotos, tripulação, despatcher de aeronaves e provedores de treinamento.
+**Time de Publicação Operacional**, da indústria aeronáutica, responsáveis por emitir, aprovar e revisar os manuais operacionais de aviação, destinados a pilotos, tripulação, despatcher de aeronaves e provedores de treinamento.
 
 ##### Produto do Cliente
 Manuais operacionais de aviação, que incluem limitações, procedimentos, informações sobre performance, itens inoperantes, checklists, sistemas de aeronaves, etc.
 
-Os manuais são documentos compostos por duas partes: PN (Part number, sigla em inglês) e Traço, que é um conjunto de blocos que dividem o documento.
+Os manuais são documentos compostos por duas partes: PN (Part Number, sigla em inglês) e Traço, que é um conjunto de blocos que dividem o documento.
 
 Os documentos também passam por revisões, esta é uma característica deste tipo de manual: disponibilizar/identificar a versão do documento revisado.
 
 ## Objetivo
-Desenvolver um sistema que permita customizar, controlar e revisar documentos formados por fragmentos armazenados em rquivos PDF, usando regras específicas para gerar o documento final.
+Desenvolver um sistema que permita customizar, controlar e revisar documentos formados por fragmentos armazenados em arquivos PDF, usando regras específicas para gerar o documento final.
 
 #### Membros e papéis:
-- Tobias Lino      -> Scrum Master, Java Developer
-- Wallace Caetano  -> Product Owner, Java Developer
-- Devanir Ramos    -> Java Developer
-- Tairik Johnny    -> Frontend Developer
-- Gabriel Timoteo  -> Frontend Developer
+- Tairik Johnny    -> Scrum Master, Frontend Developer -> linkedin.com/in/tairik-nishimura/
+- Wallace Caetano  -> Product Owner, Java Developer -> linkedin.com/in/wallace-caetano/
+- Devanir Ramos    -> Java Developer -> linkedin.com/in/devanir-ramos-junior/
+
 
 # Organização de Sprints
 ### O planejamento e o progresso durante as Sprints do projeto poderá ser visto em [Entregas](https://github.com/API-FATEC/API_3sem_2021-01/wiki/Entregas).
@@ -35,12 +34,11 @@ Desenvolver um sistema que permita customizar, controlar e revisar documentos fo
 ### **Pre-requisitos:**
 - Java 11
 - Maven 3 
-- Postgres
+- Oracle
 - Docker e Docker Compose
 - NodeJs versão 14.16
 ### **Preparação do Banco de dados**
-- criar uma base de dados no postgres com nome `mom` e criar o usuário `mom` e senha `mom`
-  > Se utilizar o Postgres no Docker, subir o container do banco com o comando `docker-compose -f docker/docker-compose.yml up -d`
+- criar uma base de dados no Oracle com nome `mom` e criar o usuário `mom` e senha `mom`
 - Executar o comando `mvn liquibase:update` para construir os objetos do banco
 ## **Subindo o backend**
 
