@@ -94,6 +94,11 @@ export default {
         url: "/BaixarDocumentacao",
         icon: "mdi-folder-remove",
       },
+      {
+        conteudo: "Gerar LEP",
+        url: "/GerarLEP",
+        icon: "mdi-folder-remove",
+      },
     ],
   }),
 };
