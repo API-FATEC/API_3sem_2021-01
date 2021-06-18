@@ -3,6 +3,7 @@ package com.fatec.mom.domain.document;
 import com.fatec.mom.domain.revision.Revision;
 import com.fatec.mom.domain.revision.RevisionService;
 import com.fatec.mom.infra.generator.full.FullDocumentGenerator;
+import com.fatec.mom.infra.generator.full.FullGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
@@ -107,5 +108,11 @@ public class DocumentService {
     public Document importDocument(final Long id) {
         final var document = documentRepository.findById(id);
         return document.orElseThrow();
+    }
+
+    public void downloadFullNew(String trait) throws IOException {
+        //inicializa um FullGenerator e executa o metodo q gera o FULL, de acordo com o trait passado
+        var generator = new FullGenerator();
+        generator.getFull(trait);
     }
 }

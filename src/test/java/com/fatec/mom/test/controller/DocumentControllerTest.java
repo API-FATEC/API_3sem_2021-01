@@ -1,34 +1,36 @@
-//package com.fatec.mom.test.controller;
-//
-//import com.fatec.mom.domain.block.Block;
-//import com.fatec.mom.domain.document.Document;
-//import com.fatec.mom.domain.document.DocumentService;
-//import com.fatec.mom.test.integration.IntegrationTest;
-//import com.google.gson.Gson;
-//import com.google.gson.reflect.TypeToken;
-//import org.junit.jupiter.api.Test;
-//import org.skyscreamer.jsonassert.JSONAssert;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.context.jdbc.Sql;
-//import org.springframework.test.context.jdbc.SqlConfig;
-//
-//import java.util.HashSet;
-//import java.util.LinkedList;
-//import java.util.List;
-//
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//import static org.hamcrest.CoreMatchers.equalTo;
-//import static org.hamcrest.MatcherAssert.assertThat;
-//
-//@IntegrationTest
-//class DocumentControllerTest extends AbstractControllerTest {
-//
-//    @Autowired
-//    private DocumentService documentService;
-//
+package com.fatec.mom.test.controller;
+
+import com.fatec.mom.domain.block.Block;
+import com.fatec.mom.domain.document.Document;
+import com.fatec.mom.domain.document.DocumentService;
+import com.fatec.mom.test.integration.IntegrationTest;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+//import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
+
+import java.io.File;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+@IntegrationTest
+class DocumentControllerTest extends AbstractControllerTest {
+
+    @Autowired
+    private DocumentService documentService;
+
 //    @Test
 //    @Sql(value = "/com/fatec/mom/test/sql/insert-three-documents-and-twenty-five-blocks.sql",
 //        config = @SqlConfig(transactionManager = "dataSourceTransactionManager"))
@@ -123,4 +125,21 @@
 //                getResultAsJson(result),
 //                true);
 //    }
-//}
+
+    @Test
+    void generateFull() throws Exception {
+        //testa o url pra ver se vai funcionar
+        getMockMvc().perform(
+                get("/document/download/full?trait=50")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk()).andReturn();
+
+        //se funcionou agora o arquivo gerado será apagado
+        File currentDirFile = new File(".");
+        String helper = currentDirFile.getAbsolutePath();
+        String currentDir = helper.substring(0, helper.length() - 1);
+        String rootPath = currentDir + "doc\\Mockup FATEC\\MOCKUP\\ABC-1234\\Master\\";
+        File full50 = new File(rootPath + "[]ABC-1234-50-FULL.pdf");
+        full50.delete();
+    }
+}

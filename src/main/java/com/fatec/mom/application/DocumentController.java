@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -123,5 +124,16 @@ public class DocumentController {
         final var document = documentService.importDocument(id);
 
         return ResponseEntity.ok(document);
+    }
+
+    @GetMapping("/download/full")
+    @ApiOperation(value = "gera a versão Full")
+    public ResponseEntity downloadFullNew(
+            @RequestParam("trait") String trait) throws IOException {
+        //documentService é onde a lógica acontece
+        documentService.downloadFullNew(trait);
+
+        return ResponseEntity.ok("Ok");
+
     }
 }
