@@ -8,10 +8,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -128,12 +131,20 @@ public class DocumentController {
 
     @GetMapping("/download/full")
     @ApiOperation(value = "gera a versão Full")
-    public ResponseEntity downloadFullNew(
+    public ResponseEntity<InputStreamResource> downloadFullNew(
             @RequestParam("trait") String trait) throws IOException {
         //documentService é onde a lógica acontece
         documentService.downloadFullNew(trait);
 
-        return ResponseEntity.ok("Ok");
-
+        File currentDirFile = new File(".");
+        String helper = currentDirFile.getAbsolutePath();
+        String currentDir = helper.substring(0, helper.length() - 1);
+        String[] split = currentDir.split("\\\\");
+        File pdf = new File(split[0] + "\\" + split[1] + "\\" + split[2] + "\\Desktop\\[]ABC-1234-" + trait + "-FULL.pdf");
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(pdf));
+        return ResponseEntity.ok()
+                .contentLength(pdf.length())
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
     }
 }

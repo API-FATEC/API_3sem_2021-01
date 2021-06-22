@@ -139,7 +139,8 @@ class DocumentControllerTest extends AbstractControllerTest {
         String helper = currentDirFile.getAbsolutePath();
         String currentDir = helper.substring(0, helper.length() - 1);
         String rootPath = currentDir + "doc\\Mockup FATEC\\MOCKUP\\ABC-1234\\Master\\";
-        File full50 = new File(rootPath + "[]ABC-1234-50-FULL.pdf");
+        String[] split = currentDir.split("\\\\");
+        File full50 = new File(split[0] + "\\" + split[1] + "\\" + split[2] + "\\Desktop\\[]ABC-1234-50-FULL.pdf");
         full50.delete();
     }
 }

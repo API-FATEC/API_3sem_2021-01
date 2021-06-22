@@ -13,6 +13,7 @@ public class FullGenerator {
         File currentDirFile = new File(".");
         String helper = currentDirFile.getAbsolutePath();
         String currentDir = helper.substring(0, helper.length() - 1);
+        System.out.println(currentDir);
         //usa o path do projeto e vai até a pasta Master do mockup
         String rootPath = currentDir + "doc\\Mockup FATEC\\MOCKUP\\ABC-1234\\Master\\";
 
@@ -38,7 +39,8 @@ public class FullGenerator {
             ut.addSource(rootPath + "S03 Supplement\\05 Mars\\ABC-1234-S03-05c01.pdf");
             ut.addSource(rootPath + "S03 Supplement\\10 Copyright\\ABC-1234-S03-10c01.pdf");
             //especifica o local e o nome
-            ut.setDestinationFileName(rootPath + "[]ABC-1234-50-FULL.pdf");
+            String[] split = currentDir.split("\\\\");
+            ut.setDestinationFileName(split[0] + "\\" + split[1] + "\\" + split[2] + "\\Desktop\\[]ABC-1234-50-FULL.pdf");
         }
 
         //faz a mesma coisa mas selecionando os blocos q fazem parte do traço 55 e depois 60
@@ -55,7 +57,8 @@ public class FullGenerator {
             ut.addSource(rootPath + "AP01 Appendix\\02 Appendix\\ABC-1234-AP01-02c01.pdf");
             ut.addSource(rootPath + "S03 Supplement\\05 Mars\\ABC-1234-S03-05c01.pdf");
             ut.addSource(rootPath + "S03 Supplement\\10 Copyright\\ABC-1234-S03-10c01.pdf");
-            ut.setDestinationFileName(rootPath + "[]ABC-1234-55-FULL.pdf");
+            String[] split = currentDir.split("\\\\");
+            ut.setDestinationFileName(split[0] + "\\" + split[1] + "\\" + split[2] + "\\Desktop\\[]ABC-1234-55-FULL.pdf");
         }
 
         else if (trait.equals("60")){
@@ -72,9 +75,9 @@ public class FullGenerator {
             ut.addSource(rootPath + "AP01 Appendix\\02 Appendix\\ABC-1234-AP01-02c01.pdf");
             ut.addSource(rootPath + "S03 Supplement\\05 Mars\\ABC-1234-S03-05c01.pdf");
             ut.addSource(rootPath + "S03 Supplement\\10 Copyright\\ABC-1234-S03-10c02.pdf");
-            ut.setDestinationFileName(rootPath + "[]ABC-1234-60-FULL.pdf");
+            String[] split = currentDir.split("\\\\");
+            ut.setDestinationFileName(split[0] + "\\" + split[1] + "\\" + split[2] + "\\Desktop\\[]ABC-1234-60-FULL.pdf");
         }
         ut.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
-
     }
 }
