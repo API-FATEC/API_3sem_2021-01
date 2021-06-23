@@ -8,6 +8,7 @@ export default {
         valid: true,
         name: '',
         partNumber: '',
+        trait: '',
         findedPartNumbers: [],
         findedDocs: [],
         findedDocsNames: [],
@@ -167,5 +168,9 @@ export default {
             });
 
         },
+
+        baixarFull:(trait)=>{
+            return http.get(`/document/download/full?trait=${trait}`)
+        }
     },
 }
