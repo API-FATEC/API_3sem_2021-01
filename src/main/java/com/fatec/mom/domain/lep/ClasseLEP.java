@@ -2,17 +2,21 @@ package com.fatec.mom.domain.lep;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ClasseLEP {
-    private String block;
-    private int code;
-    private int page;
-    private String change;
+    private List<ItensLEP> blocosSelecionados;
 
-    public ClasseLEP(String block, int code, int page, String change) {
-        this.block = block;
-        this.code = code;
-        this.page = page;
-        this.change = change;
+    public ClasseLEP(List<ItensLEP> blocos){
+        this.blocosSelecionados = blocos;
+    }
+
+    public void addItensLEP(ItensLEP itensLEP){
+        this.blocosSelecionados.add(itensLEP);
+    }
+
+    public List<ItensLEP> getItensLEP() {
+        return this.blocosSelecionados;
     }
 }
