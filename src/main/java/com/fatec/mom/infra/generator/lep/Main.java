@@ -1,6 +1,4 @@
-package com.fatec.mom.domain.lep;
-
-import com.fatec.mom.domain.lep.ClasseLEP;
+package com.fatec.mom.infra.generator.lep;
 
 import java.util.ArrayList;
 

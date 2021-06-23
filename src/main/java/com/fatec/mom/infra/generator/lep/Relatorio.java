@@ -1,4 +1,4 @@
-package com.fatec.mom.domain.lep;
+package com.fatec.mom.infra.generator.lep;
 
 public interface Relatorio {
     public void gerarCabecalhoPaginaDeRevisao();

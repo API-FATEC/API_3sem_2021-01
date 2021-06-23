@@ -1,16 +1,13 @@
-package com.fatec.mom.domain.lep;
+package com.fatec.mom.infra.generator.lep;
 
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import javax.swing.GroupLayout.Alignment;
-
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.sun.xml.bind.marshaller.XMLWriter;
 
 public class RelatorioPDF implements Relatorio{
     private ClasseLEP classeLEP;

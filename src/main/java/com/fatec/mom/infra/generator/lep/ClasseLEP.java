@@ -1,4 +1,4 @@
-package com.fatec.mom.domain.lep;
+package com.fatec.mom.infra.generator.lep;
 
 import lombok.Data;
 
