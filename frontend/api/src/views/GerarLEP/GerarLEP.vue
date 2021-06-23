@@ -29,6 +29,10 @@
                             filled
                             label="Part Number"
                           ></v-select>
+                          <v-text-field
+                            v-model="trait"
+                            placeholder="Traço"
+                          ></v-text-field>
 
                           <v-btn
                             :disabled="!valid"
@@ -107,14 +111,28 @@
                 <v-row>
                   <v-col>
                     <div id="btn">
-                      <v-btn
-                        depressed
-                        color="primary"
-                        :disabled="canCreate"
-                        @click="createReview"
-                      >
-                        Criar Revisão
-                      </v-btn>
+                      <div>
+                        <v-btn
+                          depressed
+                          color="primary"
+                          :disabled="canCreate"
+                          @click="createReview"
+                        >
+                          Criar Revisão
+                        </v-btn>
+                      </div>
+                      <div>
+                        <div>
+                          <v-btn
+                            depressed
+                            color="primary"
+                            @click="baixarFull(trait)"
+                            id="btn-full"
+                          >
+                            Baixar FULL
+                          </v-btn>
+                        </div>
+                      </div>
                     </div>
                   </v-col>
                 </v-row>
@@ -150,5 +168,8 @@
 }
 #list {
   margin-top: 50px;
+}
+#btn-full{
+  margin-left: 30px;
 }
 </style>
