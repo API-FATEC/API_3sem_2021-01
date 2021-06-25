@@ -147,4 +147,14 @@ public class DocumentController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(resource);
     }
+
+    @PostMapping("/save")
+    @ApiOperation(value = "Salva um document no banco")
+    public  ResponseEntity<Document> saveDoc (
+            @RequestBody final Document doc) {
+
+        var newDoc = documentService.save(doc);
+
+        return ResponseEntity.ok(doc);
+    }
 }

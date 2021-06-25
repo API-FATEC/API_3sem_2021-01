@@ -27,13 +27,10 @@ public class FullDocumentGeneratorTest {
 
         //caso tenha gerado com sucesso o arquivo será apagado,
         //o objetivo do teste é apenas verificar se está gerando corretamente
-        File currentDirFile = new File(".");
-        String helper = currentDirFile.getAbsolutePath();
-        String currentDir = helper.substring(0, helper.length() - 1);
-        String rootPath = currentDir + "doc\\Mockup FATEC\\MOCKUP\\ABC-1234\\Master\\";
-        File full50 = new File(rootPath + "[]ABC-1234-50-FULL.pdf");
-        File full55 = new File(rootPath + "[]ABC-1234-55-FULL.pdf");
-        File full60 = new File(rootPath + "[]ABC-1234-60-FULL.pdf");
+        File desktop = new File(System.getProperty("user.home"), "Desktop");
+        File full50 = new File(desktop.getPath() + "\\[]ABC-1234-50-FULL.pdf");
+        File full55 = new File(desktop.getPath() + "\\[]ABC-1234-55-FULL.pdf");
+        File full60 = new File(desktop.getPath() + "\\[]ABC-1234-60-FULL.pdf");
         full50.delete();full55.delete();full60.delete();
         System.out.println("Arquivos apagados.\nTeste concluido com sucesso.");
     }
