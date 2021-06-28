@@ -1,5 +1,5 @@
-import { http } from "../../services/config";
-import { DocumentsEndpoints } from "../../model/endpoints/EndpointsMapping";
+import {http} from "../../services/config";
+import {DocumentsEndpoints} from "../../model/endpoints/EndpointsMapping";
 import swal from 'sweetalert';
 
 export default {
@@ -8,17 +8,25 @@ export default {
         valid: true,
         name: '',
         partNumber: '',
-        trait: '',
         findedPartNumbers: [],
         findedDocs: [],
         findedDocsNames: [],
+        trait: '',
 
+        headers: [{
+            text: 'Name',
+            align: 'start',
+            value: 'name'
+        },
+            { text: 'Status', value: 'status'},
+            { text: 'Data de criação', value: 'createdDate'},
+            { text: 'Última atualização', value: 'lastUpdateDate'}],
         items: [],
-        selectedBlocks: [],
+        allReviews: [],
 
         document: [],
         openedReview: [],
-        hasOpenedReview: true,
+        closedReview: [],
     }),
 
     created() {
@@ -28,10 +36,6 @@ export default {
     computed: {
         findDocs: function () {
             this.searchDocs();
-        },
-
-        canCreate() {
-            return this.selectedBlocks.length === 0;
         },
     },
 
@@ -48,8 +52,7 @@ export default {
             this.$refs.form.reset()
             this.dialogError = false;
             this.items = [];
-            this.selectedBlocks = [];
-            this.hasOpenedReview = false;
+            this.allReviews = [];
         },
 
         searchPartNumbers(documentName) {
@@ -73,8 +76,8 @@ export default {
 
                     this.findedDocsNames = docsNames;
                 }).catch(error => {
-                    console.log(error)
-                });
+                console.log(error)
+            });
         },
 
         getBlocks() {
@@ -90,7 +93,7 @@ export default {
             return blocksNames;
         },
 
-        getDocumentBlocks() {
+        getDocument() {
             http.get(DocumentsEndpoints.FIND_ALL_BY, {
                 params: {
                     document_name: this.name,
@@ -100,73 +103,40 @@ export default {
                 .then(response => {
                     this.document = response.data;
                     let documentId = response.data.id;
+                    this.allReviews = this.document.revisions;
+                    this.getOpenedReview(documentId);
 
-                    this.getBlocks();
-                    this.hasOpenedReviews(documentId);
+                    console.log(this.openedReview);
+                    console.log(this.allReviews);
                 }).catch(error => {
-                console.log(error)
+                console.log(error);
+                //alert('Não foi possível obter o documento')
+                swal("Erro!", "Não foi possível obter o documento", "error");
             });
-
         },
 
-        createReview() {
-            if (this.hasOpenedReview) {
-                //alert('Já existe uma revisão aberta, feche-a antes!');
-                swal("Aviso!", "Já existe uma revisão aberta, feche-a antes!", "warning");
-                return;
-            }
-           console.log(this.selectedBlocks);
-
-           let blocks = [];
-           this.selectedBlocks.forEach(block => {
-               let name = block.substring(0, block.indexOf(' - '));
-               let code = block.substring(block.indexOf(' - ') + 3, block.length);
-
-               let blocksInDocument = this.searchBlocksInDocument(name, code);
-               if (blocksInDocument.length > 0 && blocksInDocument.length < 2) {
-                    blocks.push(blocksInDocument[0]);
-               }
-           });
-
-           let review = {
-               createdDate: new Date(),
-               document: this.document,
-               status: 'OPENED',
-               blocksInRevision: blocks
-           };
-           console.log(review);
-           http.post('/revision/save', review)
-               .then(response => {
-                   console.log(response);
-                   const revisionName = response.data.name;
-                   //alert(`${revisionName} criada com Sucesso!`);
-                   swal("Sucesso!", `${revisionName} criada com Sucesso!`, "success");
-               })
-               .catch(error => {
-                   console.error(error);
-               });
-        },
-
-        searchBlocksInDocument(name, code) {
-            return this.document.blocks.filter(block => block.name === name && block.code === parseInt(code));
-        },
-
-        hasOpenedReviews(documentId) {
+        getOpenedReview(documentId) {
             http.get(`/revision/opened?document_id=${documentId}`)
                 .then(response => {
-                    let openedReview = response.data;
-                    if (openedReview.name !== undefined) {
-                        this.openedReview = response.data;
-                        this.hasOpenedReview = true;
-                        //alert(`A revisão ${this.openedReview.name} já está aberta! É preciso finaliza-la antes de prosseguir`);
-                        swal("Aviso!", `Já existe uma revisão aberta para esse documento, feche a revisão ${this.openedReview.name} para continuar!`, "warning");
-                    } else {
-                        this.hasOpenedReview = false;
+                    this.openedReview = response.data;
+                    console.log(response.data);
+                    if (this.openedReview.name === undefined) {
+                        //alert('Não existe nenhuma revisão aberta')
+                        swal("Aviso!", "Não existe nenhuma revisão aberta para este documento", "warning");
                     }
                 }).catch(error => {
                 console.log(error)
+                //alert('Não foi possível obter a revisão')
+                swal("Erro!", "Não foi possível obter a revisão", "error");
             });
+        },
 
+        gerarLEP(){
+            swal("Sucesso!", "LEP gerada com sucesso!", "success");
+        },
+
+        getOpenedColor(status) {
+            return status === 'OPENED' ? 'orange' : 'green';
         },
 
         baixarFull:(trait)=>{
