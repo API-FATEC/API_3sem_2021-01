@@ -95,7 +95,7 @@
                               depressed
                               color="primary"
                               :disabled="canCreate"
-                              @click="gerarLEP()"
+                              @click="gerarLEP(trait)"
                             >
                               Gerar LEP
                             </v-btn>
