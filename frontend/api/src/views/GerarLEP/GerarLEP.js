@@ -131,16 +131,16 @@ export default {
             });
         },
 
-        gerarLEP(){
-            swal("Sucesso!", "LEP gerada com sucesso!", "success");
-        },
-
         getOpenedColor(status) {
             return status === 'OPENED' ? 'orange' : 'green';
         },
 
         baixarFull:(trait)=>{
             return http.get(`/document/download/full?trait=${trait}`)
-        }
+        },
+
+        gerarLEP:(trait)=>{
+            return http.get(`/lep/download?trait=${trait}`)
+        },
     },
 }
