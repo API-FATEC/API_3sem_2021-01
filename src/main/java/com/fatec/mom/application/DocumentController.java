@@ -136,11 +136,8 @@ public class DocumentController {
         //documentService é onde a lógica acontece
         documentService.downloadFullNew(trait);
 
-        File currentDirFile = new File(".");
-        String helper = currentDirFile.getAbsolutePath();
-        String currentDir = helper.substring(0, helper.length() - 1);
-        String[] split = currentDir.split("\\\\");
-        File pdf = new File(split[0] + "\\" + split[1] + "\\" + split[2] + "\\Desktop\\[]ABC-1234-" + trait + "-FULL.pdf");
+        File desktop = new File(System.getProperty("user.home"), "Desktop");
+        File pdf = new File(desktop.getPath() + "\\Desktop\\[]ABC-1234-" + trait + "-FULL.pdf");
         InputStreamResource resource = new InputStreamResource(new FileInputStream(pdf));
         return ResponseEntity.ok()
                 .contentLength(pdf.length())

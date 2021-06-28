@@ -72,7 +72,7 @@ export default {
       {
         conteudo: "Buscar documento",
         url: "/docsearch",
-        icon: "mdi-search-web",
+        icon: "mdi-folder-search",
       },
       {
         conteudo: "Criar Revisão",
@@ -82,7 +82,7 @@ export default {
       {
         conteudo: "Editar Blocos da Revisão",
         url: "/EditarBlocosRevisao",
-        icon: "mdi-folder-remove",
+        icon: "mdi-folder-edit",
       },
       {
         conteudo: "Fechar Revisão",
@@ -92,12 +92,12 @@ export default {
       {
         conteudo: "Baixar Documentação",
         url: "/BaixarDocumentacao",
-        icon: "mdi-folder-remove",
+        icon: "mdi-folder-download",
       },
       {
         conteudo: "Gerar LEP",
         url: "/GerarLEP",
-        icon: "mdi-folder-remove",
+        icon: "mdi-file-download",
       },
     ],
   }),
