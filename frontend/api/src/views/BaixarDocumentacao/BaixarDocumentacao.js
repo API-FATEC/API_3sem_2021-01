@@ -80,6 +80,16 @@ export default {
                 console.log(error)
             });
         },
+        downloadDocs() {
+            http.get(DocumentsEndpoints.DOWNLOADDOC, {responseType: "arraybuffer"})
+                .then(response => {
+                    let blob = new Blob([response.data], { type: 'application/pdf' })
+                    let link = document.createElement('a')
+                    link.href = window.URL.createObjectURL(blob)
+                    link.download = 'test.pdf'
+                    link.click()
+                })
+        },
 
         getDocument() {
             http.get(DocumentsEndpoints.FIND_ALL_BY, {
