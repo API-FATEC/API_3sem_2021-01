@@ -44,6 +44,11 @@ const routes = [
     path: '/BaixarDocumentacao',
     name: 'BaixarDocumentacao',
     component: () => import('../views/BaixarDocumentacao/BaixarDocumentacao.vue')
+  },
+  {
+    path: '/GerarLEP',
+    name: 'GerarLEP',
+    component: () => import('../views/GerarLEP/GerarLEP.vue')
   }
   // {
   //   path: '/about',

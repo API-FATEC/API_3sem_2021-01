@@ -8,10 +8,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -123,5 +127,34 @@ public class DocumentController {
         final var document = documentService.importDocument(id);
 
         return ResponseEntity.ok(document);
+    }
+
+    @GetMapping("/download/full")
+    @ApiOperation(value = "gera a versão Full")
+    public ResponseEntity<InputStreamResource> downloadFullNew(
+            @RequestParam("trait") String trait) throws IOException {
+        //documentService é onde a lógica acontece
+        documentService.downloadFullNew(trait);
+
+        File currentDirFile = new File(".");
+        String helper = currentDirFile.getAbsolutePath();
+        String currentDir = helper.substring(0, helper.length() - 1);
+        String[] split = currentDir.split("\\\\");
+        File pdf = new File(split[0] + "\\" + split[1] + "\\" + split[2] + "\\Desktop\\[]ABC-1234-" + trait + "-FULL.pdf");
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(pdf));
+        return ResponseEntity.ok()
+                .contentLength(pdf.length())
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
+    }
+
+    @PostMapping("/save")
+    @ApiOperation(value = "Salva um document no banco")
+    public  ResponseEntity<Document> saveDoc (
+            @RequestBody final Document doc) {
+
+        var newDoc = documentService.save(doc);
+
+        return ResponseEntity.ok(doc);
     }
 }

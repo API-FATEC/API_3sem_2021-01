@@ -53,7 +53,7 @@ public class Block {
     @Enumerated(EnumType.STRING)
     private BlockStatus status;
 
-    @JsonBackReference("blocks")
+    //@JsonBackReference("blocks")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DOC_COD")
     private Document document;
