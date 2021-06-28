@@ -7,6 +7,7 @@ import com.fatec.mom.domain.block.pagescomparator.changes.BlockPageChange;
 import com.fatec.mom.domain.document.Document;
 import com.fatec.mom.domain.document.DocumentService;
 import com.fatec.mom.domain.revision.RevisionService;
+import com.fatec.mom.infra.generator.lep.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +83,10 @@ public class LEPService {
         pages = blockPageChangesService.saveAll(pages);
 
         return new LEP(doc.getRevisions(), pages);
+    }
+
+    public void downloadLep(Integer trait) {
+        var generator = new Main();
+        generator.main(trait);
     }
 }

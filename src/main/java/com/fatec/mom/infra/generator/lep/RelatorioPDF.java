@@ -1,6 +1,7 @@
 package com.fatec.mom.infra.generator.lep;
 
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -14,7 +15,25 @@ public class RelatorioPDF implements Relatorio{
     private Document documentoPDF;
     private String caminhoRelatorio = "D:/LEP.pdf";
 
-    public RelatorioPDF(ClasseLEP classeLEP) {
+    public RelatorioPDF(ClasseLEP classeLEP, int trait) {
+
+        File currentDirFile = new File(".");
+        String helper = currentDirFile.getAbsolutePath();
+        String currentDir = helper.substring(0, helper.length() - 1);
+        String rootPath = currentDir + "doc\\Mockup FATEC\\MOCKUP\\ABC-1234\\Master\\00 Inicial\\02 List of Effective Pages\\ABC-1234-00-02c0";
+
+        if (trait == 50) {
+            rootPath = rootPath + "1.pdf";
+            this.caminhoRelatorio = rootPath;
+        }
+        else if (trait == 55) {
+            rootPath  = rootPath + "2.pdf";
+            this.caminhoRelatorio = rootPath;
+        }
+        else if (trait == 60) {
+            rootPath  = rootPath + "3.pdf";
+            this.caminhoRelatorio = rootPath;
+        }
 
         this.classeLEP = classeLEP;
 
