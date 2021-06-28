@@ -79,10 +79,10 @@
                                 >{{ item.status }}</v-chip
                               >
                             </template>
-                            <template v-slot:item.actions="{ item }">
+                            <template v-slot:item.actions="">
                               <v-icon
                                 class="mr-2"
-                                @click="baixarDocumentacao(item)"
+                                @click="downloadDocs"
                                 medium
                               >
                                 mdi-download

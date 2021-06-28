@@ -95,7 +95,7 @@
                               depressed
                               color="primary"
                               :disabled="canCreate"
-                              @click="gerarLEP()"
+                              @click="gerarLEP(trait)"
                             >
                               Gerar LEP
                             </v-btn>
@@ -108,10 +108,22 @@
                                 @click="baixarFull(trait)"
                                 id="btn-full"
                               >
-                                Baixar FULL
+                                Gerar FULL
                               </v-btn>
                             </div>
                           </div>
+                            <div>
+                              <div>
+                                <v-btn
+                                  depressed
+                                  color="primary"
+                                  @click="downloadDocs()"
+                                  id="btn-full"
+                                >
+                                  Baixar FULL
+                                </v-btn>
+                              </div>
+                            </div>
                         </div>
                       </v-col>
                     </v-row>

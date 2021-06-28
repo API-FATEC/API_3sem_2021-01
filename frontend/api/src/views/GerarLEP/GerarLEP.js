@@ -131,16 +131,27 @@ export default {
             });
         },
 
-        gerarLEP(){
-            swal("Sucesso!", "LEP gerada com sucesso!", "success");
-        },
-
         getOpenedColor(status) {
             return status === 'OPENED' ? 'orange' : 'green';
         },
 
         baixarFull:(trait)=>{
             return http.get(`/document/download/full?trait=${trait}`)
-        }
+        },
+
+        gerarLEP:(trait)=>{
+            return http.get(`/lep/download?trait=${trait}`)
+        },
+
+        downloadDocs() {
+                    http.get(DocumentsEndpoints.DOWNLOADDOC, {responseType: "arraybuffer"})
+                        .then(response => {
+                            let blob = new Blob([response.data], { type: 'application/pdf' })
+                            let link = document.createElement('a')
+                            link.href = window.URL.createObjectURL(blob)
+                            link.download = 'ABC-1234-60-FULL.pdf'
+                            link.click()
+                        })
+        },
     },
 }
