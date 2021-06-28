@@ -16,11 +16,11 @@ public class DownloadController {
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     public HttpEntity<byte[]> download() throws IOException {
 
-        byte[] arquivo = Files.readAllBytes( Paths.get("C:/Users/walla/Documents/paleta.pdf") );
+        byte[] arquivo = Files.readAllBytes( Paths.get("C:/Users/tairi/Desktop/[]ABC-1234-60-FULL.pdf") );
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        httpHeaders.add("Content-Disposition", "attachment;filename=\"paleta.pdf\"");
+        httpHeaders.add("Content-Disposition", "attachment;filename=\"[]ABC-1234-60-FULL.pdf\"");
 
         HttpEntity<byte[]> entity = new HttpEntity<byte[]>( arquivo, httpHeaders);
 
