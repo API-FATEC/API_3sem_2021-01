@@ -6,7 +6,7 @@
 ![](https://img.shields.io/badge/nodejs-14.16-darkgreen)
 ## Projeto API 3º semestre Banco de Dados.
 
-Projeto realizado em parceria com a FATEC de São José dos Campos, alunos do curso de Banco de Dados e com a EMBRAER.
+Projeto realizado em parceria com a FATEC de São José dos Campos, alunos do curso de Banco de Dados e uma empresa da Indústria Aeronáutica.
 
 #### Cliente
 **Time de Publicação Operacional**, da indústria aeronáutica, responsáveis por emitir, aprovar e revisar os manuais operacionais de aviação, destinados a pilotos, tripulação, despatcher de aeronaves e provedores de treinamento.
